@@ -223,6 +223,21 @@ class AcrossThePair(unittest.TestCase):
         self.assertEqual(kinds, ["run.keeper_cleanup"])
         self.assertTrue(runlog.latest_run(self.dir)["clean"])
 
+    # A run that died from a signal (a crash) is said, with the signal and where macOS keeps its crash report, even when
+    # nothing was left to undo; the run then counts as ended (no crash banner for a Mac that was left clean).
+    def test_crash_is_named(self):
+        k = Keeper(RootFake(), None, None, os.getuid())
+        k.log_path = self.log
+        self.assertEqual(k.clean_up(128 + 11), [])
+        with open(self.log, encoding="utf-8") as f:
+            self.assertIn("NOTE  the run died from SIGSEGV (a crash: macOS keeps its crash report in ~/Library/Logs/DiagnosticReports, "
+                          "Python-....ips) - the keeper did: nothing was left to undo", f.read())
+        with open(records_path(self.log), encoding="utf-8") as f:
+            record = json.loads(f.readline())
+        self.assertEqual((record["level"], record["data"]["signal"]), ("problem", "SIGSEGV"))
+        self.assertTrue(runlog.latest_run(self.dir)["clean"])
+        self.assertEqual([privsep.signal_name(c) for c in (0, 1, 134, 139)], [None, None, "SIGABRT", "SIGSEGV"])
+
     # The cable the run put in comes out with the clean up (D30); one that was already in stays.
     def test_clean_up_takes_the_cable_out(self):
         self.system.root_watch(self.log, lambda why: None)

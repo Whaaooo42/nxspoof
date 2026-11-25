@@ -208,7 +208,7 @@ class Sharing(unittest.TestCase):
         self.assertEqual(sharing.parse_service_interface(sample("scutil_show_bridge.txt"), "bridge0"), "Thunderbolt Bridge")
         self.assertIsNone(sharing.parse_service_interface(sample("scutil_show_bridge.txt"), "en0"))
 
-    # SystemConfiguration is never loaded where NXSPOOF forks (macOS 27.3 crashed there, Nov 25): only macos/scprefs.py
+    # SystemConfiguration is never called where NXSPOOF forks (macOS 27.3 crashed there, Nov 25): only macos/scprefs.py
     # uses ctypes, it imports nothing from NXSPOOF, and nothing imports it (it only ever runs as a fresh process).
     def test_ctypes_only_in_a_fresh_process(self):
         package = os.path.join(PROJECT_DIR, "nxspoof")

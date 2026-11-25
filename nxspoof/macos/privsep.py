@@ -102,6 +102,15 @@ def kill(pid):
     except OSError:
         pass
 
+# The signal that ended a run, from wait()'s exit code ("SIGSEGV" for 139), or None when the run exited by itself.
+def signal_name(code):
+    if code is None or code <= 128:
+        return None
+    try:
+        return signal.Signals(code - 128).name
+    except ValueError:
+        return "signal %d" % (code - 128)
+
 # Wait for the run (pid) to end; its exit code (128 + the signal's number when a signal ended it).
 def wait(pid):
     _, status = os.waitpid(pid, 0)

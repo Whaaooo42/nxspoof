@@ -332,6 +332,7 @@ def run_new(out_prefix, keep_dir=False, stop="ctrl-c", hold=0, keeper=False, das
         def __init__(self, leases_path, channel):
             FakeSystem.__init__(self, leases_path)
             self.channel, self.keeper_pid, self.lock = channel, os.getppid(), threading.Lock()
+            self.last_beat = 0.0                                      # as KeeperSystem.__init__ (the heartbeat's pace)
 
     work = make_work_dir("new", [])
     casual_path, log_path = out_prefix + ".casual.txt", out_prefix + ".log"

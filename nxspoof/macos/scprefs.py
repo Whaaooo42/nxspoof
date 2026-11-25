@@ -1,6 +1,7 @@
 """
 nxspoof.macos.scprefs - macOS's SystemConfiguration settings (SCPreferences) read and written through ctypes, in a fresh
-process of its own: NXSPOOF never loads these frameworks in a process that was forked (the background run, the keeper).
+process of its own: NXSPOOF never calls these frameworks in a process that was forked (the background run, the keeper).
+(They're loaded in every Python process at launch anyway; calling them after a fork without exec is what macOS forbids.)
 
 macOS doesn't allow CoreFoundation and SystemConfiguration in a child process that was forked without exec: on a newer
 macOS (27.3, Nov 25) the run crashed in SCPreferencesCreate the moment it read the hotspot's name ("crashed on child

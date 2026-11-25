@@ -117,8 +117,9 @@ class Keeper(object):
                 if sock:
                     sock.close()
         self.channel.close()
-        self.clean_up()
-        return privsep.wait(self.child)
+        code = privsep.wait(self.child)                                # how it ended first: the note says if it crashed
+        self.clean_up(code)
+        return code
 
     # One request -> (answer, socket to hand over or None). Anything not in CHECKS, or with wrong arguments, is refused.
     def handle(self, request):
@@ -158,9 +159,10 @@ class Keeper(object):
         self.frozen = True
         privsep.kill(self.child)
 
-    # The run has ended: undo what it left (firewall rules, Internet Sharing, the virtual cable), and say so in its log.
-    # Returns what was done.
-    def clean_up(self):
+    # The run has ended (code: its exit code, 128 + a signal when one ended it): undo what it left (firewall rules, Internet
+    # Sharing, the virtual cable), and say so in its log; a run that died from a signal is said even with nothing to undo (which
+    # signal, and where macOS keeps its crash report). Returns what was done.
+    def clean_up(self, code=None):
         left = not self.keep_sharing
         parts = [(self.firewall_loaded, "firewall rules removed", "remove the firewall rules", lambda: self.system.firewall_flush()),
                  (self.sharing_on and left, "Internet Sharing turned off", "turn Internet Sharing off", lambda: self.system.set_sharing(False)),
@@ -175,15 +177,25 @@ class Keeper(object):
             except Exception as e:
                 done.append("couldn't %s (%s)" % (doing, error_text(e)))
                 complete = False
-        if (done or self.frozen) and self.log_path:
-            why = "froze (no heartbeat for %d s), so the keeper ended it" % FROZEN_AFTER if self.frozen else \
-                  "ended without cleaning up (it crashed or was stopped by force)"
+        died = None if self.frozen else privsep.signal_name(code)
+        if (done or self.frozen or died) and self.log_path:
+            why, said = self._end_words(died)
             did = "; ".join(done) or "nothing was left to undo"
             append_as_root(self.log_path, self.uid, Event(
                 "run.keeper_cleanup", "NOTE", "the run %s - the keeper did: %s" % (why, did),
-                casual="🧹 NXSPOOF %s; its root part cleaned up: %s." % ("froze" if self.frozen else "stopped without cleaning up", did),
-                level="warn" if complete else "problem", data={"done": done, "complete": complete, "frozen": self.frozen}))
+                casual="🧹 NXSPOOF %s; its root part cleaned up: %s." % (said, did),
+                level="warn" if complete and not died else "problem",
+                data={"done": done, "complete": complete, "frozen": self.frozen, "signal": died}))
         return done
+
+    # How the run ended, in words for the note: (technical, casual) - frozen, died from a signal (died), or just gone.
+    def _end_words(self, died):
+        if self.frozen:
+            return "froze (no heartbeat for %d s), so the keeper ended it" % FROZEN_AFTER, "froze"
+        if died:
+            return ("died from %s (a crash: macOS keeps its crash report in ~/Library/Logs/DiagnosticReports, Python-....ips)" % died,
+                    "crashed (%s)" % died)
+        return "ended without cleaning up (it crashed or was stopped by force)", "stopped without cleaning up"
 
 # The run's System in a split run: root methods are requests to the keeper; everything else is done here, as you.
 class KeeperSystem(System):

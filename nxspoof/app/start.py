@@ -124,6 +124,7 @@ def report(found, output):
         print("NXSPOOF ended before it was ready. Its last words:")
         for line in tail(output) or ["(nothing)"]:
             print("   " + line)
+        print("If it crashed, macOS keeps its crash report in ~/Library/Logs/DiagnosticReports (Python-....ips): 🐞 Report and that file tell what happened.")
         return 1
     if found.get("ok"):
         print("✅ NXSPOOF is running. %s\n%s" % (found.get("text", ""), WATCH_HINT))
