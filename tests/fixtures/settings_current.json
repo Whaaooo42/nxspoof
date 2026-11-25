@@ -1,0 +1,48 @@
+{
+  "_readme": "Settings for nx_spoof.py. Command-line options (--no-firewall etc.) override these. Every field is explained in docs/reference.html (settings.json).",
+
+  "logs": {
+    "keep_last": 0
+  },
+
+  "ftp": {
+    "watch": true,
+    "port": 5000,
+    "check_every_seconds": 3,
+    "recheck_when_up_seconds": 30,
+    "open_filezilla": false
+  },
+
+  "consoles": [
+    {
+      "name": "Switch 1",
+      "model": "Nintendo Switch",
+      "mac": "dc:68:eb:5a:11:c1",
+      "owner": "me",
+      "color": "cyan",
+      "serial": "",
+      "system_version": "",
+      "ftp": { "port": 5000 },
+      "notes": [
+        "First on NXSPOOF 2026-11-13 12:47. Connection test: ctest.cdn.nintendo.net, User-Agent 'NX NIFM/00'.",
+        "Blocked lookups seen: pegasus.hac.lp1.pegasus.srv.nintendo.net, val.hac.lp1.penne.srv.nintendo.net, api.hac.lp1.ctest.srv.nintendo.net.",
+        "2026-11-13 13:06: error 2110-1100 once (never joined the Wi-Fi radio, not the firewall); retry worked."
+      ]
+    },
+    {
+      "name": "Switch 2",
+      "model": "Nintendo Switch 2",
+      "mac": "48:f1:eb:5a:22:c2",
+      "owner": "me",
+      "color": "magenta",
+      "serial": "",
+      "system_version": "",
+      "ftp": { "port": 5000 },
+      "notes": [
+        "First on NXSPOOF 2026-11-13 13:25. Connection test: ctest.p01.ctest.srv.nintendo.net, User-Agent 'libcurl (nnNifm; ...; SDK 23.3.0.0; Add-on 23.3.0.0)'.",
+        "Blocked lookups seen: sun.p01.lp1.d4c (update check), dauth.p01.lp1.ndas (device sign-in, retried every few minutes), api.p01.lp1.ctest, bvc.p01.lp1.bvc, <id>.my.2k.com, api.github.com, v1.",
+        "Also tries IPv6 (dropped by the firewall; NXSPOOF has no IPv6). 'SDK 23.3.0.0' is the networking component version, not necessarily the System version."
+      ]
+    }
+  ]
+}

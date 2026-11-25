@@ -1,0 +1,30 @@
+name: 🐞 Something went wrong
+description: NXSPOOF didn't do what it should on your Mac. Its own report says most of what we need.
+title: "Problem: "
+labels: ["problem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time! NXSPOOF can write most of this for you: **🐞 Report** on the dashboard (or menu **6 → 4**, or `python3 -B nx_spoof.py report`) makes a report with this Mac, its setup and the last runs' problems, with names and addresses replaced. Read it, then paste it below.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you saw instead.
+      placeholder: I clicked ▶ Start, typed my password, and after a minute the dashboard said the hotspot didn't come up.
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: NXSPOOF's report
+      description: Paste the report here (it's already Markdown). If you couldn't make one, say which macOS and which Mac you have.
+      placeholder: "## NXSPOOF problem report ..."
+    validations:
+      required: true
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else
+      description: A screenshot, what you already tried, another network tool running on this Mac (VPN, firewall, Docker)...

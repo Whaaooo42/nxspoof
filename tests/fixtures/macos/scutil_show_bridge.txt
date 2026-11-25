@@ -1,0 +1,6 @@
+<dictionary> {
+  DeviceName : bridge0
+  Hardware : Ethernet
+  Type : Ethernet
+  UserDefinedName : Thunderbolt Bridge
+}

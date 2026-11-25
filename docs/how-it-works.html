@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html" class="on" aria-current="page">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>How it works</h1>
+<p class="lead">A ten-minute read, without code: the trick, the three walls, and the four parts of NXSPOOF that make it all go. The packet-by-packet close-up is <a href="connection-test.html">The connection test</a>.</p>
+
+<h2>The trick</h2>
+<p>When a Switch joins a Wi-Fi network, it asks one question before calling itself online: <i>"can I reach Nintendo's test page?"</i> It looks up a test name (<code>ctest.cdn.nintendo.net</code> for a Switch 1, <code>ctest.p01.ctest.srv.nintendo.net</code> for a Switch 2), fetches a page from it, and checks the answer. NXSPOOF makes your Mac the Wi-Fi network, the name lookup <b>and</b> the test page, all at once: the Switch asks its question, gets exactly the answer it expects, and is happy. Every other question gets a polite "no".</p>
+<figure>
+<svg viewBox="0 0 1000 330" role="img" aria-labelledby="w1 wd1">
+  <title id="w1">A Switch on NXSPOOF's hotspot: three open doors, everything else dropped</title>
+  <desc id="wd1">The Switch joins the Mac's hotspot. Inside the firewall only three doors are open: macOS's DHCP gives an address, NXSPOOF's DNS answers the test names with the Mac and everything else with nowhere, and NXSPOOF's test page answers 200 ok. Everything else is dropped. The internet side is Thunderbolt Bridge, a dead end.</desc>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head"/></marker></defs>
+  <rect x="20" y="120" width="150" height="80" rx="10" class="box b-violet"/><text x="95" y="155" text-anchor="middle" class="title">Switch</text><text x="95" y="175" text-anchor="middle" class="small">joins the Wi-Fi</text>
+  <path d="M170 160 H 226" class="arrow" marker-end="url(#ah)"/><text x="180" y="150" class="small">Wi-Fi</text>
+  <rect x="230" y="14" width="750" height="304" rx="12" class="box b-gray"/><text x="250" y="40" class="title">Your Mac</text><text x="330" y="40" class="small">192.168.2.1 on the hotspot (bridge100)</text>
+  <rect x="250" y="56" width="710" height="160" rx="10" class="box b-red dash"/><text x="266" y="80" class="title">Firewall (pf)</text><text x="370" y="80" class="small">a console may reach the Mac for three things only</text>
+  <rect x="270" y="98" width="210" height="96" rx="10" class="box b-green"/><text x="375" y="126" text-anchor="middle" class="title">DHCP (macOS)</text><text x="375" y="148" text-anchor="middle" class="small">"here's your address"</text><text x="375" y="166" text-anchor="middle" class="small">192.168.2.x</text>
+  <rect x="500" y="98" width="210" height="96" rx="10" class="box b-green"/><text x="605" y="126" text-anchor="middle" class="title">DNS (NXSPOOF)</text><text x="605" y="148" text-anchor="middle" class="small">test names → the Mac</text><text x="605" y="166" text-anchor="middle" class="small">the rest → 0.0.0.0 (nowhere)</text>
+  <rect x="730" y="98" width="210" height="96" rx="10" class="box b-green"/><text x="835" y="126" text-anchor="middle" class="title">Test page (NXSPOOF)</text><text x="835" y="148" text-anchor="middle" class="small">port 80: 200 ok, like Nintendo</text><text x="835" y="166" text-anchor="middle" class="small">any other site: 403</text>
+  <text x="270" y="240" class="small">Everything else (IPv6, any other port, anything aimed past the Mac): dropped, and counted.</text>
+  <rect x="270" y="256" width="440" height="44" rx="10" class="box"/><text x="290" y="283">The "internet" side: Thunderbolt Bridge, a dead end</text>
+  <path d="M710 278 H 770" class="arrow arrow-red" marker-end="url(#ah)"/><text x="782" y="284" class="title no">✗ no road out</text>
+</svg>
+<figcaption>Three walls, independent of each other: no road out, names that lead nowhere, and a firewall that drops the rest.</figcaption>
+</figure>
+
+<h2>The three walls</h2>
+<div class="cards">
+  <div class="card"><span class="tag t-gray">wall 1</span><h3>No road out</h3><p>macOS's own <b>Internet Sharing</b> makes the hotspot and hands out addresses. It insists on sharing <i>from</i> something: NXSPOOF gives it <b>Thunderbolt Bridge</b> with a fixed private address, a port with nothing behind it. A <b>virtual cable</b> (two virtual interfaces, gone at every restart, plugged back at every start) makes macOS believe it's connected.</p></div>
+  <div class="card"><span class="tag t-gray">wall 2</span><h3>Names lead nowhere</h3><p>Every device that joins asks the Mac for names. NXSPOOF's small DNS server answers the two test names with the Mac's address, and <b>everything else</b> (Nintendo's other servers, game and update servers…) with <code>0.0.0.0</code>: <b>BLOCKED</b>. If macOS already holds the DNS port, NXSPOOF answers on 5354 and the firewall quietly redirects there ("plan B").</p></div>
+  <div class="card"><span class="tag t-gray">wall 3</span><h3>A firewall that doesn't trust names</h3><p>A program can skip the lookup and use an address it already knows. So NXSPOOF loads rules into macOS's firewall (<b>pf</b>), for the hotspot only: getting an address, asking a name, the test page; <b>every other packet is dropped</b>. pf counts the drops (the summary's "everything else (blocked)"). At Stop, NXSPOOF takes out its own rules, and only those.</p></div>
+  <div class="card"><span class="tag t-green">the answer</span><h3>The test page</h3><p>The Switch fetches its test page from the Mac. NXSPOOF answers it exactly as Nintendo's server would (<code>200 OK</code>, <code>X-Organization: Nintendo</code>, <code>ok</code>; the log says <b>200 ok</b>). That answer flips the Switch to "connected".</p></div>
+</div>
+<p>The hotspot's name, channel and password stay macOS's: you set them once in System Settings, and NXSPOOF only reads them (to show the name and check there's a password). Writing them behind macOS's back breaks the password: tried, and dropped (<a href="decisions.html#d25">D25</a>).</p>
+
+<h2>Watching: who's there, and what they try</h2>
+<ul>
+  <li><b>Joining and leaving the Wi-Fi:</b> macOS writes it in its kernel log, and NXSPOOF reads it live (a console that leaves shows up about 6 seconds later, 16 at most).</li>
+  <li><b>Which address each console got:</b> from macOS's DHCP lease file.</li>
+  <li><b>What each console asks for:</b> every DNS question and web request, matched to the console by its address.</li>
+  <li><b>Its FTP server</b> (optional): NXSPOOF knocks on the console's FTP port now and then, to say when an FTP app on it is up.</li>
+  <li><b>The hotspot itself:</b> every 5 seconds. If macOS drops it, NXSPOOF plugs the cable back in and turns sharing on again, and keeps trying until it's back or you Stop.</li>
+</ul>
+<p>Consoles are recognized by their MAC address (the ones in settings.json); an unknown one shows up with <b>Add this console</b>.</p>
+
+<h2 id="the-four-parts">The four parts</h2>
+<ul class="rules">
+  <li><b>Only a Stop stops NXSPOOF</b>Closing a window, a tab or the Terminal never stops a run. A run is always in the background. (A sleep ends it too: closing the lid is a way to say you're done.)</li>
+  <li><b>The run talks to nobody</b>It writes files (its records, where it is, what to show) and reads settings.json. No web server of its own.</li>
+  <li><b>The dashboard finds the run</b>Not the other way around. Open it whenever: it reads the run's records from the first line.</li>
+  <li><b>One way to start</b>Both doors run the same <code>nx_spoof.py start</code>, from the program copy, and get the run's one answer.</li>
+  <li><b>One run at a time, by a lock</b>The run holds a lock file. A free lock means no run, however the last one ended.</li>
+  <li><b>Minimal root</b>Only the keeper is root, with a short checked list of jobs. The code that reads what consoles send runs as you.</li>
+</ul>
+<div class="cards">
+  <div class="card"><span class="tag t-green">process · runs as you</span><h3>The run</h3><p>Does the job, tells it in files.</p>
+    <ul><li>DNS, the "ok" test page, the self-test</li><li>Watches consoles, FTP, and its hotspot</li><li>Holds <code>run.lock</code>; writes <code>run.json</code>, <code>run_state.json</code> and its records</li><li>Reads settings.json again when it changes</li><li>Stops on a Stop's note or a signal: firewall out, summary, sharing off, cable out</li></ul></div>
+  <div class="card"><span class="tag t-red">process · root</span><h3>The keeper</h3><p>The run's root part (<a href="decisions.html#d24">D24</a>).</p>
+    <ul><li>Only its checked list, on request: Internet Sharing, NXSPOOF's firewall rules, the cable, ports 53 and 80</li><li>Cleans up if the run dies <b>or freezes</b> (no heartbeat for 30 s)</li><li>Ends with the run</li></ul></div>
+  <div class="card"><span class="tag t-blue">process · runs as you</span><h3>The dashboard</h3><p>The page's server. Comes and goes with the page.</p>
+    <ul><li><code>127.0.0.1</code> only, the same port each time (remembered in <code>dash.json</code>)</li><li>Finds the run by its lock, shows it from its files</li><li>Writes settings.json (Configure, consoles)</li><li>This Mac, ▶ Start, ■ Stop (a note and a signal)</li><li>Leaves a few seconds after its last page closes</li></ul></div>
+  <div class="card"><span class="tag t-violet">viewers</span><h3>The page, <code>follow</code></h3><p>Show and ask, nothing else.</p>
+    <ul><li>The page talks only to the dashboard; its buttons need the page's secret token</li><li><code>nx_spoof.py follow</code> (menu 3, 4): the newest run's records, live, in the Terminal; Ctrl+C only stops watching</li></ul></div>
+</div>
+
+<h3>How they connect</h3>
+<figure>
+<svg viewBox="0 0 1000 560" role="img" aria-labelledby="n1 nd1">
+  <title id="n1">A run that writes files, readers that read them</title>
+  <desc id="nd1">menu.command and the dashboard both run nx_spoof.py commands; start goes from the program copy, as root, to the keeper and the run; the run writes its lock, run.json, run_state.json and records into the data folder; the dashboard and the Terminal viewer read them; the dashboard writes settings.json, which the run reads again; a Stop is a note and a signal.</desc>
+  <defs><marker id="nh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head"/></marker></defs>
+  <rect x="40" y="20" width="180" height="56" rx="10" class="box b-gray"/><text x="130" y="44" text-anchor="middle" class="title">menu.command</text><text x="130" y="62" text-anchor="middle" class="small">each item = one command</text>
+  <rect x="300" y="20" width="240" height="56" rx="10" class="box b-gray"/><text x="420" y="44" text-anchor="middle" class="title">nx_spoof.py</text><text x="420" y="62" text-anchor="middle" class="small">start · stop · follow · setup · …</text>
+  <rect x="620" y="20" width="180" height="56" rx="10" class="box b-gray"/><text x="710" y="44" text-anchor="middle" class="title">NXSPOOF.app</text><text x="710" y="62" text-anchor="middle" class="small">opens (or finds) the dashboard</text>
+  <rect x="40" y="170" width="200" height="90" rx="10" class="box b-red"/><text x="140" y="196" text-anchor="middle" class="title">Keeper</text><text x="140" y="215" text-anchor="middle" class="small">root · its checked list</text><text x="140" y="232" text-anchor="middle" class="small">cable · sharing · pf · ports</text><text x="140" y="249" text-anchor="middle" class="small">cleans up · heartbeat</text>
+  <rect x="300" y="170" width="240" height="90" rx="10" class="box b-green"/><text x="420" y="196" text-anchor="middle" class="title">The run</text><text x="420" y="215" text-anchor="middle" class="small">you · DNS · "ok" page</text><text x="420" y="232" text-anchor="middle" class="small">consoles · FTP · its hotspot</text><text x="420" y="249" text-anchor="middle" class="small">talks to nobody: writes files</text>
+  <rect x="620" y="150" width="180" height="100" rx="10" class="box b-blue"/><text x="710" y="176" text-anchor="middle" class="title">Dashboard</text><text x="710" y="195" text-anchor="middle" class="small">you · 127.0.0.1 · same port</text><text x="710" y="212" text-anchor="middle" class="small">reads files, serves the page</text><text x="710" y="229" text-anchor="middle" class="small">settings · This Mac · ▶ ■</text>
+  <rect x="840" y="150" width="140" height="100" rx="10" class="box b-violet"/><text x="910" y="190" text-anchor="middle" class="title">The page</text><text x="910" y="210" text-anchor="middle" class="small">your browser</text>
+  <rect x="820" y="290" width="160" height="64" rx="10" class="box b-violet"/><text x="900" y="316" text-anchor="middle" class="title">Terminal viewer</text><text x="900" y="336" text-anchor="middle" class="small">nx_spoof.py follow</text>
+  <rect x="40" y="400" width="200" height="130" rx="10" class="box b-gray"/><text x="140" y="436" text-anchor="middle" class="title">macOS</text><text x="140" y="458" text-anchor="middle" class="small">Internet Sharing · pf</text><text x="140" y="476" text-anchor="middle" class="small">Wi-Fi (its own hotspot)</text><text x="140" y="494" text-anchor="middle" class="small">the virtual cable</text>
+  <rect x="260" y="400" width="720" height="130" rx="10" class="box b-yellow"/><text x="280" y="424" class="title">Data folder</text><text x="368" y="424" class="small">~/Library/Application Support/NXSPOOF</text>
+  <rect x="276" y="440" width="128" height="74" rx="8" class="box"/><text x="340" y="464" text-anchor="middle">run.lock</text><text x="340" y="482" text-anchor="middle" class="small">run.json</text><text x="340" y="498" text-anchor="middle" class="small">run_state.json</text>
+  <rect x="416" y="440" width="128" height="74" rx="8" class="box"/><text x="480" y="468" text-anchor="middle">logs/*.jsonl</text><text x="480" y="486" text-anchor="middle" class="small">the records</text><text x="480" y="502" text-anchor="middle" class="small">(+ the .log text)</text>
+  <rect x="556" y="440" width="128" height="74" rx="8" class="box"/><text x="620" y="468" text-anchor="middle">settings.json</text><text x="620" y="486" text-anchor="middle" class="small">consoles, bridge,</text><text x="620" y="502" text-anchor="middle" class="small">the FTP watch</text>
+  <rect x="696" y="440" width="128" height="74" rx="8" class="box"/><text x="760" y="468" text-anchor="middle">stop.json</text><text x="760" y="486" text-anchor="middle" class="small">a Stop's note</text><text x="760" y="502" text-anchor="middle" class="small">dash.json: its port</text>
+  <rect x="836" y="440" width="128" height="74" rx="8" class="box"/><text x="900" y="468" text-anchor="middle">program/</text><text x="900" y="486" text-anchor="middle" class="small">the copy every</text><text x="900" y="502" text-anchor="middle" class="small">start runs</text>
+  <path d="M220 48 H 296" class="arrow dash" marker-end="url(#nh)"/><text x="232" y="40" class="small">runs</text>
+  <path d="M710 76 V 146" class="arrow dash arrow-blue" marker-end="url(#nh)"/>
+  <path d="M650 150 V 100 H 500 V 80" class="arrow dash arrow-blue" marker-end="url(#nh)"/><text x="506" y="116" class="small">▶ Start · This Mac</text><text x="506" y="130" class="small">(password window)</text>
+  <path d="M360 76 V 130 H 140 V 166" class="arrow dash arrow-red" marker-end="url(#nh)"/><text x="150" y="124" class="small">start (root, from program/)</text>
+  <path d="M460 76 V 166" class="arrow dash" marker-end="url(#nh)"/><text x="466" y="150" class="small">stop</text>
+  <path d="M240 215 H 296" class="arrow arrow-red" marker-start="url(#nh)" marker-end="url(#nh)"/><text x="248" y="207" class="small">guards</text>
+  <path d="M620 215 H 544" class="arrow arrow-blue" marker-end="url(#nh)"/><text x="552" y="207" class="small">■ Stop</text><text x="552" y="232" class="small">(signal)</text>
+  <path d="M800 200 H 836" class="arrow arrow-blue" marker-start="url(#nh)" marker-end="url(#nh)"/>
+  <path d="M140 260 V 396" class="arrow arrow-red" marker-end="url(#nh)"/><text x="148" y="330" class="small">root jobs</text>
+  <path d="M420 260 V 396" class="arrow arrow-green" marker-start="url(#nh)" marker-end="url(#nh)"/><text x="428" y="300" class="small">writes the lock, run.json,</text><text x="428" y="314" class="small">state, records · reads</text><text x="428" y="328" class="small">settings and stop.json</text>
+  <path d="M700 250 V 396" class="arrow arrow-blue" marker-start="url(#nh)" marker-end="url(#nh)"/><text x="692" y="344" text-anchor="end" class="small">reads run.json, state, records</text><text x="692" y="358" text-anchor="end" class="small">writes settings, stop.json</text>
+  <path d="M900 354 V 396" class="arrow" marker-end="url(#nh)"/><text x="908" y="380" class="small">reads</text>
+</svg>
+<figcaption>Dashed: starting something. Solid: talking or reading. Red: root. The only line between the dashboard and the run is ■ Stop (a note in <code>stop.json</code>, plus a signal). A reload, a second page, the app opened later: each just reads the files again.</figcaption>
+</figure>
+
+<h3>Every way a run can end, or not</h3>
+<div class="scroll"><table>
+<tr><th>What happens</th><th>What NXSPOOF does</th></tr>
+<tr><td><b>■ Stop</b> on the page, menu 2, <code>nx_spoof.py stop</code></td><td>A note and a signal to the run (no password: it's you). Firewall out, summary, Internet Sharing off, the cable out if the run put it in. The lock frees itself.</td></tr>
+<tr><td>Ctrl+C in, or closing, a Terminal viewer</td><td>Nothing. The viewer stops watching.</td></tr>
+<tr><td>Closing the page during a run</td><td>A macOS dialog: <b>Stop NXSPOOF</b> or <b>Keep running</b> (the default, also after 2 minutes). Then the dashboard leaves; the run goes on unless you chose Stop.</td></tr>
+<tr><td>Closing the page, no run</td><td>The dashboard leaves a few seconds later (a reload doesn't count).</td></tr>
+<tr><td>The app opened, the page never shows up</td><td>The dashboard leaves after 90 s.</td></tr>
+<tr><td>The app opened, a dashboard already open</td><td>The same page opens again; no second dashboard.</td></tr>
+<tr><td>The hotspot vanishes</td><td>Red 📡 chip and a line; cable back in, sharing back on, after 5, 15, 30 s, then every minute, until it's back or a Stop. Self-test again when it's back.</td></tr>
+<tr><td>The run crashes, or freezes for 30 s</td><td>The keeper ends it if needed, cleans up (firewall, sharing, cable) and says so in the run's log.</td></tr>
+<tr><td>The keeper is killed, or the Mac loses power</td><td>Nothing can clean up in that moment: the dashboard's 🧹 Clean up offers itself next time.</td></tr>
+<tr><td>A second start, from any door</td><td>"NXSPOOF is already running", nothing touched.</td></tr>
+</table></div>
+
+<h3>Who watches whom</h3>
+<div class="scroll"><table>
+<tr><th>Who</th><th>Watches</th><th>Ends when</th></tr>
+<tr><td><b>Run</b></td><td>its hotspot (5 s) · consoles (Wi-Fi log, DHCP leases, DNS, HTTP) · FTP servers · settings.json · a Stop's note (every half second) and signals</td><td>a Stop</td></tr>
+<tr><td><b>Keeper</b></td><td>the run: alive, and its heartbeat (every 10 s)</td><td>the run ends</td></tr>
+<tr><td><b>Dashboard</b></td><td>its pages (a closed page is noticed at once) · the lock and the run's files · This Mac tasks · crash leftovers (every 10 s with no run)</td><td>its last page has been gone 1.5 s</td></tr>
+<tr><td><b>Viewer</b></td><td>the newest run's records</td><td>that run stops · Ctrl+C</td></tr>
+</table></div>
+
+<h2>Where the words come from</h2>
+<p>Everything NXSPOOF says goes through <b>one message bus</b>. Each message has a technical text, an optional casual one (plain words with emoji) and a level; problems always show. The Terminal, the log file, the dashboard and the <b>records</b> are all listeners: the log file (<code>data/logs/&lt;date&gt;_&lt;time&gt;.log</code>) is the full technical story, and next to it the records (<code>.jsonl</code>) hold the same events as data, which programs read instead of picking through text (the dashboard, menu 6 → 1's checklist).</p>
+
+<h2>What it changes on your Mac, and how it goes back</h2>
+<div class="scroll"><table>
+<tr><th>When</th><th>What</th><th>Undone by</th></tr>
+<tr><td>Once (setup)</td><td>Thunderbolt Bridge's fixed address (noted first: how it was)</td><td>↩ Undo setup</td></tr>
+<tr><td>Every start</td><td>the virtual cable, Internet Sharing on, NXSPOOF's firewall rules</td><td>the Stop</td></tr>
+<tr><td>After a crash</td><td>—</td><td>the keeper; if even that couldn't happen, 🧹 Clean up</td></tr>
+</table></div>
+<p><b>It doesn't</b> touch the consoles (no modding, nothing installed on them), give them internet (by design, nothing gets through but the test), or change the hotspot's name, channel or password. Any device can join the hotspot, but only a Switch gets the test answer: everything else is refused, for every device.</p>
+
+</main>
+</body>
+</html>

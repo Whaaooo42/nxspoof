@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html" class="on" aria-current="page">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>Troubleshooting</h1>
+<p class="lead">Type what you see: an error number, a word from the log, a button's name. Every word must match. Not listed, or the fix didn't help? <a href="#report">🐞 Report</a> makes a report for a GitHub issue. The technical lines (<code>WIFI</code>, <code>DHCP</code>, <code>DNS</code>…) are in the dashboard's <b>Technical</b> log, or the run's log file (menu <b>6 → 2</b>).</p>
+<input class="search" type="search" data-filter="problems" data-count="problem-count" placeholder="2110, already running, plan B, FileZilla…" aria-label="Search the problems"><span id="problem-count" class="search-count"></span>
+
+<div id="problems">
+
+<section>
+<h2>Starting</h2>
+<div class="sym" id="unidentified"><div class="what"><code>NXSPOOF.app</code>, <code>menu.command</code> or a file in <code>scripts/</code> won't open ("unidentified developer")</div><div class="fix">Right-click it → <b>Open</b> → <b>Open</b>. Only needed once per file.</div></div>
+<div class="sym" id="app-opens-nothing"><div class="what"><code>NXSPOOF.app</code> opens nothing at all / you clicked <b>Don't Allow</b> for the folder</div><div class="fix">System Settings → Privacy &amp; Security → Files and Folders → NXSPOOF: turn on <b>Documents Folder</b> (or the folder nx-spoof is in). Or use <code>scripts/dashboard.command</code> (the dashboard with a Terminal window).</div></div>
+<div class="sym" id="not-ready"><div class="what">Start lists what isn't ready, ending with ✋ "Not ready yet"</div><div class="fix">Each ✋ line says what's missing. <b>🛠️ Fix and start</b> on the page (one password for both), or menu <b>1</b> asks "Let setup fix what it can, then start?" (<code>start --fix</code>), then "Start anyway?" (<code>start --anyway</code>).</div></div>
+<div class="sym" id="already-running"><div class="what"><code>NXSPOOF is already running (process N): nothing done.</code> / ▶ Start says <i>already running or starting</i></div><div class="fix">One run at a time (the lock): two would fight over the firewall and the ports. A run started from the menu shows up on the dashboard within a second; stop it there (■ Stop), with menu <b>2</b>, or <code>nx_spoof.py stop</code>, then start again.</div></div>
+<div class="sym" id="start-nothing"><div class="what">Pressed <b>▶ Start</b> but it still says ▶ Start, or <i>Starting…</i> for a long time</div><div class="fix">Look at the header: <i>type your password in the macOS window</i> (the window may be behind your browser), or <i>waiting for NXSPOOF to come up</i>. From the menu: type your password in the Terminal (nothing shows while you type).</div></div>
+<div class="sym" id="start-cancelled"><div class="what">The dashboard's log says <code>start cancelled</code></div><div class="fix">The password window was closed with Cancel. Press ▶ Start again.</div></div>
+<div class="sym" id="start-said"><div class="what"><code>NXSPOOF didn't start - what the start said:</code></div><div class="fix">The lines under it are what <code>nx_spoof.py start</code> printed (the data folder's <code>logs/.page_start.txt</code>): its <code>❌</code> line says why (this Mac not ready, the hotspot didn't come up within 60 s…). Fix that, or try menu <b>1</b>, which prints the same answer in the Terminal. A wrong password doesn't get here: macOS asks again.</div></div>
+<div class="sym" id="macos-said"><div class="what"><code>couldn't start NXSPOOF: macOS said: …</code></div><div class="fix">macOS refused the password window (for example an account that isn't an administrator). Use an administrator account, or menu <b>1</b>.</div></div>
+<div class="sym" id="program-copy"><div class="what"><code>couldn't prepare NXSPOOF's data folder (…)</code> after ▶ Start</div><div class="fix">The dashboard couldn't refresh the program copy in <code>~/Library/Application Support/NXSPOOF/program/</code> (a full disk, or a file there that isn't yours). Menu <b>1</b> works meanwhile.</div></div>
+<div class="sym" id="cable"><div class="what"><code>FATAL virtual cable: couldn't plug it in</code> / 😕 "I couldn't plug in the virtual cable"</div><div class="fix">Thunderbolt Bridge lost its fixed address. <b>⚙️ Configure → 🛠️ Fix selected</b> (or menu <b>7 → 2</b>), then ▶ Start again.</div></div>
+<div class="sym" id="settings-typo"><div class="what"><code>settings.json has an error on line X, column Y</code></div><div class="fix">Fix that spot: usually a missing or extra comma, or single quotes instead of double quotes.</div></div>
+<div class="sym" id="port-in-use"><div class="what"><code>FATAL … port 53</code> or <code>port 80</code> in use</div><div class="fix">See what's using it: <code>sudo lsof -nP -i :53</code> (or <code>-iTCP:80</code>), and quit it (e.g. <code>brew services stop dnsmasq</code>).</div></div>
+<div class="sym" id="plan-b"><div class="what"><code>switching to plan B (pf redirect)</code></div><div class="fix">Fine: NXSPOOF worked around a port conflict by itself (DNS on 5354, the firewall redirects). What matters is <code>READY</code>.</div></div>
+<div class="sym" id="plan-b-failed"><div class="what"><code>plan B failed</code></div><div class="fix"><code>sudo ifconfig bridge100 alias 192.168.2.254 255.255.255.255</code>, then <code>sudo python3 nx_spoof.py start --ip 192.168.2.254</code>, and set the console's Manual DNS (<a href="#dhcp-no-dns">below</a>) to <code>192.168.2.254</code>.</div></div>
+</section>
+
+<section>
+<h2>This Mac (setup, undo, clean up)</h2>
+<div class="sym" id="setup-admin"><div class="what">Setup says "needs admin rights"</div><div class="fix">Use the dashboard's 🛠️ Fix selected (or menu <b>7 → 2</b>): it asks for your password. Not <code>python3 nx_spoof.py setup</code> without <code>sudo</code>.</div></div>
+<div class="sym" id="setup-waits"><div class="what">Configure's This Mac column says "Setup waits until NXSPOOF stops" / <code>a run is active: nothing done</code></div><div class="fix">Setup, undo and clean up wait while NXSPOOF runs or starts (setup would pull the bridge out from under it), or while another This Mac task runs. Stop the run first, or wait for the task.</div></div>
+<div class="sym" id="bridge-overlap"><div class="what">The bridge's address <i>is in a network this Mac already uses</i></div><div class="fix">Your home network (or another adapter) uses the same range. ⚙️ Configure, Thunderbolt Bridge's line: pick another address (<code>10.254.0.1</code> or <code>192.168.254.1</code>), then <b>🛠️ Save and fix</b>.</div></div>
+<div class="sym" id="no-password"><div class="what">The hotspot has <b>no password</b> (<code>SHARING hotspot: … password MISSING</code>)</div><div class="fix">System Settings → General → Sharing → ⓘ next to Internet Sharing → <b>Wi-Fi Options…</b>: a password of at least 8 characters, <b>WPA2/WPA3 Personal</b>. NXSPOOF never sets it: macOS keeps it in its keychain.</div></div>
+<div class="sym" id="half-way"><div class="what"><code>😕 Couldn't set up this Mac: it stopped half way</code> (or undo, clean up)</div><div class="fix">The command ended without its closing line. The dashboard's log has what it wrote (<code>… ended without its closing line - what it wrote:</code>); <a href="#report">🐞 report it</a>. Meanwhile menu <b>7 → 2</b> (or <b>7 → 3</b>, <b>7 → 4</b>) does the same in a Terminal window, everything visible.</div></div>
+<div class="sym" id="cable-fail-setup"><div class="what">Setup says <code>virtual cable: FAIL - not plugged in yet</code></div><div class="fix">Normal before setup plugs it in (the next line says <code>fixed</code>). Only <code>plugged in, but Thunderbolt Bridge has no fixed address yet</code> is a real problem: run setup again.</div></div>
+<div class="sym" id="import-open"><div class="what"><code>SETTINGS not imported: NXSPOOF or its dashboard is open</code></div><div class="fix">The open dashboard (or a run) owns settings.json while it's up. Use the dashboard's ⚙️ Configure → <b>📥 Import settings…</b>, or close it first.</div></div>
+<div class="sym" id="import-error"><div class="what">Import says the file has an error on line X, column Y</div><div class="fix">The file isn't valid JSON (often a missing or extra comma). Nothing was changed. Fix that spot, or export a fresh copy.</div></div>
+</section>
+
+<section>
+<h2>During a run</h2>
+<div class="sym" id="hotspot-down"><div class="what"><code>SHARING the hotspot went DOWN (…) - putting it back</code> / ⚠️ The hotspot stopped</div><div class="fix">macOS dropped the hotspot (on Nov 18 it lost the virtual cable). NXSPOOF puts it back by itself: <code>try 1: virtual cable plugged back in</code>, <code>Internet Sharing turned ON again</code>, then <code>the hotspot is UP again</code> with a new self-test; consoles usually rejoin by themselves. It never gives up: after three tries it goes on every 60 s until the hotspot is back or you Stop (a Mac asleep comes back this way). Down for long: Stop, start again, and <a href="#report">🐞 report it</a> (the report has what came before).</div></div>
+<div class="sym" id="slept"><div class="what"><code>NOTE  this Mac slept (about …) - stopping</code> / 😴 Your Mac went to sleep, so I stopped</div><div class="fix">Normal: a sleep ends the run (D32). A sleeping Mac takes the hotspot and the consoles with it, and on waking macOS rejoins your home Wi-Fi; NXSPOOF stops cleanly instead of taking that away again. A run keeps the Mac awake (the log's <code>keeping this Mac awake</code> line), but closing the lid still sleeps it. <b>▶ Start</b> again when you need it. <code>--allow-sleep</code> lets an idle Mac sleep (and so end the run) on purpose.</div></div>
+<div class="sym" id="sharing-came-back"><div class="what">I turned Internet Sharing off in System Settings, and it came back on by itself</div><div class="fix">While NXSPOOF runs, it puts its hotspot back when it disappears. To end it, press <b>■ Stop</b> (or menu <b>2</b>): NXSPOOF turns sharing off itself.</div></div>
+<div class="sym" id="renamed"><div class="what"><code>SHARING the hotspot's name changed: "…" now, "…" at the last run</code> / ⚠️ Your hotspot is now called …</div><div class="fix">Someone renamed the hotspot in System Settings (NXSPOOF never does). Each Switch has to join the new name, with the password; or put the old name back in Wi-Fi Options.</div></div>
+<div class="sym" id="keeper-cleaned"><div class="what"><code>NOTE  the run ended without cleaning up (…) - the keeper did: …</code></div><div class="fix">The run stopped abruptly (a crash, a forced quit, or frozen for 30 s), and NXSPOOF's root part, the keeper, cleaned up: nothing is left on. If the line says <code>couldn't …</code>, press <b>🧹 Clean up</b> (or menu <b>7 → 4</b>). <a href="#report">🐞 Report it</a> (the report has what came before).</div></div>
+<div class="sym" id="keeper-gone"><div class="what"><code>PROBLEM NXSPOOF's root part (the keeper, process …) went away - stopping</code></div><div class="fix">The keeper was stopped by force, so the run stopped too: it can't undo the firewall or sharing without root. The dashboard's banner offers <b>🧹 Clean up</b>.</div></div>
+<div class="sym" id="leftovers"><div class="what">The red banner: the last run never reached its end, or Internet Sharing is still on</div><div class="fix">A run crashed, the Mac restarted during a run, or it was stopped by force. <b>🧹 Clean up</b> (your password): firewall rules out, sharing off, the cable out. <b>Not now</b> hides it until the dashboard opens again.</div></div>
+<div class="sym" id="pf-still-on"><div class="what"><code>sudo pfctl -s info</code> says <code>Status: Enabled</code> after NXSPOOF stopped</div><div class="fix">Each run gives back its hold on pf (its <code>pfctl -E</code> token) when it stops, so pf goes off again unless something else holds it (<code>sudo pfctl -s References</code> lists who). Runs from before 2026-11-24 didn't: their tokens stay until the Mac restarts. Restarting clears them.</div></div>
+<div class="sym" id="sharing-still-on"><div class="what">Internet Sharing still ON after NXSPOOF stopped / the Mac has no internet</div><div class="fix">No internet is expected while sharing is on. After a stop: <b>🧹 Clean up</b>, menu <b>7 → 4</b> or <code>sudo python3 nx_spoof.py cleanup</code>, or turn it off in System Settings.</div></div>
+</section>
+
+<section>
+<h2>The hotspot</h2>
+<div class="sym" id="not-found"><div class="what">Stuck on <code>…not found yet</code> / ⏳ "Waiting for the hotspot"</div><div class="fix">Sharing didn't really start (start gives up after 60 s; its <code>FATAL</code> line lists the network interfaces macOS has, which <a href="#report">🐞 Report</a> includes). Check <a href="setup.html">Setup</a> step C, and turn sharing OFF, wait 5 s, ON. Still failing: the virtual cable may be missing (<code>python3 nx_spoof.py link status</code>).</div></div>
+<div class="sym" id="sharing-manual"><div class="what"><code>SHARING could not turn it on automatically</code> or <code>still not up after 30 s</code></div><div class="fix">System Settings → Sharing opens for you: turn Internet Sharing on by hand (from Thunderbolt Bridge, to Wi-Fi). NXSPOOF carries on by itself. <a href="#report">🐞 Report it</a> (the report has the SHARING line).</div></div>
+<div class="sym" id="no-bridge"><div class="what">No "Thunderbolt Bridge" in <i>Share your connection from</i></div><div class="fix">Add it (<a href="setup.html">Setup</a> step B). Or pick an Ethernet adapter that is <b>not</b> plugged into your router.</div></div>
+</section>
+
+<section>
+<h2>A console connecting (in the order the lines appear)</h2>
+<div class="sym" id="2110"><div class="what">Console error <b>2110-1100</b> / no <code>WIFI … joined</code> line</div><div class="fix">The console never joined the Wi-Fi radio: not the firewall. Rescan on the console and pick the hotspot, switch its Wi-Fi off and on, or try channel 1 or 6. Once, a retry fixed it.</div></div>
+<div class="sym" id="wifi-no-dhcp"><div class="what"><code>WIFI</code> line but no <code>DHCP</code> line</div><div class="fix">Start once with <code>--no-firewall</code> to compare, then <a href="#report">🐞 report it</a>.</div></div>
+<div class="sym" id="dhcp-no-dns"><div class="what"><code>DHCP</code> line but no <code>DNS</code> lines</div><div class="fix">On the console: the hotspot → <b>Change Settings</b> → <b>DNS Settings</b> → <b>Manual</b> → Primary and Secondary <code>192.168.2.1</code> → Save → Test Connection.</div></div>
+<div class="sym" id="dns-no-http"><div class="what"><code>DNS</code> lines but no <code>HTTP</code> line</div><div class="fix">The Mac's own firewall: System Settings → Network → Firewall → Options → allow <code>python3</code>, or turn off "Block all incoming connections".</div></div>
+<div class="sym" id="firewall-warning"><div class="what"><code>FIREWALL WARNING</code> instead of <code>FIREWALL ON</code></div><div class="fix">DNS and web blocking still work, but the firewall may not be blocking: another firewall or a VPN may be using pf, macOS's packet filter. Quit it for one run to compare, and <a href="#report">🐞 report it</a>.</div></div>
+<div class="sym" id="still-no-internet"><div class="what">Everything looks right but the console still says no internet</div><div class="fix">Note the error code (2xxx-xxxx). The run's log (<code>data/logs/</code>) has the rest.</div></div>
+</section>
+
+<section>
+<h2>Names, Wi-Fi tracking, FTP</h2>
+<div class="sym" id="unknown-console"><div class="what">My console shows as <code>Unknown console</code> / 🙋 "A console I don't know"</div><div class="fix">Its <code>mac</code> in settings.json is wrong or missing. Add it from its card (<b>➕ Add to settings.json</b>), or copy the MAC from the <code>WIFI … joined</code> line.</div></div>
+<div class="sym" id="no-left"><div class="what">A console left but no <code>left the Wi-Fi</code> line</div><div class="fix">Wait 16 seconds: the longest it takes. Never comes: <a href="#report">🐞 report it</a>, with the time it left.</div></div>
+<div class="sym" id="wifi-quiet"><div class="what"><code>WIFI the Wi-Fi watcher saw no console join or leave</code> / ⚠️ I couldn't see consoles joining the Wi-Fi</div><div class="fix">Your macOS words its Wi-Fi log lines differently from the ones NXSPOOF knows. Everything else works; only join and leave times are missing. <a href="#report">🐞 Report it</a>: the report says which macOS.</div></div>
+<div class="sym" id="leases-quiet"><div class="what"><code>DHCP … lookups came from addresses no DHCP lease names</code> / ⚠️ I couldn't tell which console was which</div><div class="fix">Your macOS may keep its DHCP lease file somewhere else, so consoles show as addresses. Everything else works. <a href="#report">🐞 Report it</a>.</div></div>
+<div class="sym" id="ftp-never-up"><div class="what"><code>FTP server is UP</code> never appears</div><div class="fix">Check the FTP app is running on the console and its port matches the console's (or the global) FTP port.</div></div>
+<div class="sym" id="ftp-busy"><div class="what"><code>FTP server busy (a program on this Mac is connected to it…)</code></div><div class="fix">Normal: FileZilla is using the console's FTP server, which takes one connection at a time. It still counts as UP.</div></div>
+<div class="sym" id="ftp-passive"><div class="what">FileZilla connects and logs in, but listing folders or transfers hang</div><div class="fix">Use <b>passive</b> mode (FileZilla's default: Site Manager → Transfer Settings → Passive). In passive mode your Mac opens every connection, which the firewall lets back; in <i>active</i> mode the console would connect back to the Mac, and the firewall blocks connections a console starts.</div></div>
+<div class="sym" id="filezilla-missing"><div class="what"><code>open_filezilla is on, but FileZilla isn't in /Applications</code> / "Open in FileZilla" is missing</div><div class="fix">The button only shows when that console's FTP server is UP and FileZilla is in /Applications. Install it there, or turn <code>open_filezilla</code> off.</div></div>
+</section>
+
+<section>
+<h2>The dashboard</h2>
+<div class="sym" id="port-8800"><div class="what"><code>port 8800 is used by another program: the dashboard is on … from now on</code></div><div class="fix">Nothing to do: the dashboard took a free port and remembers it (the data folder's <code>dash.json</code>). NXSPOOF.app and menu 5 open the right one.</div></div>
+<div class="sym" id="no-browser"><div class="what">The browser didn't open</div><div class="fix">Open <code>http://localhost:8800</code> yourself (or the port in the data folder's <code>dash.json</code>).</div></div>
+<div class="sym" id="cant-reach"><div class="what">The page says "Can't reach the dashboard any more"</div><div class="fix">The dashboard isn't running anymore. Open <code>NXSPOOF.app</code> again: a run still going shows up within a second, and if a crash left something on, the red banner offers 🧹 Clean up.</div></div>
+<div class="sym" id="same-page"><div class="what"><code>NXSPOOF.app</code> just opens the page that's already there</div><div class="fix">One dashboard at a time: opening it again brings the open one back.</div></div>
+<div class="sym" id="page-closed"><div class="what">I closed the dashboard's page while NXSPOOF runs</div><div class="fix">A few seconds later a macOS dialog asks <b>Stop NXSPOOF</b> or <b>Keep running</b> (the default, also when nobody answers within 2 minutes). Either way the dashboard closes; a run that keeps going shows up on the next dashboard you open, its whole log from the first line. Opening NXSPOOF while the dialog is up keeps the dashboard.</div></div>
+<div class="sym" id="tab-icon"><div class="what">The browser tab shows a gray letter instead of NXSPOOF's green "ok"</div><div class="fix">Safari's icon cache is stuck (other sites show letters too). Quit Safari (⌘Q), then in Finder, Go → Go to Folder… <code>~/Library/Safari/</code> and move <b>Favicon Cache</b> to the Trash. Open Safari again and reload the dashboard. Removing the site's website data doesn't touch icons.</div></div>
+<div class="sym" id="casual-empty"><div class="what">The log looks empty in Casual</div><div class="fix">Only meaningful events show in Casual. Switch to Technical to see everything.</div></div>
+<div class="sym" id="console-form"><div class="what">Adding or editing a console says "another console is already called…", "please give it a name", "color must be…", "the FTP port must be…"</div><div class="fix">Pick another name, type one, choose a color from the list, or a port from 1 to 65535. Nothing was written.</div></div>
+<div class="sym" id="console-not-seen"><div class="what">Adding a console says "that console hasn't connected during this run"</div><div class="fix">The card's form is for consoles seen in this run. Let it connect, or use <b>➕ Add a console</b> with its MAC address.</div></div>
+<div class="sym" id="removed"><div class="what">I removed a console by mistake</div><div class="fix">If it connected during this run, its card now offers <b>➕ Add to settings.json</b>: add it back (its notes are gone). Otherwise the latest import backup or the run's log has its MAC address.</div></div>
+<div class="sym" id="next-start"><div class="what">A setting I changed didn't take effect</div><div class="fix">Its row says <i>next start</i>: it's saved and applies when NXSPOOF starts again. A blue badge (e.g. <code>--no-firewall for this run</code>): an option given at start wins for this run.</div></div>
+<div class="sym" id="save-refused"><div class="what">Saving says "must be at least…", "must be a whole number", "must be one of…"</div><div class="fix">Use a value in the range or list it gives. Nothing was written.</div></div>
+<div class="sym" id="where-settings"><div class="what">Where did <code>settings.json</code> and <code>logs/</code> go?</div><div class="fix">Into NXSPOOF's data folder, <code>~/Library/Application Support/NXSPOOF/</code> (so ▶ Start works wherever the nx-spoof folder is). The <code>data</code> shortcut opens it; so does menu <b>6 → 3</b>. A <code>settings.json.old</code> in the nx-spoof folder means the data folder already had one: the data folder's is used.</div></div>
+<div class="sym" id="report"><div class="what">🐞 I want to report a problem / none of this helped</div><div class="fix">On the dashboard, <b>🐞 Report</b> (top right): NXSPOOF makes a report with this Mac, its setup and the last runs' warnings and problems, and shows it first. Console names, MAC addresses (all but their maker part), the hotspot's name, your name and your Mac's name are replaced; read it anyway. <b>Copy</b> it, open a new issue on NXSPOOF's GitHub page and paste it, with what happened in your own words. From the Terminal: menu <b>6 → 4</b>, or <code>python3 -B nx_spoof.py report</code> (it's also saved in <code>data/logs/reports/</code>; <code>--full</code> adds the last run's whole log).</div></div>
+</section>
+
+</div>
+
+</main>
+</body>
+</html>

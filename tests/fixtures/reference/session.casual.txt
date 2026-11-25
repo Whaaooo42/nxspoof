@@ -1,0 +1,23 @@
+🚀 Starting NXSPOOF…
+📡 The NXSPOOF Wi-Fi is on. Your Mac is offline while it runs.
+✅ All set! Turn on a Switch and connect it to NXSPOOF.
+   (Press Ctrl+C or close this window to stop.)
+🎮 Switch 2 connected
+🌐 Switch 2 thinks it's online, all good
+🛡️ Switch 2: 3 attempts to reach the internet blocked so far
+📁 Switch 2's file server is ready: ftp://127.0.0.1:5021
+📁 Switch 2's file server stopped
+🎮 Switch 1 connected
+👋 Switch 1 left (it was here 9 seconds)
+🙋 A console I don't know just connected (0a:01:02:03:04:05)
+👋 Switch 2 left (it was here 34 seconds)
+🎮 Switch 2 is back
+🌐 Switch 2 thinks it's online, all good
+🛑 Stopping…
+📋 What happened:
+   Switch 2: here 37 seconds, online check passed 2 times, 5 attempts to reach the internet blocked
+   Switch 1: here 9 seconds, online check not passed, 0 attempts to reach the internet blocked
+   Unknown console: here 13 seconds, online check not passed, 0 attempts to reach the internet blocked
+   🙋 To remember it, paste this into "consoles" in settings.json:
+      {"name": "Friend's Switch", "model": "", "mac": "0a:01:02:03:04:05", "owner": "", "color": "yellow", "ftp": {"port": 5000}, "notes": []}
+🏠 Your Mac is back on your home Wi-Fi. Bye!

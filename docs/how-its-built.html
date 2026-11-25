@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it's built · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html" class="on" aria-current="page">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>How it's built</h1>
+<p class="lead">For working on NXSPOOF: how the code is organized, the rules that keep it organized, and where new features go. The why of each choice is in <a href="decisions.html">Decisions</a>; the parts at run time are in <a href="how-it-works.html#the-four-parts">How it works</a>. Standard-library Python 3.9 (Apple's own), nothing to install.</p>
+<p class="small"><a href="#principles">Principles</a> · <a href="#layers">Layers</a> · <a href="#design">The design</a> · <a href="#safeguards">Safeguards</a> · <a href="#modules">Modules</a> · <a href="#contract">Platform contract</a> · <a href="#adding">Adding a feature</a> · <a href="#next">What's next</a></p>
+
+<h2 id="principles">Principles</h2>
+<ul class="rules">
+  <li><b>Black boxes</b>Each module has one job, owns its state, and is used only through a small interface.</li>
+  <li><b>No globals</b>Objects are created once in <code>app/</code> and handed to whoever needs them.</li>
+  <li><b>Imports go down</b>The layers below; a test enforces it, which also rules out circular imports.</li>
+  <li><b>One event bus</b>Everything said or that happens is one event: a technical text, an optional casual one, a level, a fact.</li>
+  <li><b>Only macos/ talks to the Mac</b>Commands, pf, sharing, ownership. It never logs: it returns values or raises.</li>
+  <li><b>One ordered shutdown</b>For every way a run can end; each step protected on its own.</li>
+  <li><b>Standard library only</b>Apple's <code>python3</code> 3.9, no 3.10+ syntax.</li>
+  <li><b>A hobby project</b>No plugin systems, asyncio, class hierarchies, frameworks or build steps.</li>
+</ul>
+
+<h2 id="layers">Layers</h2>
+<figure>
+<svg viewBox="0 0 1000 260" role="img" aria-labelledby="l1 ld1">
+  <title id="l1">The layers: imports only go down</title>
+  <desc id="ld1">app at the top may import everything; features, dashboard and setup use the layers below; settings, consoles, net, macos and output sit above core, which uses the standard library only.</desc>
+  <rect x="300" y="14" width="400" height="44" rx="10" class="box b-blue"/><text x="500" y="41" text-anchor="middle"><tspan class="title">app/</tspan><tspan class="small" dx="8">wiring: may import everything</tspan></text>
+  <rect x="200" y="80" width="180" height="44" rx="10" class="box b-green"/><text x="290" y="107" text-anchor="middle" class="title">features/</text>
+  <rect x="410" y="80" width="180" height="44" rx="10" class="box b-green"/><text x="500" y="107" text-anchor="middle" class="title">dashboard/</text>
+  <rect x="620" y="80" width="180" height="44" rx="10" class="box b-green"/><text x="710" y="107" text-anchor="middle" class="title">setup/</text>
+  <rect x="60" y="146" width="160" height="44" rx="10" class="box b-yellow"/><text x="140" y="173" text-anchor="middle" class="title">settings/</text>
+  <rect x="240" y="146" width="160" height="44" rx="10" class="box b-yellow"/><text x="320" y="173" text-anchor="middle" class="title">consoles/</text>
+  <rect x="420" y="146" width="160" height="44" rx="10" class="box b-yellow"/><text x="500" y="173" text-anchor="middle" class="title">net/</text>
+  <rect x="600" y="146" width="160" height="44" rx="10" class="box b-red"/><text x="680" y="173" text-anchor="middle" class="title">macos/</text>
+  <rect x="780" y="146" width="160" height="44" rx="10" class="box b-yellow"/><text x="860" y="173" text-anchor="middle" class="title">output/</text>
+  <rect x="300" y="212" width="400" height="40" rx="10" class="box b-gray"/><text x="500" y="237" text-anchor="middle"><tspan class="title">core/</tspan><tspan class="small" dx="8">standard library only</tspan></text>
+</svg>
+<figcaption>A module imports its own package and the layers below; packages in the same layer don't import each other (one exception: <code>consoles</code> may use <code>macos.leases</code>). Sensors in <code>net/</code> and <code>macos/</code> know addresses, never names: they report through callbacks. <code>tests/test_layers.py</code> reads every import.</figcaption>
+</figure>
+
+<h2 id="design">The design</h2>
+<div class="cards">
+  <div class="card"><h3>Events and logs</h3><p><code>bus.log(tag, technical, casual=…, level=…, fact=…)</code>, <code>bus.say(casual)</code>, <code>bus.fact(kind)</code>. Sinks (the Terminal, the log file, the records, the dashboard) run in order under one lock; listeners (the story, the services) after it. A line that matters to listeners carries its fact: <b>one</b> event, so the line always comes before what listeners do. Every event lands in the run's records, <code>logs/&lt;run&gt;.jsonl</code>: programs read those, never the text (only <code>features/textlog.py</code> knows the text, for runs before 2026-11-15).</p></div>
+  <div class="card"><h3>Marked, never searched for</h3><p>Console names come from the registry as <code>Marked</code> text, and lines are built with <code>compose("…%s…", registry.name(mac))</code> (<code>core/text.py</code>), which keeps the marks; outcome words with <code>outcome("BLOCKED", "blocked")</code>. The Terminal and the dashboard color exactly those stretches; searching a line would also catch a model or an old name. A name used as plain text on purpose: <code>str(...)</code>.</p></div>
+  <div class="card"><h3>Settings</h3><p><code>settings/schema.py</code> describes every field once: default, type, help, <i>now</i> or <i>next start</i>. Configure, validation, the <code>SETTINGS</code> lines and the <a href="reference.html#settings">reference table</a> all come from it. <code>settings/store.py</code> saves as a tidy rewrite, through a checked temporary file. The store is quiet: whoever changes a setting announces it. <code>app/config.py</code> merges settings and options into one RunConfig.</p></div>
+  <div class="card"><h3>A run's life</h3><p><code>app/start.py</code>: the program copy, the checks, the lock, the background, then <code>keeper.split()</code> before any thread exists. <code>app/run.py</code>: sharing on, wait for the hotspot, DNS, firewall, web, monitors, self-test, READY, the one answer. Stop requests (a note, a signal) set one flag. The ordered shutdown: servers, firewall counters and rules, summaries, sharing off, cable out, <code>Stopped.</code>; each step only if its resource was taken, and one failure never skips the rest.</p></div>
+  <div class="card"><h3>The run writes, the others read (D30)</h3><p>The run holds <code>run.lock</code> and writes <code>run.json</code> (where it is), <code>run_state.json</code> (what the page shows, every second while it changes) and its records; it reads settings.json again when it changes (<code>features/settingswatch.py</code>) and takes a Stop's note from <code>stop.json</code>. The dashboard (<code>app/runfollow.py</code>) finds it by the lock and follows those files. A run never serves a page.</p></div>
+  <div class="card"><h3>Minimal root (D24)</h3><p><code>macos/privsep.py</code> forks: the original stays root as the keeper; the new one takes your groups, gid and uid, in that order, so it can never come back. One length-prefixed JSON message at a time over a socket pair, file descriptors alongside. The run's <code>KeeperSystem</code> turns root calls into requests; the keeper checks each against <code>CHECKS</code>, builds the firewall rules itself, and opens the servers' sockets. A new root need is a new checked request, with its test in <code>tests/test_keeper.py</code>.</p></div>
+  <div class="card"><h3>Files have one owner</h3><p>settings.json: <code>settings/store.py</code>; logs and records: <code>output/logfile.py</code>; the run's files: <code>output/runfile.py</code>; the data folder and the program copy: <code>output/datafolder.py</code>. Everything created is handed back to you (<code>macos.user.give_to_user</code>). Where files go is asked of <code>core/places.py</code>, by role.</p></div>
+  <div class="card"><h3>Where macOS keeps the hotspot</h3><p>Name, channel, security: <code>/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist</code>, section <code>InternetSharing</code> (the SSID as bytes), readable without root. The password: the System keychain (account <code>AirPort</code>). <code>com.apple.nat.plist</code>'s AirPort section is stale: never read the name there. Name and password go together: writing one alone breaks the hotspot (Run H), so NXSPOOF only reads.</p></div>
+</div>
+
+<h2 id="safeguards">Safeguards</h2>
+<p>Three layers, all automatic on every test run (<code>python3 -B tools/run_tests.py</code>, on Apple's 3.9 and a newer Python), so new code keeps to the principles and nothing gets mangled quietly.</p>
+<h3>1 · Guardrails: hard rules (<code>tools/guardrails.py</code>)</h3>
+<p>Each rule is a function given a project folder that returns the places breaking it, with what to do; the tests fail on any. Exceptions sit in its <code>ALLOWED_*</code> tables, each with its reason: a new one is a visible decision, never an accident. Plus <code>tests/test_layers.py</code> (the layers) and <code>tests/test_conventions.py</code> (the code conventions below). <span class="tag t-violet">from the code</span></p>
+<!-- generated: guardrails -->
+<div class="scroll"><table>
+<tr><th>Rule</th><th>Protects</th></tr>
+<tr><td><b>only macos/ talks to the Mac</b></td><td>no subprocess, ctypes or system calls outside nxspoof/macos/ (signals: app/signals.py)</td></tr>
+<tr><td><b>macos/ never logs</b></td><td>macos/ returns values or raises</td></tr>
+<tr><td><b>no hard-coded machine details</b></td><td>devices and addresses are detected</td></tr>
+<tr><td><b>messages go through the event bus</b></td><td>print only where printing is the job (ALLOWED_PRINT)</td></tr>
+<tr><td><b>files have one owner</b></td><td>settings via settings/store.py, logs via output/logfile.py (ALLOWED_FILE_WRITES)</td></tr>
+<tr><td><b>console names are marked</b></td><td>lines name consoles with compose() (core/text.py), so outputs color exactly the name</td></tr>
+<tr><td><b>every log tag has a color</b></td><td>tags are in TAG_COLORS (Terminal colors, dashboard column)</td></tr>
+<tr><td><b>standard library only</b></td><td>nothing to install on a new Mac</td></tr>
+<tr><td><b>Apple's Python 3.9</b></td><td>every file parses as Python 3.9</td></tr>
+<tr><td><b>page never turns text into HTML</b></td><td>dashboard and docs text is inserted as plain text</td></tr>
+<tr><td><b>page: no inline scripts, no internet</b></td><td>the dashboard and the docs pages run only their own script files and work offline</td></tr>
+<tr><td><b>page modules import only each other</b></td><td>js/ modules import ./other.js only</td></tr>
+<tr><td><b>one button style</b></td><td>every dashboard button is .btn, one size; only ALLOWED_BUTTON_VARIANTS say what it means</td></tr>
+<tr><td><b>every command has a menu row</b></td><td>new commands are one key away in menu.command</td></tr>
+<tr><td><b>the platform contract is complete</b></td><td>app/system.py's CONTRACT lists every System method (the docs' table is written from it)</td></tr>
+<tr><td><b>every dashboard task has a command</b></td><td>the two doors stay the same (D23): each This Mac button runs an nx_spoof.py command</td></tr>
+<tr><td><b>every file is in the reference</b></td><td>docs/reference.html's Files table lists every file at the top, in scripts/ and tools/</td></tr>
+<tr><td><b>nothing personal in the repository</b></td><td>no word from the owner's private/personal.txt in a file git would publish (the list never ships: a public copy has nothing to check)</td></tr>
+<tr><td><b>the docs' generated parts are current</b></td><td>the tables that mirror the code (settings, options, commands, menu, modules, contract, rules) are written from it; every setting and option has help, every module a header line, every page its place in PAGES</td></tr>
+<tr><td><b>nothing past the watchdog's limits</b></td><td>tools/health.py hard limits</td></tr>
+</table></div>
+<!-- /generated -->
+<h3>2 · The watchdog: soft limits (<code>tools/health.py</code>)</h3>
+<p>It measures every file of <code>nxspoof/</code> and <code>tools/</code>, every function, and blocks of 8+ lines that appear twice, against the last accepted state (<code>tools/health_baseline.json</code>). Slow creep counts too: a file growing by 30 % (and 60+ lines) or a function's complexity by 40 % (and 4+). <span class="tag t-violet">from the code</span></p>
+<!-- generated: limits -->
+<div class="scroll"><table>
+<tr><th>Measure</th><th>Memo at</th><th>Limit (the tests fail)</th></tr>
+<tr><td>code lines in one file</td><td>450</td><td>800</td></tr>
+<tr><td>nxspoof modules one file imports</td><td>10</td><td>16</td></tr>
+<tr><td>lines of one function</td><td>60</td><td>110</td></tr>
+<tr><td>decision points in one function</td><td>14</td><td>25</td></tr>
+<tr><td>blocks inside blocks</td><td>4</td><td>6</td></tr>
+<tr><td>parameters of one function</td><td>8</td><td>11</td></tr>
+</table></div>
+<!-- /generated -->
+<h3>3 · The memo (<code>MEMO.md</code>)</h3>
+<p>After every test run the watchdog writes it when something new needs a look (what, where, what to do), and removes it when there's nothing to say. Fine as it is: <code>python3 -B tools/health.py --accept "why"</code>, kept with its reason in the baseline's history. <b>Proof that they bite:</b> <code>tests/test_guardrails_bite.py</code> copies the project, plants one violation per rule (a <code>print()</code> in a feature, an inline script, a 130-line function, a stale generated table…) and checks the right safeguard names it. A new rule always comes with its proof.</p>
+<p class="small">The safeguards are the owner's: never loosen a rule, raise a limit or add an exception without the owner's OK (<code>CLAUDE.md</code>).</p>
+
+<h2>Validation</h2>
+<ol>
+  <li><b>Unit tests</b>: every module, with faked command outputs and real samples (<code>tests/fixtures/</code>); exact answers that must never drift (colors, DNS replies byte for byte, the sharing settings written, Wi-Fi tracking, settings defaults) are pinned in <code>tests/fixtures/golden.json</code>. <code>tests/__init__.py</code> swaps the data folder for a temporary one.</li>
+  <li><b>The guardrails and the watchdog</b>, at the end of the tests.</li>
+  <li><b>The simulated session</b> (<code>tools/simulate.py new --out &lt;tmp&gt;</code>, then <code>--compare tests/fixtures/reference/run &lt;tmp&gt;</code>): the real start-to-stop run on a fake Mac, fake consoles joining, passing, getting blocked, FTP, leaving and coming back. The technical log, the casual transcript and the dashboard snapshots must match the reference run of today's code (<code>--stop dashboard</code>: <code>run_dashboard_stop</code>; <code>--keeper</code>: through a real keeper). An intended change: record the reference again, and say what changed.</li>
+  <li><b>Real runs</b> with the Switches (<a href="real-runs.html">Real runs</a>), each checked from its records.</li>
+</ol>
+
+<h2>Code conventions</h2>
+<ul>
+  <li>A one-line <code>#</code> comment directly above every function, class and method (JS: <code>//</code>); no docstrings except the file header, whose first line is <code>name - its job</code> (the <a href="#modules">modules table</a> is made from it).</li>
+  <li>Never two empty lines in a row. Section banners exactly 160 wide, with an empty line above and below.</li>
+  <li>A thorough technical log; a casual line wherever it means something to a person; problems always show.</li>
+  <li>A new option gets a <code>--flag</code> and its help; a new command, a menu row; a new file, its row in the <a href="reference.html#files">reference</a>.</li>
+</ul>
+
+<h2 id="modules">Modules</h2>
+<p><span class="tag t-violet">from the code</span> Each module's job, from the first line of its own header.</p>
+<!-- generated: modules -->
+<div class="scroll"><table>
+<tr><th>Module</th><th>Its job</th></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/app/</code></td></tr>
+<tr><td><code>background.py</code></td><td>a run in the background (D28): only a Stop stops NXSPOOF (or the Mac sleeping, D32); windows only watch it.</td></tr>
+<tr><td><code>center.py</code></td><td>the control center: the dashboard, the one that serves the page (D16-D18, D27, D30).</td></tr>
+<tr><td><code>cli.py</code></td><td>the command-line options, as one table.</td></tr>
+<tr><td><code>commands.py</code></td><td>the small commands of nx_spoof.py (app/main.py picks the command)</td></tr>
+<tr><td><code>config.py</code></td><td>settings.json + command-line options -&gt; one RunConfig for this run.</td></tr>
+<tr><td><code>context.py</code></td><td>the objects of one run, created once and handed to whoever needs them.</td></tr>
+<tr><td><code>hotspotwatch.py</code></td><td>the hotspot can vanish under a run (D29). On Nov 18 at 02:39 macOS lost the virtual cable,</td></tr>
+<tr><td><code>keeper.py</code></td><td>a run's root part: privilege separation (D24, docs/how-its-built.html).</td></tr>
+<tr><td><code>launch.py</code></td><td>the dashboard on its own, as app/main.py starts it (nx_spoof.py dashboard; nx_spoof.py start is app/start.py).</td></tr>
+<tr><td><code>main.py</code></td><td>the entry point: read the options, pick the command, run it.</td></tr>
+<tr><td><code>pagewatch.py</code></td><td>the page IS the dashboard (D27): the control center closes by itself once no page shows it.</td></tr>
+<tr><td><code>password.py</code></td><td>one nx_spoof.py command as root through macOS's own password window, for the dashboard: ▶ Start</td></tr>
+<tr><td><code>reporting.py</code></td><td>🐞 Report a problem: the one engine behind the dashboard's button and `nx_spoof.py report`</td></tr>
+<tr><td><code>run.py</code></td><td>one run of NXSPOOF: the start sequence, the wait, and the ordered shutdown.</td></tr>
+<tr><td><code>runfollow.py</code></td><td>the dashboard finds the run and follows it from its files (D30: no web API in the run, no relay).</td></tr>
+<tr><td><code>runnet.py</code></td><td>a run's network side: Internet Sharing (on, off, the hotspot as macOS has it) and the firewall</td></tr>
+<tr><td><code>runstate.py</code></td><td>the run's side of the files it shares with the dashboard (D30: the run talks to nobody).</td></tr>
+<tr><td><code>signals.py</code></td><td>Ctrl+C, a closed Terminal window and SIGTERM all become one stop request.</td></tr>
+<tr><td><code>start.py</code></td><td>nx_spoof.py start, the one way to start NXSPOOF (D30).</td></tr>
+<tr><td><code>starter.py</code></td><td>the dashboard's ▶ Start: the same nx_spoof.py start as the menu's (D30), through macOS's password window.</td></tr>
+<tr><td><code>system.py</code></td><td>the one door to the Mac: every macOS action a run needs, in one object.</td></tr>
+<tr><td><code>tasks.py</code></td><td>This Mac's buttons that need admin rights, and the crash check (control center stage 3, D22).</td></tr>
+<tr><td><code>transfer.py</code></td><td>`nx_spoof.py settings export|import &lt;file.json&gt;`: your settings.json to a file, or another one in</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/consoles/</code></td></tr>
+<tr><td><code>activity.py</code></td><td>what each console did this run. The only place presence is stored.</td></tr>
+<tr><td><code>registry.py</code></td><td>who each console is: name, model, color, FTP settings, from settings.json.</td></tr>
+<tr><td><code>tracker.py</code></td><td>turns what the sensors saw into console activity, log lines and facts.</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/core/</code></td></tr>
+<tr><td><code>controls.py</code></td><td>the registry of controls (dashboard buttons and other commands).</td></tr>
+<tr><td><code>events.py</code></td><td>the event bus: everything that is said or happens goes through here.</td></tr>
+<tr><td><code>fmt.py</code></td><td>small formatting helpers shared by every output: durations, plurals, MAC</td></tr>
+<tr><td><code>paths.py</code></td><td>where the project lives, so every path is relative to the nx-spoof folder.</td></tr>
+<tr><td><code>places.py</code></td><td>where NXSPOOF's files are, by role (D23). The platform says where each role lives</td></tr>
+<tr><td><code>text.py</code></td><td>text that knows which parts of it name a console, and which words are an outcome.</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/dashboard/</code></td></tr>
+<tr><td><code>center.py</code></td><td>"is a dashboard open, and where?": DASH_FILE in the runtime folder (the control center,</td></tr>
+<tr><td><code>controls.py</code></td><td>the dashboard's own controls (following a run, app/runfollow.py adds "stop" and</td></tr>
+<tr><td><code>server.py</code></td><td>the live dashboard's web server, for THIS Mac only (http://localhost:8800).</td></tr>
+<tr><td><code>state.py</code></td><td>the snapshot the dashboard page shows (GET /api/state).</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/features/</code></td></tr>
+<tr><td><code>filezilla.py</code></td><td>opening FileZilla on a console's FTP server, during a run.</td></tr>
+<tr><td><code>report.py</code></td><td>the problem report: what NXSPOOF knows about a problem on this Mac, in one Markdown text made to</td></tr>
+<tr><td><code>runlog.py</code></td><td>what a run did, from its records: the real-run checklist and a short description.</td></tr>
+<tr><td><code>sensors.py</code></td><td>the end-of-run check of NXSPOOF's sensors: did each one see what the others say happened?</td></tr>
+<tr><td><code>services.py</code></td><td>watches each console for its services (today: its FTP server).</td></tr>
+<tr><td><code>settingswatch.py</code></td><td>a run follows settings.json while it runs (D30: the dashboard writes it, the run reads it).</td></tr>
+<tr><td><code>story.py</code></td><td>the casual narrator: turns what consoles do into friendly lines.</td></tr>
+<tr><td><code>summary.py</code></td><td>what happened during the run, printed when NXSPOOF stops.</td></tr>
+<tr><td><code>textlog.py</code></td><td>reading a run's text log into records, for runs logged before the structured twin</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/macos/</code></td></tr>
+<tr><td><code>admin.py</code></td><td>starting something as root with macOS's own password window (control center stage 2, D17).</td></tr>
+<tr><td><code>appfirewall.py</code></td><td>macOS's own firewall (System Settings &gt; Network &gt; Firewall).</td></tr>
+<tr><td><code>cable.py</code></td><td>the virtual cable that makes Thunderbolt Bridge look "plugged in", so Internet Sharing</td></tr>
+<tr><td><code>dhcp.py</code></td><td>notices when Internet Sharing's DHCP server hands out an address.</td></tr>
+<tr><td><code>dialog.py</code></td><td>a small macOS dialog with buttons (osascript's "display dialog"), for the rare times NXSPOOF has</td></tr>
+<tr><td><code>firewall.py</code></td><td>the pf firewall rules NXSPOOF loads into its own anchor.</td></tr>
+<tr><td><code>hotspot.py</code></td><td>the hotspot's name, channel and security, where macOS 15 really keeps them (found by a probe on</td></tr>
+<tr><td><code>leases.py</code></td><td>the one reader of macOS's DHCP lease file (/var/db/dhcpd_leases).</td></tr>
+<tr><td><code>machine.py</code></td><td>what kind of Mac this is: macOS version and build, model, chip, Python, language, managed or not.</td></tr>
+<tr><td><code>netif.py</code></td><td>network interfaces: the hotspot's interface, the Wi-Fi device, the bridge,</td></tr>
+<tr><td><code>netservices.py</code></td><td>macOS network services through `networksetup`: find the service of a</td></tr>
+<tr><td><code>privsep.py</code></td><td>splitting a root run into two processes (privilege separation, D24).</td></tr>
+<tr><td><code>process.py</code></td><td>a run's life as a process: started in the background with an answer, stopped by a signal, started</td></tr>
+<tr><td><code>sharing.py</code></td><td>turn macOS Internet Sharing on/off without System Settings.</td></tr>
+<tr><td><code>shell.py</code></td><td>running a command on this Mac, the one way every other part does it.</td></tr>
+<tr><td><code>user.py</code></td><td>acting on behalf of the person who ran sudo: file ownership, running apps as</td></tr>
+<tr><td><code>wifi.py</code></td><td>who is on the Wi-Fi right now, from macOS's kernel log.</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/net/</code></td></tr>
+<tr><td><code>dns.py</code></td><td>the DNS server the consoles use: test names -&gt; the Mac, everything else -&gt; blocked.</td></tr>
+<tr><td><code>policy.py</code></td><td>what a console may reach. DNS, the web test, the dashboard and the logs all ask here.</td></tr>
+<tr><td><code>selftest.py</code></td><td>the self-check run before consoles connect: both test names must get the</td></tr>
+<tr><td><code>sockets.py</code></td><td>the DNS (UDP) and web (TCP) servers' sockets, bound to one address.</td></tr>
+<tr><td><code>web.py</code></td><td>the fake connection test: "200 OK / X-Organization: Nintendo / ok" for the test</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/output/</code></td></tr>
+<tr><td><code>colors.py</code></td><td>Terminal colors: the line's tag (DNS, WIFI...), outcome words (BLOCKED, PASS...)</td></tr>
+<tr><td><code>datafolder.py</code></td><td>NXSPOOF's data folder: settings.json, logs/, last_run.log, the dashboard's link file and</td></tr>
+<tr><td><code>logfile.py</code></td><td>the per-run log files: the text log (always technical, never colored) and its</td></tr>
+<tr><td><code>runfile.py</code></td><td>"is NXSPOOF running, and where?", answered by files in the runtime folder (core/places.py)</td></tr>
+<tr><td><code>terminal.py</code></td><td>the Terminal window, in either style.</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/settings/</code></td></tr>
+<tr><td><code>schema.py</code></td><td>the one description of every setting and every console field.</td></tr>
+<tr><td><code>store.py</code></td><td>settings.json: load, validate, tidy save, console add/edit/remove, export and import.</td></tr>
+<tr><td><code>transfer.py</code></td><td>what importing another settings.json would change (the dashboard's 📥 Import preview and</td></tr>
+<tr class="group"><td colspan="2"><code>nxspoof/setup/</code></td></tr>
+<tr><td><code>checklist.py</code></td><td>runs the setup steps three ways</td></tr>
+<tr><td><code>repair.py</code></td><td>the checklist's undoing side (setup/checklist.py's Checklist inherits it)</td></tr>
+<tr><td><code>steps.py</code></td><td>what a Mac needs for NXSPOOF, one small step per requirement.</td></tr>
+</table></div>
+<!-- /generated -->
+
+<h2 id="contract">The platform contract (D23)</h2>
+<p>Everything NXSPOOF needs from the machine goes through one object, <code>app/system.py</code>'s <code>System</code>; its <code>CONTRACT</code> lists the methods by group, and a guardrail checks the class and <code>CONTRACT</code> agree. The simulator and the tests answer them with a fake Mac. Another platform would be another <code>System</code>: Linux with NetworkManager or hostapd, nftables and dnsmasq's leases; the keeper and the files would stay. <span class="tag t-violet">from the code</span></p>
+<!-- generated: contract -->
+<div class="scroll"><table>
+<tr><th>Group</th><th>Method</th><th>What it does</th></tr>
+<tr><td rowspan="10"><b>who and where</b></td><td><code>is_root</code></td><td>True when running as root (through sudo).</td></tr>
+<tr><td><code>privileges</code></td><td>(app/keeper.py) says the run is you and root stays in the keeper.</td></tr>
+<tr><td><code>root_watch</code></td><td>KeeperSystem watches its keeper).</td></tr>
+<tr><td><code>places</code></td><td>files all in the data folder, ~/Library/Application Support/NXSPOOF.</td></tr>
+<tr><td><code>machine_facts</code></td><td>for the run's "this Mac" line and the problem report. Nothing personal.</td></tr>
+<tr><td><code>personal_words</code></td><td>report to replace (features/report.py).</td></tr>
+<tr><td><code>give_to_user</code></td><td>Hand a file or folder back to the real user.</td></tr>
+<tr><td><code>give_link_to_user</code></td><td>Hand a symbolic link back to the real user.</td></tr>
+<tr><td><code>mac_problems</code></td><td>program: the nx-spoof folder; places: where settings.json is (core/places.py).</td></tr>
+<tr><td><code>mac_fix</code></td><td>--fix, D30). Returns setup's exit code.</td></tr>
+<tr><td rowspan="8"><b>a run's life</b></td><td><code>in_background</code></td><td>Fork into a waiter and a worker on its own, its output into `output` -&gt; (role, fd, pid) (macos/process.py).</td></tr>
+<tr><td><code>answer</code></td><td>The worker's one answer to the waiter (macos/process.py).</td></tr>
+<tr><td><code>wait_answer</code></td><td>The waiter: the worker's answer (dict), None (it ended without one) or "timeout" (macos/process.py).</td></tr>
+<tr><td><code>stop_run</code></td><td>Ask the run (its process id, from run.json) to stop -&gt; True if asked, False if it's gone (PermissionError: not yours).</td></tr>
+<tr><td><code>restart_from</code></td><td>This command again from the program copy in `folder` (macos/process.py; never returns). argv: the command's words.</td></tr>
+<tr><td><code>still_here</code></td><td>The run's heartbeat: nobody to tell in one process (a split run's KeeperSystem tells its keeper).</td></tr>
+<tr><td><code>keep_awake</code></td><td>let_sleep (raises OSError).</td></tr>
+<tr><td><code>let_sleep</code></td><td>The Mac may sleep again (the run is stopping; keep_awake's handle).</td></tr>
+<tr><td rowspan="9"><b>the hotspot</b></td><td><code>hotspot_settings</code></td><td>"password"}; macos/hotspot.py, reading needs no root; {} parts when they can't be read).</td></tr>
+<tr><td><code>sharing_running</code></td><td>True if the hotspot is up right now (a bridge1xx interface exists).</td></tr>
+<tr><td><code>set_sharing</code></td><td>Turn Internet Sharing on or off; returns what was written (raises SharingError or OSError).</td></tr>
+<tr><td><code>find_sharing_interface</code></td><td>The hotspot interface and the Mac's address on it, as (iface, ip), or None if it isn't up.</td></tr>
+<tr><td><code>interfaces</code></td><td>en0 feth1"): what the log shows when the hotspot doesn't come up (on another macOS its interface may be named otherwise).</td></tr>
+<tr><td><code>bind_address</code></td><td>The address servers bind to for the hotspot address (the same on a real Mac).</td></tr>
+<tr><td><code>open_socket</code></td><td>KeeperSystem asks the keeper, since a port under 1024 on one address needs root.</td></tr>
+<tr><td><code>plug_cable</code></td><td>Every run plugs the virtual cable in itself (root) -&gt; ("already" | "plugged", cable.Status).</td></tr>
+<tr><td><code>unplug_cable</code></td><td>The run plugged the virtual cable in: out again at its Stop, the Mac as it was (root).</td></tr>
+<tr><td rowspan="4"><b>the firewall</b></td><td><code>firewall_apply</code></td><td>keeper only loads NXSPOOF's own rules. pf's token is kept here (never in a log), for firewall_flush to give back.</td></tr>
+<tr><td><code>firewall_counters</code></td><td>[(rule, packets)] for NXSPOOF's rules.</td></tr>
+<tr><td><code>firewall_flush</code></td><td>Remove NXSPOOF's rules, and give pf's token back (pf goes off again unless something else holds one).</td></tr>
+<tr><td><code>firewall_leftovers</code></td><td>True if NXSPOOF rules are still loaded.</td></tr>
+<tr><td rowspan="4"><b>who is on the hotspot</b></td><td><code>wifi_monitor</code></td><td>A started-later monitor feeding the Wi-Fi tracker from the kernel log (start() raises OSError).</td></tr>
+<tr><td><code>dhcp_monitor</code></td><td>A started-later monitor announcing new DHCP leases through on_lease(ip, mac).</td></tr>
+<tr><td><code>mac_for_ip</code></td><td>The MAC that has an IP in the lease file, or None.</td></tr>
+<tr><td><code>connected_to</code></td><td>True if a program on this Mac (e.g. FileZilla) is connected to a console's ip:port right now.</td></tr>
+<tr><td rowspan="2"><b>asking for the password</b></td><td><code>start_with_password</code></td><td>output appended to `output`, waited for. Returns at once with the window's process (see password_outcome).</td></tr>
+<tr><td><code>password_outcome</code></td><td>Wait for the password window -&gt; ("started" | "cancelled" | "failed", what to say).</td></tr>
+<tr><td rowspan="6"><b>the desktop</b></td><td><code>open_sharing_settings</code></td><td>Open System Settings &gt; General &gt; Sharing.</td></tr>
+<tr><td><code>open_url</code></td><td>Open a URL in your browser.</td></tr>
+<tr><td><code>copy_text</code></td><td>Put text on your clipboard (macos/user.py) -&gt; True if it worked.</td></tr>
+<tr><td><code>filezilla_installed</code></td><td>True if FileZilla is installed.</td></tr>
+<tr><td><code>open_filezilla</code></td><td>Open FileZilla on an ftp:// URL.</td></tr>
+<tr><td><code>ask_user</code></td><td>A small macOS dialog with buttons, as you (macos/dialog.py) -&gt; the button pressed, or None.</td></tr>
+</table></div>
+<!-- /generated -->
+
+<h2 id="adding">Adding a feature</h2>
+<div class="scroll"><table>
+<tr><th>Feature</th><th>Touches</th></tr>
+<tr><td>A new setting</td><td>One <code>Field</code> in <code>settings/schema.py</code> (default, help, now / next start); Configure, validation, the <code>SETTINGS</code> lines and the reference table follow (<code>tools/docs.py --write</code>)</td></tr>
+<tr><td>A new log line</td><td><code>bus.log(tag, technical, casual=…, level=…)</code> where it happens; a new tag gets a color in <code>output/colors.py</code></td></tr>
+<tr><td>A new reaction to something</td><td>A listener in <code>features/</code> for the event kind; one wiring line in <code>app/run.py</code></td></tr>
+<tr><td>A new service check</td><td><code>features/services.py</code>; events, the dashboard and the summary already handle services</td></tr>
+<tr><td>A new dashboard button</td><td>A control registered where the feature lives; the button in its <code>web/js/</code> module (<code>btn</code>, plus <code>primary</code> or <code>danger</code>)</td></tr>
+<tr><td>A new thing the Mac must have</td><td>One step in <code>setup/steps.py</code> (check, fix, explain): setup and doctor pick it up</td></tr>
+<tr><td>A new root need</td><td>A new keeper request in <code>app/keeper.py</code> with its argument check, and its test in <code>tests/test_keeper.py</code>; never root in the run</td></tr>
+<tr><td>A new menu item</td><td>One <code>Item</code> row in <code>tools/menu.py</code>'s <code>MENU</code> (its number is its place on its screen)</td></tr>
+<tr><td>A new docs page</td><td>The file in <code>docs/</code> (the head of any page, <code>&lt;!-- generated: nav --&gt;</code>), and its row in <code>tools/docs.py</code>'s <code>PAGES</code></td></tr>
+</table></div>
+
+<h2 id="next">What's next</h2>
+<p>The foundation is complete; D30 untangled the parts. Next: Run I on the real Mac, then the public release. Then what each console reaches beyond the test (its FTP app, any other port), and the bigger plans below, designed but not built.</p>
+<details class="fold"><summary>Two network modes (D8) <span class="muted">· planned</span></summary>
+<div class="scroll"><table>
+<tr><th></th><th>Sealed (today)</th><th>Allowlist (planned)</th></tr>
+<tr><td>Sharing from</td><td>Thunderbolt Bridge + the virtual cable (a dead link)</td><td>a USB-C Ethernet adapter to your router</td></tr>
+<tr><td>DNS</td><td>test names → the Mac; the rest → <code>0.0.0.0</code></td><td>the same, plus <b>allowed names forwarded</b> to a real DNS server</td></tr>
+<tr><td>Firewall</td><td>the Mac only (DHCP, DNS, test)</td><td>the same, plus the addresses each console's allowed names resolved to (per-console pf tables)</td></tr>
+</table></div>
+<p class="small">Allowlist mode refuses to start without a working uplink: it never quietly falls back to full internet. Every allowed connection is logged and counted, like blocked ones.</p></details>
+<details class="fold"><summary>Who may reach what: the rule order (D12, D13) <span class="muted">· planned</span></summary>
+<p class="small"><code>net/policy.py</code> answers one question for everyone (DNS, firewall, dashboard, logs): <i>may this console reach this name?</i> The first rule that matches wins:</p>
+<ol class="small">
+  <li><b>The connection test names</b>: answered by the Mac (it's what NXSPOOF is for).</li>
+  <li><b>The blocklist</b>, global (<code>lists/blocklist.txt</code>: one name or <code>*.pattern</code> per line, sources noted): blocked for every console, never a request, no allow button; only the file changes it.</li>
+  <li><b>Allow once</b> (this console, this run).</li>
+  <li><b>This console's denylist</b>, then <b>its allowlist</b>.</li>
+  <li><b>The global denylist</b>, then <b>the global allowlist</b>.</li>
+  <li><b>Everything else</b>: blocked, and becomes a <b>request</b>.</li>
+</ol>
+<p class="small">The blocklist beats everything; a console's own rules beat global ones; deny beats allow at the same level. So <code>*.nintendo.net</code> on the blocklist blocks all of Nintendo except the two tests, and no allowlist can override it.</p></details>
+<details class="fold"><summary>The Requests inbox (D11) <span class="muted">· planned</span></summary>
+<p class="small">Every attempt blocked by "everything else" becomes a request, grouped by console and name, with a count and a suggested wider rule (<code>*.github.com</code> for <code>api.github.com</code>). One click: <b>allow once</b>, <b>allow for this console</b>, <b>allow for all</b>, <b>mute for this console</b>, <b>mute for all</b> (saved in settings.json). Decisions apply live: consoles retry blocked lookups constantly, so an allowed name usually works within seconds. Optional "ask first": hold a never-seen name a few seconds while the dashboard asks. History kept in <code>logs/requests.json</code>. In sealed mode decisions are saved for the next allowlist run. Later: firewall drops of direct-to-address attempts (pf's log) as requests too. Same safety as every control: no allowing <code>*</code>, a bare top-level domain, or anything the blocklist covers; every decision logged.</p></details>
+<details class="fold"><summary>Services per console <span class="muted">· planned</span></summary>
+<p class="small">Each console lists its services (name, port, kind of check); <code>features/services.py</code> runs one watcher per service with today's FTP timing, each emitting <code>service.up</code> / <code>service.down</code>, so the logs, the story, the dashboard and the summary handle a new service with no extra code. Controls attach to services (Open in FileZilla on FTP).</p></details>
+
+</main>
+</body>
+</html>

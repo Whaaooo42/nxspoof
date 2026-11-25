@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html" class="on" aria-current="page">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>Setup</h1>
+<p class="lead">Once per Mac, or if a setting gets reset. You won't need the steps below by hand: they're here so you know what happens.</p>
+<div class="banner"><b>The easy way:</b> double-click <code>NXSPOOF.app</code>, open <b>⚙️ Configure</b>, press <b>🛠️ Fix selected</b>: one password in macOS's own window. It checks every step below, fixes <b>B</b> and the virtual cable, and says exactly what to type for the rest (the hotspot's name and password in <b>C</b>, and <b>D</b> on each console). Safe to run again: it only changes what's missing.</div>
+<div class="scroll"><table>
+<tr><th>To…</th><th>Dashboard</th><th>Menu</th><th>Terminal</th></tr>
+<tr><td>Check, change nothing</td><td>⚙️ Configure (This Mac)</td><td><b>7 → 1</b></td><td><code>python3 -B nx_spoof.py doctor</code></td></tr>
+<tr><td>Set up (fix what's missing)</td><td>🛠️ Fix selected</td><td><b>7 → 2</b> (asks before each change)</td><td><code>sudo python3 -B nx_spoof.py setup</code></td></tr>
+<tr><td>Undo</td><td>↩ Undo setup… (before NXSPOOF, or macOS's defaults)</td><td><b>7 → 3</b></td><td><code>sudo python3 -B nx_spoof.py uninstall</code></td></tr>
+</table></div>
+<p class="small muted">Setup and undo wait while NXSPOOF runs. Each writes its own log in the data folder (<code>…-setup.log</code>, <code>…-uninstall.log</code>). The first time setup changes the bridge, it notes how it was (<code>mac_before.json</code>), so Undo can put it back.</p>
+
+<h2>The steps</h2>
+<ol class="steps">
+  <li><b>A. Python.</b> <code>python3 --version</code> in Terminal shows 3.9 or higher. If a window offers to install "command line developer tools", click <b>Install</b>. (Every double-click file checks this first and offers it.)</li>
+  <li><b>B. Thunderbolt Bridge with a fixed address.</b> System Settings → <b>Network</b> → <b>Thunderbolt Bridge</b> → <b>Details…</b> → <b>TCP/IP</b>: Configure IPv4 <b>Manually</b> · IP Address <code>172.16.0.1</code> (or the one chosen on Thunderbolt Bridge's line in ⚙️ Configure: <code>10.254.0.1</code>, <code>192.168.254.1</code>) · Subnet Mask <code>255.255.255.0</code> · Router <i>empty</i> → <b>OK</b>. Missing? Network → <b>⋯</b> → Add Service → Thunderbolt Bridge.
+    <p class="small muted">Why: Internet Sharing needs something to share <i>from</i>. This is a dead link that goes nowhere, and a virtual cable (plugged in at every start) makes it look connected.</p></li>
+  <li><b>C. Internet Sharing's settings.</b> System Settings → <b>General</b> → <b>Sharing</b> → <b>ⓘ</b> next to Internet Sharing. NXSPOOF sets "from" (Thunderbolt Bridge, never an Ethernet plugged into your router) and "to" (Wi-Fi only) itself at every start. The <b>Wi-Fi Options…</b> are yours, set once; NXSPOOF only reads them:
+    <div class="scroll"><table>
+    <tr><th>Field</th><th>Set to</th></tr>
+    <tr><td>Network Name</td><td>yours to choose (<code>NXSPOOF</code>, for example): your Switches join it by this name</td></tr>
+    <tr><td>Channel</td><td><code>11</code> (or <code>6</code>, <code>1</code>: 2.4 GHz channels every Switch sees)</td></tr>
+    <tr><td>Security</td><td><b>WPA2/WPA3 Personal</b>. Not "WPA3 Personal", which the Switch 1 can't use</td></tr>
+    <tr><td>Password</td><td>8+ characters</td></tr>
+    </table></div>
+    <p class="small muted">If the form shows an old name, quit System Settings (⌘Q) and open it again.</p></li>
+  <li><b>D. Join the hotspot on each console.</b> System Settings → <b>Internet</b> → <b>Internet Settings</b> → your hotspot → password.
+    <p class="small">⚠️ If your home Wi-Fi is also saved on the console and in range, the console may join that instead and get real internet. Always check it's on the hotspot.</p></li>
+</ol>
+
+<h2>What setup checks</h2>
+<p>One step per requirement (<code>setup/steps.py</code>), each with a check, a fix when one is possible, and an explanation otherwise. To fix only some: <code>setup --only bridge,cable</code>; never one: <code>--skip cable</code>. The names: <code>settings</code>, <code>python</code>, <code>bridge</code>, <code>cable</code>, <code>sharing</code>, <code>hotspot</code>, <code>ports</code>, <code>macfirewall</code>, <code>filezilla</code>, <code>consoles</code>.</p>
+<div class="scroll"><table>
+<tr><th>Step</th><th>Check</th><th>Fix (after asking)</th><th>Otherwise</th></tr>
+<tr><td>Python</td><td>Apple's <code>python3</code> 3.9+</td><td>Apple's command-line tools installer</td><td>how to finish the install</td></tr>
+<tr><td>Thunderbolt Bridge</td><td>a service for the bridge, with its fixed address</td><td>creates the service, sets the address (refused if it overlaps a network this Mac uses)</td><td>pick another address</td></tr>
+<tr><td>Virtual cable</td><td>plugged in</td><td>plugs it in (every start does too)</td><td>—</td></tr>
+<tr><td>Internet Sharing</td><td>from the bridge, to Wi-Fi</td><td>as every start does</td><td>—</td></tr>
+<tr><td>The hotspot</td><td>a password set (name and channel shown as they are)</td><td>never: it's macOS's</td><td>opens System Settings → Sharing, says what to set</td></tr>
+<tr><td>Ports</td><td>53 and 80 free</td><td>—</td><td>names what's using them</td></tr>
+<tr><td>Mac firewall</td><td>not blocking incoming connections</td><td>—</td><td>the exact switch to turn off</td></tr>
+<tr><td>FileZilla</td><td>installed (optional)</td><td>—</td><td>where to get it</td></tr>
+<tr><td>settings.json</td><td>exists and valid</td><td>creates a clean one</td><td>the line and column of a typo</td></tr>
+<tr><td>Consoles</td><td>—</td><td>—</td><td>how to join the hotspot on a Switch</td></tr>
+</table></div>
+
+<h2 id="removing">Removing NXSPOOF</h2>
+<ol>
+  <li>On the dashboard: ⚙️ Configure → <b>↩ Undo setup…</b>, then choose: back to how your Mac was before NXSPOOF, or macOS's defaults.</li>
+  <li>Close the dashboard, then delete the nx-spoof folder and <code>~/Library/Application Support/NXSPOOF</code>.</li>
+  <li>Optional: System Settings → Privacy &amp; Security → Files and Folders: remove NXSPOOF.</li>
+</ol>
+
+</main>
+</body>
+</html>

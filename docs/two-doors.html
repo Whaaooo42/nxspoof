@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The two doors · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html" class="on" aria-current="page">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>The two doors</h1>
+<p class="lead">One NXSPOOF, two ways in: <b>NXSPOOF.app</b> (the dashboard, for everyone) and the <b>Terminal</b> (<code>menu.command</code>, <code>nx_spoof.py</code> and its <code>--flags</code>, for whoever likes to see under the hood). Both run the same commands, the same program and the same data folder (<a href="decisions.html#d23">D23</a>).</p>
+
+<div class="two">
+  <div class="card"><span class="tag t-blue">door TWO · NXSPOOF.app</span><h3>Everything chains</h3>
+    <ul>
+      <li>Double-click: the page opens (or comes back), showing the run if there is one</li>
+      <li>▶ Start: one password window, setup's fixes included if needed (<b>🛠️ Fix and start</b>)</li>
+      <li>■ Stop, ⚙️ Configure, consoles, past runs, 📖 Help</li>
+      <li>Close the page: the dialog if NXSPOOF runs, then it tidies up by itself</li>
+      <li>Every button that needs your password runs a real <code>nx_spoof.py</code> command</li>
+    </ul></div>
+  <div class="card"><span class="tag t-gray">door ONE · the Terminal</span><h3>Plain parts, flags, nothing chained</h3>
+    <ul>
+      <li><code>sudo python3 -B nx_spoof.py start</code>: start, the answer, back to the prompt (<code>--fix</code>, <code>--anyway</code>, <code>--no-firewall</code>, <code>--manual-sharing</code>, <code>--keep-sharing</code>…)</li>
+      <li><code>nx_spoof.py stop</code>: no password (the run is you)</li>
+      <li><code>nx_spoof.py follow</code>: watch it live (<code>--console casual</code>, <code>--no-color</code>)</li>
+      <li><code>doctor</code>, <code>setup</code>, <code>uninstall</code>, <code>cleanup</code>, <code>check</code>, <code>running</code>… (<a href="reference.html#commands">every command</a>)</li>
+    </ul></div>
+</div>
+
+<h2>The menu, screen by screen</h2>
+<p><code>menu.command</code>: numbers on every screen, from 1; <b>b</b> back, <b>q</b> quit. 🔑 asks for your password. What doesn't fit the moment is grayed out (here: the items for while NXSPOOF runs) but still answers if you pick it: Start while it runs says "already running" at once. Each item is one plain thing: an <code>nx_spoof.py</code> command, a tool, or opening a file. The window opens at 100 × 32; what's wider is cut, never wrapped.</p>
+<!-- generated: menu -->
+<div class="menu-screens">
+<pre class="term"><b>🎮 NXSPOOF</b>
+
+   <b>1</b>  Start NXSPOOF             🔑
+   <span class="d">2  Stop NXSPOOF                </span>
+   <span class="d">3  Watch it live (technical)   </span>  <span class="d">Ctrl+C only stops watching</span>
+   <span class="d">4  Watch it live (casual)      </span>  <span class="d">Ctrl+C only stops watching</span>
+   <b>5</b>  Open the dashboard          
+   <b>6</b>  Past runs…                    <span class="d">check the latest run, read its log, the data folder</span>
+   <b>7</b>  This Mac…                     <span class="d">ready?, set up, undo, clean up, settings file</span>
+   <b>8</b>  Development…                  <span class="d">tests, simulate, code health</span>
+   <b>9</b>  Docs…                         <span class="d">in your browser: guide, troubleshooting, reference…</span>
+
+   <b>q</b>  Quit</pre>
+<pre class="term"><b>🎮 NXSPOOF › Past runs</b>
+
+   <b>1</b>  Check the latest run      🔑  <span class="d">✅/❌: did everything go as it should?</span>
+   <b>2</b>  Read the latest run's log     <span class="d">in your text editor</span>
+   <b>3</b>  Open the data folder          <span class="d">every run's log, settings.json</span>
+   <b>4</b>  Report a problem              <span class="d">for a GitHub issue: names replaced; printed, saved, copied, GitHub opened</span>
+
+   <b>b</b>  Back   <b>q</b>  Quit</pre>
+<pre class="term"><b>🎮 NXSPOOF › This Mac</b>
+
+   <b>1</b>  Is this Mac ready?         <span class="d">changes nothing</span>
+   <b>2</b>  Set up this Mac        🔑  <span class="d">asks before each change</span>
+   <b>3</b>  Undo setup             🔑  <span class="d">asks first; your files and settings stay</span>
+   <b>4</b>  Clean up after a crash 🔑  <span class="d">firewall rules out, sharing off, cable out</span>
+   <b>5</b>  Export settings.json     
+   <b>6</b>  Import settings.json     
+
+   <b>b</b>  Back   <b>q</b>  Quit</pre>
+<pre class="term"><b>🎮 NXSPOOF › Development</b>
+
+   <b>1</b>  Run the tests               
+   <b>2</b>  Simulate a session            <span class="d">compared with the reference run</span>
+   <b>3</b>  Quick self-test               <span class="d">the DNS and web answers, on this Mac</span>
+   <b>4</b>  Watch a simulated session     <span class="d">on the dashboard, no Switch needed</span>
+   <b>5</b>  Code health                   <span class="d">guardrails, watchdog, memo</span>
+   <b>6</b>  Rebuild NXSPOOF.app         
+   <b>7</b>  Update the docs' tables       <span class="d">settings, options, menu, modules: from the code</span>
+   <b>8</b>  Draw the icon again           <span class="d">the app's and the browser tabs'; then rebuild the app</span>
+
+   <b>b</b>  Back   <b>q</b>  Quit</pre>
+<pre class="term"><b>🎮 NXSPOOF › Docs</b>
+
+   <b>1</b>  All the docs        <span class="d">the same pages as the dashboard's 📖 Help</span>
+   <b>2</b>  Guide               <span class="d">the everyday things</span>
+   <b>3</b>  Troubleshooting     <span class="d">type what you see, find the fix</span>
+   <b>4</b>  Reference           <span class="d">settings, options, commands, files</span>
+   <b>5</b>  Real runs           <span class="d">the checklist on the real Mac</span>
+   <b>6</b>  How it's built      <span class="d">for development</span>
+
+   <b>b</b>  Back   <b>q</b>  Quit</pre>
+</div>
+<!-- /generated -->
+
+<h2>Starting: the one way</h2>
+<p>Menu 1 runs <code>sudo python3 -B nx_spoof.py start</code>; the page's ▶ Start runs the same command through macOS's password window. Then:</p>
+<figure>
+<svg viewBox="0 0 1000 250" role="img" aria-labelledby="t1 td1">
+  <title id="t1">How a run starts, from either door</title>
+  <desc id="td1">Both doors run nx_spoof.py start: it stops at once if a run holds the lock, runs from the program copy, checks this Mac (fixing with --fix), takes the lock, goes into the background where the run splits from its keeper and comes up, then answers running or exactly why not.</desc>
+  <defs><marker id="sh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head"/></marker></defs>
+  <rect x="10" y="20" width="150" height="60" rx="10" class="box b-gray"/><text x="85" y="46" text-anchor="middle" class="title">Menu 1</text><text x="85" y="64" text-anchor="middle" class="small">sudo … start</text>
+  <rect x="10" y="110" width="150" height="60" rx="10" class="box b-blue"/><text x="85" y="136" text-anchor="middle" class="title">▶ Start</text><text x="85" y="154" text-anchor="middle" class="small">password window</text>
+  <rect x="190" y="50" width="140" height="100" rx="10" class="box"/><text x="260" y="76" text-anchor="middle" class="title">1 · Running?</text><text x="260" y="96" text-anchor="middle" class="small">a held lock:</text><text x="260" y="112" text-anchor="middle" class="small">"already running",</text><text x="260" y="128" text-anchor="middle" class="small">nothing done</text>
+  <rect x="350" y="50" width="140" height="100" rx="10" class="box"/><text x="420" y="76" text-anchor="middle" class="title">2 · The copy</text><text x="420" y="96" text-anchor="middle" class="small">refresh program/</text><text x="420" y="112" text-anchor="middle" class="small">in the data folder,</text><text x="420" y="128" text-anchor="middle" class="small">run from it</text>
+  <rect x="510" y="50" width="140" height="100" rx="10" class="box"/><text x="580" y="76" text-anchor="middle" class="title">3 · Ready?</text><text x="580" y="96" text-anchor="middle" class="small">setup's checks;</text><text x="580" y="112" text-anchor="middle" class="small">--fix fixes first;</text><text x="580" y="128" text-anchor="middle" class="small">not ready: exit 2</text>
+  <rect x="670" y="50" width="140" height="100" rx="10" class="box b-red"/><text x="740" y="76" text-anchor="middle" class="title">4 · Lock, split</text><text x="740" y="96" text-anchor="middle" class="small">take run.lock, go</text><text x="740" y="112" text-anchor="middle" class="small">to the background;</text><text x="740" y="128" text-anchor="middle" class="small">keeper + the run</text>
+  <rect x="830" y="50" width="160" height="100" rx="10" class="box b-green"/><text x="910" y="76" text-anchor="middle" class="title">5 · The answer</text><text x="910" y="96" text-anchor="middle" class="small">✅ running (READY)</text><text x="910" y="112" text-anchor="middle" class="small">or ❌ exactly why not,</text><text x="910" y="128" text-anchor="middle" class="small">the Mac put back</text>
+  <path d="M160 50 H 175 V 95 H 186" class="arrow" marker-end="url(#sh)"/><path d="M160 140 H 175 V 105 H 186" class="arrow arrow-blue" marker-end="url(#sh)"/>
+  <path d="M330 100 H 346" class="arrow" marker-end="url(#sh)"/><path d="M490 100 H 506" class="arrow" marker-end="url(#sh)"/>
+  <path d="M650 100 H 666" class="arrow" marker-end="url(#sh)"/><path d="M810 100 H 826" class="arrow" marker-end="url(#sh)"/>
+  <text x="190" y="190" class="small">Menu 1 prints the answer and gives the prompt back; not ready, it asks "Let setup fix what it can, then start?" (--fix), then "Start anyway?" (--anyway).</text>
+  <text x="190" y="210" class="small">The page doesn't wait for the answer: the dashboard sees the lock taken and shows the run from its files; a start that ends without a run says why in its log.</text>
+  <text x="190" y="230" class="small">After the answer the run is on its own: only a Stop (or a sleep) stops it. A start that hears nothing for 90 s says so.</text>
+</svg>
+</figure>
+<div class="scroll"><table>
+<tr><th>Step</th><th>What it does</th><th>If it can't</th></tr>
+<tr><td>The program copy</td><td>Every start runs the copy of the program in the data folder (<code>program/</code>, only the files that changed are refreshed): both doors run the same files from anywhere, because macOS keeps a program started through its password window out of Documents, Desktop, Downloads and iCloud Drive</td><td>—</td></tr>
+<tr><td>This Mac ready?</td><td>setup's checks (nothing changed); with <code>--fix</code>, setup fixes what it can first (its own log)</td><td>the list of what isn't ready, exit code 2</td></tr>
+<tr><td>The lock</td><td>one run at a time: the run and its keeper hold <code>run.lock</code></td><td><code>NXSPOOF is already running (process …): nothing done.</code></td></tr>
+<tr><td>The run</td><td>plugs the virtual cable in (needed after every restart), turns Internet Sharing on, waits for the hotspot (60 s at most), starts DNS, the firewall and the test page, runs its self-test</td><td>the exact reason, and everything put back</td></tr>
+</table></div>
+<p>The run's log starts with <code>START</code> lines saying what was found: <code>START setup's checks: this Mac is ready</code>, <code>START virtual cable: plugged in just now (taken out again when NXSPOOF stops)</code>.</p>
+
+<h2>Stopping, and watching</h2>
+<ul>
+  <li><b>Stop:</b> ■ Stop, menu 2, or <code>nx_spoof.py stop</code> (no password). It leaves the run a note (<code>stop.json</code>, read every half second) and sends a signal too, then waits until the run has stopped. The run: firewall out, summary, Internet Sharing off, the cable out if it put it in, <code>Stopped.</code></li>
+  <li><b>Watch:</b> menu 3 (technical) or 4 (casual), or <code>nx_spoof.py follow</code>: the newest run's records, live, from its first line. Ctrl+C or closing the window only stops watching.</li>
+  <li><b>Is it running?</b> <code>nx_spoof.py running</code>: the lock's answer, yes or no (the menu's status line uses it).</li>
+</ul>
+
+<h2>What runs as root</h2>
+<p>Your password starts NXSPOOF as root, but it keeps root only where it must. Right away it splits in two processes (<a href="decisions.html#d24">D24</a>):</p>
+<div class="two">
+  <div class="card"><span class="tag t-red">root</span><h3>The keeper</h3><p>Only four kinds of jobs, each request checked: turn Internet Sharing on and off; load, read and remove NXSPOOF's own firewall rules for the hotspot (it builds them itself); plug the virtual cable in and take it out; open the DNS and web ports on the hotspot's address and hand them over. It listens for the run's heartbeat: a run silent for 30 seconds is frozen, so the keeper ends it and cleans up.</p></div>
+  <div class="card"><span class="tag t-green">you</span><h3>The run</h3><p>The DNS answers, the test page, watching the consoles, the logs: the part that reads what consoles send never has root, and its files are yours. If it ends without cleaning up, the keeper does, and adds <code>NOTE  the run ended without cleaning up … - the keeper did: …</code> to its log.</p></div>
+</div>
+<p class="small">The log's <code>LOG   privileges: …</code> line says which way it ran. <code>--no-keeper</code> keeps the whole run root in one process (for comparison; stopping it then needs <code>sudo</code>). The dashboard never runs anything as root by itself: macOS's own password window does, one action at a time.</p>
+
+<h2>Why both doors</h2>
+<p>The dashboard is what most people want: buttons, a password window, plain words. The Terminal is always there, for whoever likes to see every line, pass a flag, or script it, and as the fallback when something about the app goes wrong. What's deliberately skipped (<a href="decisions.html#d23">D23</a>): installing into /Applications, a root helper that never asks for the password, signing, a bundled Python, self-updating. The folder is NXSPOOF, and it runs from wherever you put it.</p>
+
+</main>
+</body>
+</html>

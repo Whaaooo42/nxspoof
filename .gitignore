@@ -1,0 +1,14 @@
+# What git leaves out of NXSPOOF's history (docs/reference.html, Files).
+# Built on your Mac from scripts/NXSPOOF.applescript (menu 8 → 6): never stored, always rebuilt.
+NXSPOOF.app/
+# The shortcut to your data folder (settings.json, logs): yours, not code; it lives in ~/Library/Application Support/NXSPOOF.
+/data
+# The watchdog's memo, rewritten after every test run.
+MEMO.md
+# The owner's and Claude's own folder (the git cheat sheet, the story, drafts, what's next): never in git, never public.
+/private/
+__pycache__/
+*.pyc
+.DS_Store
+# The owner's own instructions for Claude Code (CLAUDE.md is the project's, public)
+CLAUDE.local.md

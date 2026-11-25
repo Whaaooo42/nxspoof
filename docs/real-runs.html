@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real runs · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html" class="on" aria-current="page">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>Real runs</h1>
+<p class="lead">For after a big change. A simulated session (menu 8 → 2) proves NXSPOOF still behaves exactly like the reference run, but not how it does on your real Mac with your real Switches. These runs do. Each one is checked from its own log afterwards.</p>
+<div class="banner"><b>Before you start:</b> menu <b>7 → 1</b> (is this Mac ready?): everything should say ✅. <b>After each run:</b> menu <b>6 → 1</b>, or pick the run in the dashboard's log pane: every item ✅; ⏭️ means "not tried in this run" (FTP, for example), which is fine.</div>
+
+<h2>The runs so far</h2>
+<div class="scroll"><table>
+<tr><th>Run</th><th>What it proved</th><th>Passed</th></tr>
+<tr><td><b>A, B, C</b></td><td>The switch to the <code>nxspoof</code> package: a full tour (a Switch joins, passes, gets blocked, FTP, leaves and comes back), stopped three ways</td><td>2026-11-14</td></tr>
+<tr><td><b>D</b></td><td>Undo setup, then set up again, for real</td><td>by 2026-11-16</td></tr>
+<tr><td><b>E</b></td><td>Started from the page through macOS's password window, from the program copy; a run that outlives its dashboard</td><td>by 2026-11-16</td></tr>
+<tr><td><b>F</b></td><td>This Mac and 🧹 Clean up from the page; the crash banner</td><td>by 2026-11-16</td></tr>
+<tr><td><b>G</b></td><td>Minimal root: only the keeper is root, and it cleans up after a crash</td><td>by 2026-11-16</td></tr>
+<tr><td><b>H</b></td><td>From zero, as someone who just got NXSPOOF (a fresh copy, the README only)</td><td>2026-11-17</td></tr>
+</table></div>
+<p class="small muted">Their steps used things that have changed since (a start in a Terminal window, Ctrl+C stopping a run, the old menu letters), so only what they proved is kept here; the history zip and git have the rest.</p>
+
+<h2>Run I: the untangled NXSPOOF on the real Mac</h2>
+<p>Everything built after Run H, tried for real: <code>Create NXSPOOF.app.command</code>, ⚙️ Configure and its one Save, 🛠️ Save and fix, the log pane's run picker, the hotspot NXSPOOF only reads, Import, and D30: one way to start from both doors, the dashboard finding the run by its lock, the closing dialog, the cable taken out at Stop, the restore that keeps trying, the menu with numbers. About 40 minutes; one Switch is enough.</p>
+
+<details class="fold" open><summary>Phase 0 · before <span class="muted">(Claude)</span></summary>
+<p>Tell Claude you're starting Run I: Claude copies your data folder aside, and you settle what happens to the 22 runs from before the records (Nov 13 and 14): archived into the history zip, or kept.</p>
+</details>
+
+<details class="fold" open><summary>Phase 1 · the app maker, on a fresh copy</summary>
+<ol>
+  <li><code>git clone ~/Documents/nx-spoof ~/Downloads/nx-spoof-i</code>, then double-click <code>Create NXSPOOF.app.command</code> in it. Expected: its window says NXSPOOF.app is ready, the app opens, the dashboard appears (macOS may ask about the Downloads folder: Allow). The window says you can close it.</li>
+  <li><b>Close the page.</b> A few seconds later the dashboard closes by itself. The copy is only for this phase (it goes to the Trash at the end).</li>
+</ol>
+</details>
+
+<details class="fold" open><summary>Phase 2 · Configure, on your usual NXSPOOF.app (nothing running)</summary>
+<ol>
+  <li>The header is one row: the chips on the left; <b>▶ Start NXSPOOF</b>, <b>📖 Help</b> and <b>⚙️ Configure</b> on the right. 📖 Help opens these pages in a new tab.</li>
+  <li><b>⚙️ Configure</b> shows <b>✋ N</b>: N is the number of ✋ lines in its This Mac column.</li>
+  <li>The hotspot line says <code>"NXSPOOF", channel 11, with a password</code>; <b>System Settings → Sharing</b> opens the Sharing pane (close it).</li>
+  <li>On Thunderbolt Bridge's line, pick <code>10.254.0.1</code>. Expected: the dropdown turns blue, the bar says <b>1 change not saved</b>, 🛠️ says <b>Save and fix</b>. Press it: one password, then the bridge <b>and</b> the virtual cable are fixed in the same go, and the checks come back ✅.</li>
+  <li>Open <b>FTP watch</b>, set <b>Port</b> to <code>0</code>, <b>Save</b>: refused, the line turns red with <i>must be at least 1, got 0</i>, nothing written. <b>Discard</b>: the bar goes away.</li>
+  <li><b>📤 Export settings</b>, then <b>📥 Import settings…</b> with the file you just downloaded (not an older export: it would put the bridge back to 172.16.0.1): the preview says <i>nothing changes</i>; <b>Import</b> anyway. Expected: a <code>settings.json.before-import-&lt;time&gt;</code> in the data folder, and a <code>SETTINGS imported from a file</code> line.</li>
+</ol>
+</details>
+
+<details class="fold" open><summary>Phase 3 · a run from the dashboard</summary>
+<ol>
+  <li><b>▶ Start NXSPOOF</b>, your password (the window goes away at once; the page shows the run a few seconds later), then READY. The 📡 chip says <b>NXSPOOF · 192.168.2.1</b>. The run's log starts with <code>START setup's checks: this Mac is ready</code> and <code>START virtual cable: plugged in just now (taken out again when NXSPOOF stops)</code> (or <code>already plugged in</code>).</li>
+  <li><b>⚙️ Configure</b> while it runs: This Mac is one line (<i>Setup waits until NXSPOOF stops</i>). Set FTP watch's <b>Recheck When Up Seconds</b> to <code>45</code>, <b>Save</b>: <code>SETTINGS changed ftp.recheck_when_up_seconds 30 -&gt; 45 from the dashboard (applies now)</code>, then within about two seconds the run's own <code>SETTINGS settings.json changed: … (applies now)</code>. Put it back to <code>30</code>. <b>← Dashboard</b>.</li>
+  <li>Join the hotspot on a Switch: its test passes. <b>■ Stop</b>: <code>stop requested from the dashboard</code>, the usual clean stop, and <code>virtual cable taken out</code> if this run put it in.</li>
+  <li><b>▶ Start</b> again, READY, then <b>close the page</b>. About 2 seconds later a macOS dialog (also try quitting the browser instead of closing the tab): <i>NXSPOOF is still running…</i> <b>Keep running</b>: the dashboard closes, the hotspot stays up. Open <code>NXSPOOF.app</code>: the run at once, its whole log from the first line, and the <b>■ Stop</b> button in the header. Close the page again; this time <b>Stop NXSPOOF</b>: a clean stop, and the dashboard closes. (Opening <code>NXSPOOF.app</code> twice in a row just brings the same page back.)</li>
+  <li>In the log pane's picker, pick that run: casual lines with the Switch's name in its color, the checklist line ✅ (open it). <b>Technical</b>, then <b>● Live</b>.</li>
+</ol>
+</details>
+
+<details class="fold" open><summary>Phase 3b · the menu</summary>
+<ol>
+  <li><code>menu.command</code> → <b>1</b>: your password once, then about 10 seconds later <code>✅ NXSPOOF is running. Connect a Switch to "NXSPOOF" …</code> and the prompt is back. <b>Close that Terminal window</b>: NXSPOOF keeps running. Open <code>menu.command</code> again: <b>1</b> is grayed out now (NXSPOOF runs), but pick it anyway: <code>NXSPOOF is already running (process …): nothing done.</code>, at once, no password.</li>
+  <li><code>menu.command</code> → <b>4</b>: the casual log, live; Ctrl+C: <i>stopped watching; NXSPOOF keeps running</i>. Then <b>3</b>, the technical one.</li>
+  <li><b>2</b>: <i>Stop requested…</i>, then <i>NXSPOOF has stopped.</i>; menu <b>6 → 1</b> checks it: stopped by <i>nx_spoof.py stop (menu 2)</i>.</li>
+  <li>The keeper's heartbeat: menu <b>1</b>, wait for the answer, then <code>kill -STOP $(python3 -c "import json; print(json.load(open('$HOME/Library/Application Support/NXSPOOF/run.json'))['pid'])")</code> (it pauses the run). About 30 seconds later the hotspot goes away by itself and the run's log ends with <code>NOTE  the run froze (no heartbeat for 30 s), so the keeper ended it - the keeper did: …</code>.</li>
+  <li><b>9</b> (Docs): the pages open in your browser.</li>
+</ol>
+</details>
+
+<details class="fold" open><summary>Phase 3c · the hotspot drops during a run (the Nov 18 event, on purpose)</summary>
+<ol>
+  <li>▶ Start, READY, a Switch connected. In Terminal, take the virtual cable out of Thunderbolt Bridge as macOS did on Nov 18 (your password): <code>sudo ifconfig bridge0 deletem feth0</code></li>
+  <li>Within about 5 seconds: <i>the hotspot went DOWN</i>, the 📡 chip turns red, then <i>try 1: virtual cable plugged back in</i>, <i>Internet Sharing turned ON again</i>, the CHECK lines, and <i>the hotspot is UP again … the self-test passed</i>. The Switch rejoins by itself. <b>■ Stop</b>.</li>
+</ol>
+</details>
+
+<details class="fold" open><summary>Phase 3d · Fix and start</summary>
+<p>With nothing running, in Configure, pick another address on Thunderbolt Bridge's line and press <b>Save</b> only: This Mac shows ✋ Thunderbolt Bridge. <b>▶ Start NXSPOOF</b>: the panel lists it with <b>🛠️ Fix and start</b>. Press it: one password, setup fixes the bridge (its own <code>…-setup.log</code>), then NXSPOOF starts. <b>■ Stop</b>, then put your usual bridge back (<b>🛠️ Save and fix</b>).</p>
+</details>
+
+<details class="fold" open><summary>Phase 4 · the hotspot renamed outside NXSPOOF</summary>
+<ol>
+  <li>System Settings → General → Sharing → ⓘ Internet Sharing → <b>Wi-Fi Options…</b>: rename the network <code>NXSPOOF-I</code> (keep the password). Quit System Settings (⌘Q).</li>
+  <li><b>⚙️ Configure</b>: the hotspot line notes <i>Its name changed since the last run (it was "NXSPOOF")</i>.</li>
+  <li><b>▶ Start</b>, READY: <i>⚠️ Your hotspot is now called NXSPOOF-I (it was NXSPOOF last run)</i>; the 📡 chip says <b>NXSPOOF-I</b>. <b>■ Stop</b>.</li>
+  <li>Rename it back to <code>NXSPOOF</code>, then ▶ Start and ■ Stop once more: it warns once more (expected). Your Switches find NXSPOOF again.</li>
+  <li>Back to your usual bridge: Thunderbolt Bridge's line → <code>172.16.0.1</code> → <b>🛠️ Save and fix</b>.</li>
+</ol>
+</details>
+
+<details class="fold" open><summary>Phase 5 · after <span class="muted">(Claude)</span></summary>
+<p>Claude reads every log of the run (setup, the runs, the dashboard's) and lists anything odd; <code>~/Downloads/nx-spoof-i</code> goes to the Trash.</p>
+</details>
+
+<h2>If something shows ❌</h2>
+<p>The lines under it say why, and the full run is in <code>data/logs/</code> (<code>last_run.log</code> points to the latest). Tell Claude which run and paste the ❌ lines (Claude can read the logs too). If a run left the hotspot on, the dashboard's banner offers <b>🧹 Clean up</b> (or menu <b>7 → 4</b>). <code>python3 -B tools/verify_run.py --all</code> shows which ways of stopping the runs have covered.</p>
+
+</main>
+</body>
+</html>

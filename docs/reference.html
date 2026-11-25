@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html" class="on" aria-current="page">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>Reference</h1>
+<p class="lead">Everything in detail. The tables marked <span class="tag t-violet">from the code</span> are written from NXSPOOF's own code (<code>tools/docs.py</code>), so they're always current.</p>
+<p class="small"><a href="#log">The log</a> · <a href="#dashboard">The dashboard</a> · <a href="#allowed">What's allowed</a> · <a href="#settings">settings.json</a> · <a href="#commands">Commands</a> · <a href="#options">Options</a> · <a href="#by-hand">By hand</a> · <a href="#files">Files</a></p>
+
+<h2 id="log">The log</h2>
+<div class="scroll"><table>
+<tr><th>Where</th><th>Style</th><th>Change it with</th></tr>
+<tr><td>The dashboard</td><td>Casual (plain words, emoji) or Technical</td><td>the <b>Casual / Technical</b> toggle above the log (remembered in your browser)</td></tr>
+<tr><td>The Terminal (<code>follow</code>, menu 3 / 4)</td><td>Technical, colored; or casual</td><td><code>--console casual</code>, <code>--no-color</code></td></tr>
+<tr><td>The log file, <code>data/logs/&lt;date&gt;_&lt;time&gt;.log</code></td><td>always the full technical one, plain text</td><td>—</td></tr>
+<tr><td>The records, <code>data/logs/&lt;date&gt;_&lt;time&gt;.jsonl</code></td><td>the same events as data, for programs (the dashboard, the run checker)</td><td>—</td></tr>
+</table></div>
+
+<h3>A good run, casual</h3>
+<pre class="term">🚀 Starting NXSPOOF…
+📡 The NXSPOOF Wi-Fi is on. Your Mac is offline while it runs.
+✅ All set! Turn on a Switch and connect it to NXSPOOF.
+🎮 Switch 2 connected
+🌐 Switch 2 thinks it's online, all good
+🛡️ Switch 2: 4 attempts to reach the internet blocked so far
+📁 Switch 2's file server is ready: ftp://192.168.2.3:5000
+👋 Switch 2 left (it was here 3 min 42 s)
+🎮 Switch 2 is back
+🛑 Stopping…
+📋 What happened:
+   Switch 2: here 5 min 10 s, online check passed 2 times, 6 attempts to reach the internet blocked
+🏠 Your Mac is back on your home Wi-Fi. Bye!</pre>
+<p class="small">Blocked attempts show as a running total, at most once a minute per console (the full list is in the log file). A console that isn't in settings.json shows as 🙋 "A console I don't know just connected". Problems are never hidden: 😕 plus a plain explanation, with the technical line in gray underneath.</p>
+
+<h3>A good run, technical</h3>
+<p class="small">In the Terminal: green for PASS / <code>200 ok</code> / FTP up, red for BLOCKED, each console's name in its own color only where the line names that console (not inside "Nintendo Switch 2" or "Switch 2 connection test"). On the dashboard, a name takes the console's current color, so older lines follow a color change.</p>
+<pre class="code">LOG   this run: logs/2026-11-13_15-10-02.log
+LOG   data folder: /Users/you/Library/Application Support/NXSPOOF (settings.json, logs/)
+LOG   privileges: the run as you; root only in the keeper (process 4242): firewall, Internet Sharing, the virtual cable, the servers' ports
+START setup's checks: this Mac is ready
+START virtual cable: plugged in just now (taken out again when NXSPOOF stops)
+SETTINGS loaded settings.json (2 consoles)
+SETTINGS console Switch 2  48:f1:eb:5a:22:c2  Nintendo Switch 2
+SHARING turning Internet Sharing ON: enabled=True  from=Thunderbolt Bridge (bridge0)  to=en0
+SHARING hotspot: "NXSPOOF", channel 11, WPA2/WPA3 Personal, password set
+FIREWALL ON  console may only reach the Mac for DHCP, DNS and the web test; every other packet is dropped
+CHECK DNS  PASS ctest.cdn.nintendo.net -&gt; 192.168.2.1     (… 6 lines)
+READY Everything works on the Mac side. Now connect the console.
+WIFI  Switch 2 (48:f1:eb:5a:22:c2) joined the Wi-Fi
+DHCP  gave address 192.168.2.3 to Switch 2 (48:f1:eb:5a:22:c2)
+DNS   Switch 2 (192.168.2.3) asked A  ctest.p01.ctest.srv.nintendo.net -&gt; 192.168.2.1  (Switch 2 connection test)
+HTTP  Switch 2 (192.168.2.3) GET http://ctest.p01.ctest.srv.nintendo.net/ … -&gt; 200 ok  (Switch 2 connection test)
+DNS   Switch 2 (192.168.2.3) asked A  dauth.p01.lp1.ndas.srv.nintendo.net -&gt; BLOCKED
+FTP   Switch 2: FTP server is UP -&gt; ftp://192.168.2.3:5000
+WIFI  Switch 2 (48:f1:eb:5a:22:c2) left the Wi-Fi (disconnected, was on for 3m 42s)</pre>
+<ul class="small">
+  <li>Something odd in settings.json (an unknown key, a value out of range): a <code>SETTINGS WARNING …</code> line says what, and which default is used; the run carries on. Options given at start: a <code>SETTINGS from options: …</code> line.</li>
+  <li>A console usually asks for its address twice; the second <code>DHCP</code> line ends with <code>again</code>. An unknown console shows as <b>Unknown console</b>, plus a <code>NEW</code> line.</li>
+  <li><b>Joining and leaving</b> come from macOS's Wi-Fi driver, which checks a connected console every 5 seconds: <code>left the Wi-Fi</code> about 6 seconds after it leaves (<code>disconnected</code>), 16 at most (<code>no longer seen for 16s</code>). A visit always starts with <code>joined the Wi-Fi</code>, even when the console's first packets beat macOS's line.</li>
+  <li>While it runs, a change to settings.json is said once: <code>SETTINGS settings.json changed: ftp.port 5000 -&gt; 2121 (applies now)</code>.</li>
+</ul>
+<p class="small">At the stop: the firewall's counts, then a summary per console.</p>
+<pre class="code">SUMMARY Switch 2  48:f1:eb:5a:22:c2  192.168.2.3
+SUMMARY    on the Wi-Fi   : 15:10:31 -&gt; 15:14:13, 15:20:02 -&gt; still on at stop  (total 6m 52s)
+SUMMARY    tests passed   : 2 x Switch 2 connection test
+SUMMARY    FTP server     : UP 15:11:02, went DOWN 15:13:40 -&gt; ftp://192.168.2.3:5000
+SUMMARY    blocked        : 14 lookups, 5 different names
+SUMMARY         7 x dauth.p01.lp1.ndas.srv.nintendo.net
+SUMMARY    User-Agent     : libcurl (nnNifm; …; SDK 23.3.0.0; Add-on 23.3.0.0)
+SUMMARY firewall: allowed DHCP 2  DNS 22  web test 14   ||   IPv6 (blocked) 6  everything else (blocked) 0</pre>
+<p class="small">For an unknown console, the summary prints a ready-to-paste settings.json entry with its MAC address filled in.</p>
+
+<h2 id="dashboard">The dashboard</h2>
+<p><code>NXSPOOF.app</code>, menu 5, or <code>python3 -B nx_spoof.py dashboard</code> (<code>scripts/dashboard.command</code>: the same with a Terminal window beside it). No hotspot and no password: <code>http://localhost:8800</code>, the same port each time (remembered in <code>dash.json</code>; another only if something else holds 8800). One dashboard at a time: opening it again brings the open page back.</p>
+<div class="scroll"><table>
+<tr><th>Part</th><th>What it does</th></tr>
+<tr><td><b>The header</b></td><td>The chips (📡 the hotspot and how long NXSPOOF has run; 🛡 the firewall; 🌐 sharing; 📁 the FTP watch), the one main button (<b>▶ Start NXSPOOF</b>, or <b>■ Stop</b> while it runs; <i>Starting…</i> / <i>Stopping…</i> with what it waits for), <b>📖 Help</b> and <b>⚙️ Configure</b> (with <b>✋ N</b> when This Mac needs you)</td></tr>
+<tr><td><b>Console cards</b></td><td>One per console in settings.json, plus unknown ones: online / connected / away / not seen yet, address, MAC, time on the Wi-Fi, online check, FTP (with <b>Copy</b>), blocked count with the full list, User-Agent</td></tr>
+<tr><td><b>The log pane</b></td><td>Every event in columns (time · emoji or tag · text), names in their colors, BLOCKED red, <code>200 ok</code> / PASS green. <b>Casual / Technical</b>, <b>Oldest first / Newest first</b> (oldest first follows new lines unless you scrolled up). Its <b>run picker</b> (● Live ▾) shows any run in <code>logs/</code>, newest first, drawn the same way under one line with its checklist (the same as menu 6 → 1); the page always opens on ● Live, and goes back to it when a run starts</td></tr>
+<tr><td><b>⚙️ Configure</b> (<code>#configure</code>; ← Dashboard returns)</td><td><b>This Mac</b> on the left: doctor's checks; what setup can fix has a ticked box; <b>🛠️ Fix selected</b> (one password; each step shows as it's done), <b>↩ Undo setup…</b> (back to before NXSPOOF, or macOS's defaults). The bridge's address is chosen on its line; the hotspot's line opens System Settings. One line while a run is active. <b>How NXSPOOF behaves</b> on the right: every setting, in sections that start closed. A change waits (a blue edge); a bar counts them, with <b>Save</b> (all at once, each value checked first: one wrong value and nothing is written) and <b>Discard</b>; with changes waiting, 🛠️ becomes <b>Save and fix</b>. <b>📤 Export</b>, <b>📥 Import…</b> (shows what changes first)</td></tr>
+<tr><td><b>The crash banner</b></td><td>When the dashboard opens, after every run, and every 10 s while nothing runs: a last run with no <code>Stopped.</code>, or Internet Sharing on with no run. A red banner with <b>🧹 Clean up</b> (<code>nx_spoof.py cleanup</code> through the password window, like menu 7 → 4) and <b>Not now</b></td></tr>
+</table></div>
+<h3>Its buttons</h3>
+<div class="scroll"><table>
+<tr><th>Button</th><th>Where</th><th>What it does</th></tr>
+<tr><td><b>▶ Start NXSPOOF</b></td><td>header</td><td>The quick check (not ready: why, with <b>🛠️ Fix and start</b> and <b>Start anyway</b>), then macOS's password window running <code>nx_spoof.py start</code>, the same as menu 1. Cancelling just says "start cancelled"; a start that ends without a run says why (<code>logs/.page_start.txt</code>)</td></tr>
+<tr><td><b>■ Stop</b></td><td>header, while a run is</td><td>After asking: a note in <code>stop.json</code> plus a signal, like menu 2</td></tr>
+<tr><td><b>📂 Open in FileZilla</b></td><td>a card whose FTP server is UP</td><td>Opens FileZilla on that console's FTP address</td></tr>
+<tr><td><b>➕ Add to settings.json</b></td><td>an unknown console's card</td><td>Name, model, owner, color: saved and recognized at once (with a note of the date added)</td></tr>
+<tr><td><b>➕ Add a console</b></td><td>below the cards</td><td>Any console by its MAC address (System Settings › Internet › System MAC Address), without waiting for it to connect</td></tr>
+<tr><td><b>✏️ Edit</b></td><td>a known console's card</td><td>Name, model, owner, color, FTP port, serial, system version, notes; <b>💾 Save</b> writes only what changed, and the log says exactly what</td></tr>
+<tr><td><b>🗑️ Remove</b></td><td>a known console's card</td><td>After asking. Seen during this run: its card stays as an unknown console, so it can be added back</td></tr>
+</table></div>
+<p class="small">Every change is checked first (a unique name, colors from the list, FTP port 1–65535); if something's wrong the form says why and nothing is written. The dashboard writes settings.json; a running NXSPOOF reads it again within about two seconds. Safety: <code>127.0.0.1</code> only, only <code>Host: localhost</code>, buttons need the page's secret token, no inline scripts, nothing from the internet. Closing the page closes the dashboard (a few seconds later; 90 s if no page ever came); while a run is active, the macOS dialog asks first. Each opening has its own log, <code>logs/&lt;date&gt;_&lt;time&gt;-dashboard.log</code>.</p>
+
+<h2 id="allowed">What's allowed (and nothing else)</h2>
+<div class="scroll"><table>
+<tr><th>Layer</th><th>Allowed</th><th>Everything else</th></tr>
+<tr><td>DNS</td><td><code>ctest.cdn.nintendo.net</code> (Switch 1) and <code>ctest.p01.ctest.srv.nintendo.net</code> (Switch 2) get the Mac's address</td><td><code>0.0.0.0</code> (BLOCKED); no IPv6 answers at all</td></tr>
+<tr><td>Web</td><td>those two names: <code>200 OK</code> + <code>X-Organization: Nintendo</code> + <code>ok</code>, like Nintendo's servers</td><td><code>403</code> (BLOCKED)</td></tr>
+<tr><td>Firewall</td><td>a console may send the Mac: DHCP, DNS (UDP 53), web (TCP 80)</td><td>dropped: the internet, your home network, other services on the Mac</td></tr>
+<tr><td>Routing</td><td>—</td><td>shared from a dead link (Thunderbolt Bridge + the virtual cable): no route out at all</td></tr>
+</table></div>
+<p class="small"><b>Connections your Mac starts are allowed:</b> FileZilla → a console's FTP server works with the firewall on; the console can reply, but it can't start anything itself. The FTP watch uses the same kind of connection.</p>
+
+<h2 id="settings">settings.json</h2>
+<p>In NXSPOOF's data folder, <code>~/Library/Application Support/NXSPOOF/settings.json</code> (the <code>data</code> shortcut; menu 6 → 3). Easiest: the dashboard's ⚙️ Configure, which checks every value and saves it in a tidy layout. By hand, JSON is strict: double quotes, no comma after the last item, no comments; a typo stops NXSPOOF with the line and column. Missing: built-in defaults. Options given at start override it for that run.</p>
+<p><span class="tag t-violet">from the code</span> The settings (<i>now</i>: a running NXSPOOF uses the change within about two seconds; <i>next start</i>: saved now, used from the next start):</p>
+<!-- generated: settings -->
+<div class="scroll"><table>
+<tr><th>Setting</th><th>Default</th><th>What it does</th><th>Accepts</th><th>Applies</th></tr>
+<tr><td><code>bridge.address</code></td><td><code>"172.16.0.1"</code></td><td>Thunderbolt Bridge's fixed address (setup sets it; pick another if it overlaps your home network)</td><td><code>172.16.0.1</code>, <code>10.254.0.1</code>, <code>192.168.254.1</code></td><td>next start</td></tr>
+<tr><td><code>logs.keep_last</code></td><td><code>0</code></td><td>Keep only the newest N run logs (0 = keep everything)</td><td>from 0</td><td>next start</td></tr>
+<tr><td><code>ftp.watch</code></td><td><code>true</code></td><td>Watch each console for an FTP server</td><td>true or false</td><td>next start</td></tr>
+<tr><td><code>ftp.port</code></td><td><code>5000</code></td><td>FTP port to check</td><td>from 1 to 65535</td><td>now</td></tr>
+<tr><td><code>ftp.check_every_seconds</code></td><td><code>3</code></td><td>How often to check while the FTP server is down</td><td>from 1</td><td>now</td></tr>
+<tr><td><code>ftp.recheck_when_up_seconds</code></td><td><code>30</code></td><td>How often to check while it's up, to notice when it goes down (0 = check once and stop)</td><td>from 0</td><td>now</td></tr>
+<tr><td><code>ftp.open_filezilla</code></td><td><code>false</code></td><td>Open FileZilla on the console when its FTP server comes up</td><td>true or false</td><td>now</td></tr>
+</table></div>
+<!-- /generated -->
+<p><span class="tag t-violet">from the code</span> <code>consoles</code>: one entry per console; only <code>mac</code> is required.</p>
+<!-- generated: console-fields -->
+<div class="scroll"><table>
+<tr><th>Field</th><th>What it does</th><th>Accepts</th></tr>
+<tr><td><code>name</code></td><td>Shown in every log line and on the dashboard</td><td>text</td></tr>
+<tr><td><code>model</code></td><td>Which Switch it is (the dashboard offers CONSOLE_MODELS); shown at start</td><td>text</td></tr>
+<tr><td><code>mac</code></td><td>How the console is recognized (System Settings &gt; Internet &gt; System MAC Address)</td><td>text</td></tr>
+<tr><td><code>owner</code></td><td>For your reference, handy for friends' consoles</td><td>text</td></tr>
+<tr><td><code>color</code></td><td>Name color in Terminal and on the dashboard</td><td><code>red</code>, <code>green</code>, <code>yellow</code>, <code>blue</code>, <code>magenta</code>, <code>cyan</code>, <code>white</code></td></tr>
+<tr><td><code>serial</code></td><td>For your reference</td><td>text</td></tr>
+<tr><td><code>system_version</code></td><td>For your reference</td><td>text</td></tr>
+<tr><td><code>ftp</code></td><td>Per-console overrides of the ftp section, e.g. {"port": 5000}</td><td>a group of settings in { }</td></tr>
+<tr><td><code>notes</code></td><td>Your notes, one text per line</td><td>a list of texts</td></tr>
+</table></div>
+<!-- /generated -->
+<p class="small"><b>Models</b> the dashboard offers: Switch V1 (Erista, unpatched / patched), Switch V2 (Mariko), Switch Lite (Mariko), Switch OLED (Mariko), Switch 2 (<code>CONSOLE_MODELS</code> in <code>settings/schema.py</code>, each with its details as a hint); any other text written by hand is kept. <b>Not settings (D30):</b> what only a run started by hand needs is an option (the firewall, sharing by hand, keeping it on, follow's style and colors), and the dashboard's port is remembered in <code>dash.json</code>. An older settings.json with those keys still loads: they're named as unknown, kept, not used.</p>
+<p class="small"><b>The FTP watch:</b> a server that was up counts as down after 3 failed checks in a row. While FileZilla is connected to it, it stays UP (many console FTP apps take one connection at a time): <code>FTP server busy (…) - still UP</code>. Checking means briefly connecting; if your FTP app shows "client connected" each time, set <code>recheck_when_up_seconds</code> to <code>0</code>.</p>
+<p class="small"><b>Export and import:</b> the dashboard's ⚙️ Configure (📤 Export never includes a password: the hotspot's lives in macOS; 📥 Import shows what it would change first), or menu 7 → 5 / 7 → 6: <code>nx_spoof.py settings export ~/Desktop/nxspoof-settings.json</code>, <code>… settings import …</code> (it says what changes and asks; <code>--yes</code> skips the question; refused while NXSPOOF or its dashboard is open). Every import keeps the previous file as <code>settings.json.before-import-&lt;date&gt;_&lt;time&gt;</code>.</p>
+
+<h2 id="commands">Commands</h2>
+<p><span class="tag t-violet">from the code</span> <code>python3 -B nx_spoof.py &lt;command&gt;</code>, from the nx-spoof folder (<code>cd</code>, a space, drag the folder onto the Terminal window, Enter). <code>sudo</code> where it says so. No command means <code>start</code>.</p>
+<!-- generated: commands -->
+<div class="scroll"><table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>nx_spoof.py start</code></td><td>start NXSPOOF in the background, then say whether it runs (the default; needs sudo); only a Stop (or the Mac sleeping) stops it</td></tr>
+<tr><td><code>nx_spoof.py dashboard</code></td><td>the dashboard on its own, no admin rights: settings, consoles, past runs, this Mac, Start</td></tr>
+<tr><td><code>nx_spoof.py check</code></td><td>quick self-test of the DNS and web answers, no admin rights needed</td></tr>
+<tr><td><code>nx_spoof.py cleanup</code></td><td>after a crash: remove leftover firewall rules and turn Internet Sharing off, with its own log (needs sudo)</td></tr>
+<tr><td><code>nx_spoof.py sharing</code></td><td>Internet Sharing: sharing status | sudo ... sharing on | off</td></tr>
+<tr><td><code>nx_spoof.py link</code></td><td>the virtual cable: link status | sudo ... link up | down</td></tr>
+<tr><td><code>nx_spoof.py setup</code></td><td>guided setup of this Mac: checks, fixes what's missing (asks first), explains the rest</td></tr>
+<tr><td><code>nx_spoof.py doctor</code></td><td>the setup checks only, nothing changed: ready or not, and why</td></tr>
+<tr><td><code>nx_spoof.py uninstall</code></td><td>undo what setup did (your files stay)</td></tr>
+<tr><td><code>nx_spoof.py settings</code></td><td>settings export &lt;file.json&gt; | settings import &lt;file.json&gt;: your settings and consoles to a file, or from one (checked first, the old ones kept)</td></tr>
+<tr><td><code>nx_spoof.py running</code></td><td>is a run active right now? says yes / no; exit 0 = yes (the dashboard and other commands don't count)</td></tr>
+<tr><td><code>nx_spoof.py stop</code></td><td>stop the running NXSPOOF, like the dashboard's Stop (no password: the run is you)</td></tr>
+<tr><td><code>nx_spoof.py follow</code></td><td>the newest run, live, in the Terminal style you pick (--console, --no-color); Ctrl+C only stops watching</td></tr>
+<tr><td><code>nx_spoof.py report</code></td><td>🐞 a problem report to paste into a GitHub issue: this Mac, setup, the last runs' problems, names replaced; printed, saved in logs/reports/, copied, and GitHub's new issue page opened (--full, --no-open)</td></tr>
+</table></div>
+<!-- /generated -->
+
+<h2 id="options">Options</h2>
+<p><span class="tag t-violet">from the code</span> For one run (or one command) only. The dashboard on its own takes only <code>--settings</code>: any other option given to it is named once at the top of its log and ignored.</p>
+<!-- generated: options -->
+<div class="scroll"><table>
+<tr><th>Option</th><th>What it does</th></tr>
+<tr><td><code>--settings …</code></td><td>settings file (default: settings.json in NXSPOOF's data folder, ~/Library/Application Support/NXSPOOF)</td></tr>
+<tr><td><code>--console technical|casual</code></td><td>follow's style (technical by default); the log file is always technical</td></tr>
+<tr><td><code>--no-color</code></td><td>plain text in Terminal (follow; colors are off in a file or a pipe anyway)</td></tr>
+<tr><td><code>--no-firewall</code></td><td>don't load the firewall (for comparison tests)</td></tr>
+<tr><td><code>--manual-sharing</code></td><td>you turn Internet Sharing on and off yourself</td></tr>
+<tr><td><code>--keep-sharing</code></td><td>leave Internet Sharing ON when NXSPOOF stops</td></tr>
+<tr><td><code>--no-ftp-watch</code></td><td>don't watch consoles for FTP servers</td></tr>
+<tr><td><code>--open-filezilla</code></td><td>open FileZilla when a console's FTP server comes up</td></tr>
+<tr><td><code>--ip …</code></td><td>testing: address to listen on (default: find the Internet Sharing network)</td></tr>
+<tr><td><code>--answer-ip …</code></td><td>testing: address given for the connection-test names (default: --ip)</td></tr>
+<tr><td><code>--dns-port N</code></td><td>testing: DNS port</td></tr>
+<tr><td><code>--http-port N</code></td><td>testing: web port for the fake connection test</td></tr>
+<tr><td><code>--probe …</code></td><td>tinkering: these names (comma-separated) get the Mac's address instead of BLOCKED, to see what a console then asks; their web requests are still refused, and logged in full</td></tr>
+<tr><td><code>--anyway</code></td><td>start: even when setup's checks say this Mac isn't ready (the dashboard's Start anyway)</td></tr>
+<tr><td><code>--fix</code></td><td>start: setup's fixes first when this Mac isn't ready, then the start (the dashboard's Fix and start)</td></tr>
+<tr><td><code>--allow-sleep</code></td><td>start: let this Mac sleep during the run (by default a run keeps it awake: the hotspot sleeps with it)</td></tr>
+<tr><td><code>--no-keeper</code></td><td>keep the whole run root in one process (no privilege separation; for comparison and debugging)</td></tr>
+<tr><td><code>--yes</code></td><td>setup, uninstall: no questions, the answer is yes (the dashboard's This Mac buttons use it)</td></tr>
+<tr><td><code>--only …</code></td><td>setup: fix only these steps, e.g. --only bridge,cable (the others are checked, not fixed)</td></tr>
+<tr><td><code>--skip …</code></td><td>setup: never fix these steps, e.g. --skip cable (they're checked and reported)</td></tr>
+<tr><td><code>--to before|defaults</code></td><td>uninstall: what Undo puts back: before (this Mac as it was before NXSPOOF changed it; the default when NXSPOOF has a record) or defaults (macOS's own)</td></tr>
+<tr><td><code>--task …</code></td><td>set by the dashboard: a ticket the command writes into its records, so the dashboard follows it</td></tr>
+<tr><td><code>--full</code></td><td>report: add the whole technical log of the newest run (folded)</td></tr>
+<tr><td><code>--no-open</code></td><td>report: don't open GitHub's new issue page, only print its address</td></tr>
+</table></div>
+<!-- /generated -->
+
+<h2 id="by-hand">By hand</h2>
+<div class="scroll"><table>
+<tr><th>What</th><th>Command</th><th>Menu</th></tr>
+<tr><td>Start on the Mac only, no Wi-Fi (a test run)</td><td><code>sudo python3 -B nx_spoof.py start --ip 127.0.0.1</code></td><td>—</td></tr>
+<tr><td>Check the latest run against the real-run checklist (its records and the Mac's state)</td><td><code>sudo python3 -B tools/verify_run.py</code> (or a log: <code>… verify_run.py data/logs/&lt;file&gt;.log</code>; <code>--all</code>: which ways of stopping the runs have covered)</td><td>6 → 1</td></tr>
+<tr><td>The virtual cable: status (exit 0 = plugged in) / in / out</td><td><code>python3 -B nx_spoof.py link status</code> · <code>sudo … link up</code> · <code>sudo … link down</code></td><td>—</td></tr>
+<tr><td>Internet Sharing: status / on / off</td><td><code>python3 -B nx_spoof.py sharing status</code> · <code>sudo … sharing on</code> · <code>sudo … sharing off</code></td><td>—</td></tr>
+<tr><td>Is the hotspot really up?</td><td><code>ifconfig bridge100 | grep "inet "</code> → <code>inet 192.168.2.1 …</code></td><td>—</td></tr>
+<tr><td>The data folder, the latest log</td><td><code>open data</code> · <code>open data/last_run.log</code></td><td>6 → 3 · 6 → 2</td></tr>
+<tr><td>All the tests, then the watchdog (on Apple's 3.9 too: <code>/usr/bin/python3</code>)</td><td><code>python3 -B tools/run_tests.py</code></td><td>8 → 1</td></tr>
+<tr><td>A simulated session, compared with the reference run</td><td><code>python3 -B tools/simulate.py new --out /tmp/x</code> then <code>--compare tests/fixtures/reference/run /tmp/x</code></td><td>8 → 2</td></tr>
+<tr><td>Watch a simulated session on the dashboard</td><td><code>python3 -B tools/simulate.py new --hold 120 --dashboard --out /tmp/x</code>, then <code>http://localhost:8897/</code></td><td>8 → 4</td></tr>
+<tr><td>The guardrails, then the watchdog's full report</td><td><code>python3 -B tools/guardrails.py</code> · <code>python3 -B tools/health.py --all</code></td><td>8 → 5</td></tr>
+<tr><td>The docs' generated tables, rewritten from the code</td><td><code>python3 -B tools/docs.py --write</code></td><td>8 → 7</td></tr>
+</table></div>
+<p class="small">Setup, uninstall and cleanup write their own log (<code>…-setup.log</code>, <code>…-uninstall.log</code>, <code>…-cleanup.log</code>) and records, which the dashboard's This Mac follows; <code>last_run.log</code> keeps pointing at the latest real run.</p>
+
+<h2 id="files">Files</h2>
+<h3>In the nx-spoof folder</h3>
+<div class="scroll"><table>
+<tr><th>File</th><th>What it is</th></tr>
+<tr><td><code>NXSPOOF.app</code></td><td><b>Double-click this:</b> the dashboard in your browser, no Terminal window. An AppleScript applet built on your Mac from <code>scripts/NXSPOOF.applescript</code> (never shipped); the first time, macOS asks whether it may use the folder it's in</td></tr>
+<tr><td><code>Create NXSPOOF.app.command</code></td><td>Double-click once after getting the folder: builds <code>NXSPOOF.app</code> with its icon, then opens it. Again to rebuild it (menu 8 → 6)</td></tr>
+<tr><td><code>menu.command</code></td><td>The menu: everything from the Terminal, by number (<a href="two-doors.html">The two doors</a>)</td></tr>
+<tr><td><code>nx_spoof.py</code></td><td>NXSPOOF's commands (<a href="#commands">above</a>): a thin launcher for <code>nxspoof/</code></td></tr>
+<tr><td><code>nxspoof/</code></td><td>NXSPOOF itself (<a href="how-its-built.html#modules">every module</a>); the dashboard's page is in <code>nxspoof/dashboard/web/</code></td></tr>
+<tr><td><code>docs/</code></td><td>These pages (plain HTML, <code>style.css</code>, <code>docs.js</code>, the tab icon <code>favicon.png</code> and <code>favicon.ico</code>)</td></tr>
+<tr><td><code>scripts/dashboard.command</code></td><td>The dashboard with a Terminal window beside it (closing that window closes it): the fallback, e.g. if macOS refused <code>NXSPOOF.app</code> the folder</td></tr>
+<tr><td><code>scripts/open_dashboard.sh</code></td><td>What <code>NXSPOOF.app</code> runs: checks for Python, starts <code>nx_spoof.py dashboard</code> in the background, returns at once</td></tr>
+<tr><td><code>scripts/NXSPOOF.applescript</code></td><td>The source of <code>NXSPOOF.app</code></td></tr>
+<tr><td><code>scripts/NXSPOOF.icns</code></td><td><code>NXSPOOF.app</code>'s icon (the polite "ok": a white speech bubble on green), put in by <code>Create NXSPOOF.app.command</code>; drawn by <code>tools/icon.py</code></td></tr>
+<tr><td><code>scripts/need_python.sh</code></td><td>"Is Apple's Python 3.9+ here?", checked first by every double-click file (offers Apple's command-line tools if not)</td></tr>
+<tr><td><code>data</code></td><td>Shortcut to NXSPOOF's data folder (below), made the first time the dashboard or a run starts</td></tr>
+<tr><td><code>README.md</code></td><td>What GitHub shows first: what NXSPOOF is, the quick start, links to these pages</td></tr>
+<tr><td><code>LICENSE</code></td><td>MIT: use it, change it, share it; no warranty</td></tr>
+<tr><td><code>CLAUDE.md</code></td><td>The rules for Claude when working on NXSPOOF, loaded in every session</td></tr>
+<tr><td><code>CLAUDE.local.md</code></td><td>Optional: your own instructions for Claude, read right after <code>CLAUDE.md</code>; ignored by git, so nothing personal ends up in the repository</td></tr>
+<tr><td><code>MEMO.md</code></td><td>Only there when the watchdog has something to say (what got too long or tangled, and what to do)</td></tr>
+<tr><td><code>.github/ISSUE_TEMPLATE/</code></td><td>GitHub's "new issue" form for a problem (<code>problem.yml</code>): what happened, and the place to paste NXSPOOF's 🐞 report</td></tr>
+<tr><td><code>.gitignore</code></td><td>What git leaves out: <code>NXSPOOF.app</code>, the <code>data</code> shortcut, <code>MEMO.md</code>, <code>private/</code>, <code>CLAUDE.local.md</code>, caches</td></tr>
+<tr><td><code>private/</code></td><td>The owner's and Claude's own notes: never in git, never public. If it holds <code>personal.txt</code> (one word per line: names, emails, real console addresses), a guardrail keeps those words out of every file git would publish</td></tr>
+<tr><td><code>tests/</code></td><td>The unit tests, no sudo; <code>tests/fixtures/reference/</code> holds the simulated session's reference run</td></tr>
+<tr><td><code>tools/run_tests.py</code></td><td>Runs all the tests, from any folder, then the guardrails and the watchdog</td></tr>
+<tr><td><code>tools/guardrails.py</code></td><td>The guardrails: the principles as checks (<a href="how-its-built.html#safeguards">the rules</a>)</td></tr>
+<tr><td><code>tools/health.py</code></td><td>The watchdog: how long and tangled the code is; writes <code>MEMO.md</code>. <code>--all</code>, <code>--accept "why"</code></td></tr>
+<tr><td><code>tools/health_baseline.json</code></td><td>The watchdog's last accepted state, with every acceptance and its reason</td></tr>
+<tr><td><code>tools/docs.py</code></td><td>Writes these pages' generated tables from the code; the tests check they're current</td></tr>
+<tr><td><code>tools/icon.py</code></td><td>Draws NXSPOOF's icon from shapes: <code>scripts/NXSPOOF.icns</code>, the browser tabs' <code>favicon.png</code> and <code>favicon.ico</code> (dashboard and docs), and the dashboard header's <code>logo.png</code>. <code>--preview DIR</code>: every size on light and dark (menu 8 → 8)</td></tr>
+<tr><td><code>tools/menu.py</code></td><td>The menu behind <code>menu.command</code> (one row per item)</td></tr>
+<tr><td><code>tools/simulate.py</code></td><td>Plays a scripted session with fake consoles through the real start-to-stop run on a fake Mac, and compares it with the reference run</td></tr>
+<tr><td><code>tools/verify_run.py</code></td><td>Checks a real run against the checklist, from its records and the Mac's state</td></tr>
+</table></div>
+<h3>In the data folder (<code>data</code>)</h3>
+<div class="scroll"><table>
+<tr><th>File</th><th>What it is</th></tr>
+<tr><td><code>settings.json</code></td><td>Your settings and consoles (<code>settings.json.before-import-…</code>: kept by each import)</td></tr>
+<tr><td><code>mac_before.json</code></td><td>How this Mac was before NXSPOOF first changed it (the bridge's address), for Undo's "back to before"</td></tr>
+<tr><td><code>logs/</code></td><td>One <code>.log</code> and one <code>.jsonl</code> per run (<code>last_run.log</code> points to the latest); <code>…-setup</code>, <code>-uninstall</code>, <code>-cleanup</code>, <code>-dashboard</code> logs (never counted by <code>keep_last</code>); <code>reports/</code>: the 🐞 problem reports made from the Terminal (<code>…-report.md</code>); hidden <code>.page_start.txt</code> and <code>.page_task.txt</code>: what the last start or This Mac task from the page printed</td></tr>
+<tr><td><code>dash.json</code></td><td>The dashboard's remembered port, and its process id while it's open</td></tr>
+<tr><td><code>run.lock</code>, <code>run.json</code>, <code>run_state.json</code>, <code>stop.json</code></td><td>While NXSPOOF runs: the lock (one run at a time), where the run is, its state for the dashboard, a Stop's note. Left over, they mean nothing: only a held lock counts</td></tr>
+<tr><td><code>program/</code></td><td>The copy of <code>nx_spoof.py</code> and <code>nxspoof/</code> every start runs (never edit it: edit the nx-spoof folder)</td></tr>
+</table></div>
+
+</main>
+</body>
+</html>

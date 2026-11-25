@@ -1,0 +1,76 @@
+[23:57:39] LOG   this run: logs/2026-11-13_23-57-39.log
+[23:57:39] SETTINGS loaded settings.json (2 consoles)
+[23:57:39] SETTINGS console=casual (Terminal style; this file is always technical)
+[23:57:39] SETTINGS firewall=True  auto_sharing=True  keep_sharing=False  ftp_watch=True  open_filezilla=False
+[23:57:39] SETTINGS console Switch 1  dc:68:eb:5a:11:c1  Nintendo Switch
+[23:57:39] SETTINGS console Switch 2  48:f1:eb:5a:22:c2  Nintendo Switch 2
+[23:57:39] DASH  live dashboard on http://localhost:8897/ (this Mac only)
+[23:57:39] SHARING turning Internet Sharing ON: enabled=True  from=Thunderbolt Bridge (bridge0)  to=en0  [simulated]
+[23:57:39] Looking for the Internet Sharing Wi-Fi network (bridge100)...
+[23:57:39] Found Internet Sharing on bridge100, Mac address on that network is 192.168.2.1
+[23:57:39] DNS   listening on 192.168.2.1:5399 (only the 2 test names answered, everything else BLOCKED)
+[23:57:39] FIREWALL ON  console may only reach the Mac for DHCP, DNS and the web test; every other packet is dropped
+[23:57:39] HTTP  listening on 192.168.2.1:8098 (only the 2 test names answered)
+[23:57:39] WIFI  watching for consoles joining the Wi-Fi and getting an address
+[23:57:39] DNS   127.0.0.1 asked A     ctest.cdn.nintendo.net -> 192.168.2.1  (Switch 1 connection test)
+[23:57:39] CHECK DNS  PASS ctest.cdn.nintendo.net -> 192.168.2.1
+[23:57:39] CHECK DNS  PASS ctest.p01.ctest.srv.nintendo.net -> 192.168.2.1
+[23:57:39] DNS   127.0.0.1 asked A     ctest.p01.ctest.srv.nintendo.net -> 192.168.2.1  (Switch 2 connection test)
+[23:57:39] CHECK DNS  PASS example.com -> 0.0.0.0
+[23:57:39] DNS   127.0.0.1 asked A     example.com -> BLOCKED
+[23:57:39] CHECK HTTP PASS ctest.cdn.nintendo.net -> 200 ok
+[23:57:39] CHECK HTTP PASS ctest.p01.ctest.srv.nintendo.net -> 200 ok
+[23:57:39] CHECK HTTP PASS example.com -> 403
+[23:57:39] READY Everything works on the Mac side. Now connect the console. Ctrl+C to stop.
+[23:57:41] DHCP  gave address 127.0.0.1 to Switch 2 (48:f1:eb:5a:22:c2)
+[23:57:41] FTP   watching Switch 2 for an FTP server on port 5021 (start it on the console)
+[23:57:42] WIFI  Switch 2 (48:f1:eb:5a:22:c2) joined the Wi-Fi
+[23:57:42] DNS   Switch 2 (127.0.0.1) asked A     ctest.p01.ctest.srv.nintendo.net -> 192.168.2.1  (Switch 2 connection test)
+[23:57:42] HTTP  Switch 2 (127.0.0.1) GET http://ctest.p01.ctest.srv.nintendo.net/  (UA: libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)) -> 200 ok  (Switch 2 connection test)
+[23:57:43] DNS   Switch 2 (127.0.0.1) asked A     dauth.p01.lp1.ndas.srv.nintendo.net -> BLOCKED
+[23:57:44] DNS   Switch 2 (127.0.0.1) asked A     sun.p01.lp1.d4c.srv.nintendo.net -> BLOCKED
+[23:57:44] DNS   Switch 2 (127.0.0.1) asked A     dauth.p01.lp1.ndas.srv.nintendo.net -> BLOCKED
+[23:57:45] DNS   Switch 2 (127.0.0.1) asked A     api.p01.lp1.ctest.srv.nintendo.net -> BLOCKED
+[23:57:45] HTTP  Switch 2 (127.0.0.1) GET http://api.github.com/repos/x  (UA: Mozilla/5.0 (Nintendo Switch)) -> BLOCKED (403)
+[23:57:51] FTP   Switch 2: FTP server is UP -> ftp://127.0.0.1:5021
+[23:57:54] FTP   Switch 2: FTP server went DOWN (watching again)
+[23:57:57] WIFI  Switch 1 (dc:68:eb:5a:11:c1) joined the Wi-Fi
+[23:58:06] WIFI  Switch 1 (dc:68:eb:5a:11:c1) left the Wi-Fi (disconnected, was on for 8s)
+[23:58:07] WIFI  Unknown console (0a:01:02:03:04:05) joined the Wi-Fi
+[23:58:07] NEW   unknown console 0a:01:02:03:04:05 - not in settings.json yet (a ready-to-paste entry is printed in the summary when you stop)
+[23:58:16] WIFI  Switch 2 (48:f1:eb:5a:22:c2) left the Wi-Fi (disconnected, was on for 34s)
+[23:58:18] WIFI  Switch 2 (48:f1:eb:5a:22:c2) joined the Wi-Fi
+[23:58:18] DNS   Switch 2 (127.0.0.1) asked A     ctest.p01.ctest.srv.nintendo.net -> 192.168.2.1  (Switch 2 connection test)
+[23:58:18] HTTP  Switch 2 (127.0.0.1) GET http://ctest.p01.ctest.srv.nintendo.net/  (UA: libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)) -> 200 ok  (Switch 2 connection test)
+[23:58:20] Stopping...
+[23:58:20] pf           0 packets  block drop in quick on bridge100 inet6 all
+[23:58:20] pf           6 packets  pass in quick on bridge100 inet proto udp from any port = 68 to any port = 67 keep state
+[23:58:20] pf          14 packets  pass in quick on bridge100 inet proto udp from any to 192.168.2.1 port = 53 keep state
+[23:58:20] pf          42 packets  pass in quick on bridge100 inet proto tcp from any to 192.168.2.1 port = 80 flags S/SA keep state
+[23:58:20] pf           0 packets  block drop in quick on bridge100 all
+[23:58:20] pf    firewall rules removed
+[23:58:20] SUMMARY ----------------------------------------------------------------
+[23:58:20] SUMMARY run 23:57:39 -> 23:58:20 (0:00:40)
+[23:58:20] SUMMARY Switch 2  48:f1:eb:5a:22:c2  127.0.0.1
+[23:58:20] SUMMARY    on the Wi-Fi   : 23:57:42 -> 23:58:16, 23:58:18 -> still on at stop  (total 36s)
+[23:58:20] SUMMARY    tests passed   : 2 x Switch 2 connection test
+[23:58:20] SUMMARY    FTP server     : UP 23:57:51, went DOWN 23:57:54 -> ftp://127.0.0.1:5021
+[23:58:20] SUMMARY    blocked        : 5 lookups, 4 different names
+[23:58:20] SUMMARY         2 x dauth.p01.lp1.ndas.srv.nintendo.net
+[23:58:20] SUMMARY         1 x sun.p01.lp1.d4c.srv.nintendo.net
+[23:58:20] SUMMARY         1 x api.p01.lp1.ctest.srv.nintendo.net
+[23:58:20] SUMMARY         1 x http://api.github.com
+[23:58:20] SUMMARY    User-Agent     : libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)
+[23:58:20] SUMMARY    User-Agent     : Mozilla/5.0 (Nintendo Switch)
+[23:58:20] SUMMARY Switch 1  dc:68:eb:5a:11:c1  (no address)
+[23:58:20] SUMMARY    on the Wi-Fi   : 23:57:57 -> 23:58:06  (total 8s)
+[23:58:20] SUMMARY    tests passed   : none
+[23:58:20] SUMMARY Unknown console  0a:01:02:03:04:05  (no address)
+[23:58:20] SUMMARY    on the Wi-Fi   : 23:58:07 -> still on at stop  (total 12s)
+[23:58:20] SUMMARY    tests passed   : none
+[23:58:20] SUMMARY firewall: allowed DHCP 6  DNS 14  web test 42   ||   IPv6 (blocked) 0  everything else (blocked) 0
+[23:58:20] SUMMARY NEW console 0a:01:02:03:04:05 - paste into "consoles" in settings.json:
+[23:58:20] SUMMARY    {"name": "Friend's Switch", "model": "", "mac": "0a:01:02:03:04:05", "owner": "", "color": "yellow", "ftp": {"port": 5000}, "notes": []}
+[23:58:20] SUMMARY ----------------------------------------------------------------
+[23:58:20] SHARING turned Internet Sharing OFF - your Mac goes back to your home Wi-Fi
+[23:58:20] Stopped.

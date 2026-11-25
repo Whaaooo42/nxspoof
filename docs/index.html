@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NXSPOOF docs</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html" class="on" aria-current="page">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<p class="hero-icon"><img src="images/icon.png" width="96" height="96" alt="NXSPOOF's icon: a white speech bubble saying ok, on green"></p>
+<h1>NXSPOOF</h1>
+<p class="lead">Your Mac becomes a Wi-Fi hotspot for Nintendo Switch and Switch 2 consoles that answers <b>only</b> their "am I online?" connection test, and blocks everything else. Your consoles think they're online and keep working with things that need a network (an FTP app on the console, for example), while nothing reaches Nintendo or the internet.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="images/dashboard-dark.png"><img src="images/dashboard-light.png" alt="The NXSPOOF dashboard during a session: one Switch online with its file server up (Copy, Open in FileZilla) and 5 blocked attempts, one gone, an unknown console with its Add this console form, and the live log"></picture><figcaption>A simulated session (made-up consoles): menu 8 → 4 shows it on your Mac, no Switch needed.</figcaption></figure>
+<div class="banner"><b>In one sentence:</b> NXSPOOF is the Wi-Fi network, the name lookup <b>and</b> Nintendo's test page, all on your Mac, behind a firewall that drops everything else.</div>
+
+<h2>Two ways in</h2>
+<div class="two">
+  <div class="card"><span class="tag t-blue">the usual way</span><h3>NXSPOOF.app: the dashboard</h3>
+    <p>Double-click it: a page opens in your browser. ▶ Start (your Mac password in macOS's own window), your consoles as they join, the live log in plain words, ⚙️ Configure, past runs, ■ Stop. Closing the page never stops NXSPOOF by accident: it asks first.</p>
+    <p><a href="guide.html">The guide</a></p></div>
+  <div class="card"><span class="tag t-gray">the Terminal way</span><h3>menu.command and nx_spoof.py</h3>
+    <p>Everything by number, or every command and <code>--flag</code> by hand. The same start, the same program and the same data folder as the app: the two doors open onto one NXSPOOF.</p>
+    <p><a href="two-doors.html">The two doors</a></p></div>
+</div>
+
+<h2>What you see</h2>
+<pre class="term">🎮 Switch 2 connected
+🌐 Switch 2 thinks it's online, all good
+🛡️ Switch 2: 4 attempts to reach the internet blocked so far
+📁 Switch 2's file server is ready: ftp://192.168.2.3:5000
+👋 Switch 2 left (it was here 3 min 42 s)</pre>
+<p class="small muted">The casual log. The technical one has every DNS question, web request and firewall count; every run is saved with both.</p>
+
+<h2>The pages</h2>
+<!-- generated: pages -->
+<h3>Use it</h3>
+<div class="cards">
+<a class="card link" href="guide.html"><b>Guide</b><span>Start, stop, the dashboard, a friend's Switch: the everyday things</span></a>
+<a class="card link" href="troubleshooting.html"><b>Troubleshooting</b><span>Something's wrong: type what you see, find the fix</span></a>
+<a class="card link" href="setup.html"><b>Setup</b><span>A new Mac, step by step (the dashboard does most of it)</span></a>
+</div>
+<h3>Understand it</h3>
+<div class="cards">
+<a class="card link" href="how-it-works.html"><b>How it works</b><span>The trick, the three walls, and the four parts of NXSPOOF</span></a>
+<a class="card link" href="connection-test.html"><b>The connection test</b><span>What happens, packet by packet, until a Switch says connected</span></a>
+<a class="card link" href="two-doors.html"><b>The two doors</b><span>NXSPOOF.app and the menu; how a run starts, stops, and what runs as root</span></a>
+</div>
+<h3>Look it up</h3>
+<div class="cards">
+<a class="card link" href="reference.html"><b>Reference</b><span>Settings, options, commands, log lines, the dashboard's buttons, every file</span></a>
+<a class="card link" href="real-runs.html"><b>Real runs</b><span>The checklist on the real Mac, after a big change</span></a>
+</div>
+<h3>Build it</h3>
+<div class="cards">
+<a class="card link" href="how-its-built.html"><b>How it's built</b><span>The layers, the rules, every module, the platform contract</span></a>
+<a class="card link" href="decisions.html"><b>Decisions</b><span>D1 to D30: what was decided, and why</span></a>
+</div>
+<!-- /generated -->
+
+<h2>About these pages</h2>
+<p class="small">They're the <code>docs/</code> folder of NXSPOOF, plain HTML that works offline: the dashboard shows them under <b>📖 Help</b>, the menu's Docs (9) opens them in your browser, and the public site is the same folder. Every table that mirrors the code (settings, options, commands, the menu, the modules) is written from the code itself by <code>tools/docs.py</code>, so it can't fall behind.</p>
+
+</main>
+</body>
+</html>

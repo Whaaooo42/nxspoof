@@ -1,0 +1,6335 @@
+{
+ "accepted": {},
+ "copies": [],
+ "files": {
+  "nxspoof/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 2,
+   "functions": {}
+  },
+  "nxspoof/app/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/app/background.py": {
+   "file_fan_out": 6,
+   "file_lines": 96,
+   "functions": {
+    "ask_to_stop": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "follow_args": {
+     "complexity": 5,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "follow_command": {
+     "complexity": 11,
+     "function_lines": 31,
+     "nesting": 4,
+     "parameters": 7
+    },
+    "lines_for": {
+     "complexity": 10,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "newest_records": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "stop_command": {
+     "complexity": 4,
+     "function_lines": 14,
+     "nesting": 2,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/app/center.py": {
+   "file_fan_out": 16,
+   "file_lines": 181,
+   "functions": {
+    "Center.__init__": {
+     "complexity": 1,
+     "function_lines": 35,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "Center._close_down": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Center._open_browser": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Center._serve": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Center.close_keeping_run": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Center.hotspot_name": {
+     "complexity": 5,
+     "function_lines": 11,
+     "nesting": 3,
+     "parameters": 0
+    },
+    "Center.idle": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Center.is_starting": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Center.logs_dir": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Center.mac_checks": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Center.note": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "Center.open_sharing_settings": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Center.request_stop": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Center.run": {
+     "complexity": 9,
+     "function_lines": 37,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Center.run_appeared": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Center.run_details": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Center.run_ended": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Center.state": {
+     "complexity": 3,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/app/cli.py": {
+   "file_fan_out": 0,
+   "file_lines": 78,
+   "functions": {
+    "Option.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "Option.dest": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "build_parser": {
+     "complexity": 5,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "given_options": {
+     "complexity": 5,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "parse_args": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/commands.py": {
+   "file_fan_out": 10,
+   "file_lines": 75,
+   "functions": {
+    "check_command": {
+     "complexity": 7,
+     "function_lines": 24,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "find_places": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "link_command": {
+     "complexity": 6,
+     "function_lines": 16,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "link_refusal": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "load_store": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "prepare_data": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "running_command": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/app/config.py": {
+   "file_fan_out": 3,
+   "file_lines": 71,
+   "functions": {
+    "RunConfig.__init__": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "RunConfig.cable_line": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "RunConfig.console_lines": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "RunConfig.describe": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "RunConfig.extra": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "RunConfig.get": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "RunConfig.preflight": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "RunConfig.source": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "RunConfig.stop_hint": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "build_config": {
+     "complexity": 11,
+     "function_lines": 20,
+     "nesting": 3,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/app/context.py": {
+   "file_fan_out": 5,
+   "file_lines": 42,
+   "functions": {
+    "Context.__init__": {
+     "complexity": 3,
+     "function_lines": 13,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "Context.overridden_by": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Context.request_stop": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Context.set_phase": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Context.setting": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/hotspotwatch.py": {
+   "file_fan_out": 3,
+   "file_lines": 97,
+   "functions": {
+    "HotspotWatch.__init__": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "HotspotWatch._back": {
+     "complexity": 2,
+     "function_lines": 11,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "HotspotWatch._loop": {
+     "complexity": 4,
+     "function_lines": 4,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "HotspotWatch._put_back": {
+     "complexity": 7,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "HotspotWatch._still_down": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "HotspotWatch._wait_up": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "HotspotWatch._why": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "HotspotWatch.recover": {
+     "complexity": 9,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "HotspotWatch.start": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "HotspotWatch.stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "HotspotWatch.up": {
+     "complexity": 5,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/app/keeper.py": {
+   "file_fan_out": 9,
+   "file_lines": 187,
+   "functions": {
+    "Keeper.__init__": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 5
+    },
+    "Keeper._end_frozen": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Keeper._track": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "Keeper.clean_up": {
+     "complexity": 11,
+     "function_lines": 24,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Keeper.handle": {
+     "complexity": 9,
+     "function_lines": 21,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Keeper.serve": {
+     "complexity": 11,
+     "function_lines": 24,
+     "nesting": 3,
+     "parameters": 0
+    },
+    "KeeperSystem.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "KeeperSystem._ask": {
+     "complexity": 5,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "KeeperSystem.firewall_apply": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "KeeperSystem.firewall_counters": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.firewall_flush": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.firewall_leftovers": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.is_root": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.open_socket": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "KeeperSystem.plug_cable": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.privileges": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.root_watch": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "KeeperSystem.root_watch.watch": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "KeeperSystem.set_sharing": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "KeeperSystem.still_here": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "KeeperSystem.unplug_cable": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "is_int": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "is_ipv4": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "split": {
+     "complexity": 5,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/app/launch.py": {
+   "file_fan_out": 5,
+   "file_lines": 13,
+   "functions": {
+    "center_command": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 5
+    }
+   }
+  },
+  "nxspoof/app/main.py": {
+   "file_fan_out": 11,
+   "file_lines": 50,
+   "functions": {
+    "dispatch": {
+     "complexity": 13,
+     "function_lines": 25,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "main": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "report_args": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/app/pagewatch.py": {
+   "file_fan_out": 0,
+   "file_lines": 33,
+   "functions": {
+    "PageWatch.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "PageWatch.check": {
+     "complexity": 11,
+     "function_lines": 23,
+     "nesting": 1,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/app/password.py": {
+   "file_fan_out": 3,
+   "file_lines": 28,
+   "functions": {
+    "ask": {
+     "complexity": 5,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "say_not_started": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "when_answered": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/app/reporting.py": {
+   "file_fan_out": 6,
+   "file_lines": 49,
+   "functions": {
+    "_ask": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "attach": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "new_issue_url": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "report_command": {
+     "complexity": 3,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 5
+    },
+    "report_text": {
+     "complexity": 4,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/app/run.py": {
+   "file_fan_out": 16,
+   "file_lines": 355,
+   "functions": {
+    "Run.__init__": {
+     "complexity": 6,
+     "function_lines": 38,
+     "nesting": 1,
+     "parameters": 7
+    },
+    "Run._answer_no": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Run._cable_out": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run._check_stop": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run._describe_settings": {
+     "complexity": 5,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run._dns_server": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "Run._fatal": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "Run._find_hotspot": {
+     "complexity": 11,
+     "function_lines": 35,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Run._here_i_am": {
+     "complexity": 2,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Run._open_log": {
+     "complexity": 5,
+     "function_lines": 19,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Run._plug_cable": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run._protected": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Run._root_lost": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Run._say_stopping": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run._selftest": {
+     "complexity": 3,
+     "function_lines": 16,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "Run._start_dns": {
+     "complexity": 9,
+     "function_lines": 20,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "Run._start_monitors": {
+     "complexity": 4,
+     "function_lines": 16,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run._start_web": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Run._this_mac": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Run._wait": {
+     "complexity": 4,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Run.execute": {
+     "complexity": 5,
+     "function_lines": 16,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run.log": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 5
+    },
+    "Run.shutdown": {
+     "complexity": 9,
+     "function_lines": 29,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Run.start": {
+     "complexity": 8,
+     "function_lines": 32,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Run.wifi_name": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/runfollow.py": {
+   "file_fan_out": 5,
+   "file_lines": 71,
+   "functions": {
+    "RunFollow.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "RunFollow._read": {
+     "complexity": 9,
+     "function_lines": 19,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "RunFollow.check": {
+     "complexity": 4,
+     "function_lines": 13,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "RunFollow.open_filezilla": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "RunFollow.pid": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunFollow.present": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunFollow.register_controls": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "RunFollow.state": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunFollow.stop": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/runnet.py": {
+   "file_fan_out": 4,
+   "file_lines": 95,
+   "functions": {
+    "NetSteps._firewall_off": {
+     "complexity": 4,
+     "function_lines": 14,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "NetSteps._hotspot": {
+     "complexity": 8,
+     "function_lines": 16,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "NetSteps._load_firewall": {
+     "complexity": 10,
+     "function_lines": 29,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "NetSteps._sharing_off": {
+     "complexity": 5,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "NetSteps._sharing_on": {
+     "complexity": 5,
+     "function_lines": 18,
+     "nesting": 3,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/app/runstate.py": {
+   "file_fan_out": 3,
+   "file_lines": 46,
+   "functions": {
+    "NoControls.available": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunState.__init__": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "RunState.start": {
+     "complexity": 1,
+     "function_lines": 7,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunState.start.loop": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "RunState.state": {
+     "complexity": 2,
+     "function_lines": 10,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunState.stop": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "RunState.write": {
+     "complexity": 4,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/app/signals.py": {
+   "file_fan_out": 0,
+   "file_lines": 13,
+   "functions": {
+    "install": {
+     "complexity": 2,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "install.handler": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "restore": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/start.py": {
+   "file_fan_out": 12,
+   "file_lines": 114,
+   "functions": {
+    "Answer.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "Answer.drop": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Answer.send": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "already_running": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "fix_first": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "ready": {
+     "complexity": 7,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "report": {
+     "complexity": 7,
+     "function_lines": 15,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "run_from_copy": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "run_in_background": {
+     "complexity": 3,
+     "function_lines": 15,
+     "nesting": 1,
+     "parameters": 7
+    },
+    "start_command": {
+     "complexity": 8,
+     "function_lines": 25,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "where": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/app/starter.py": {
+   "file_fan_out": 7,
+   "file_lines": 96,
+   "functions": {
+    "PageStart.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "PageStart._after_password": {
+     "complexity": 7,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "PageStart._watch": {
+     "complexity": 7,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "PageStart._with_password": {
+     "complexity": 1,
+     "function_lines": 10,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "PageStart.busy": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "PageStart.done": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "PageStart.shown": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "PageStart.start": {
+     "complexity": 13,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "fix_mac": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "mac_checks": {
+     "complexity": 4,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "renamed_note": {
+     "complexity": 9,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/app/system.py": {
+   "file_fan_out": 16,
+   "file_lines": 111,
+   "functions": {
+    "System.__init__": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.answer": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.ask_user": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "System.bind_address": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.connected_to": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.copy_text": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.dhcp_monitor": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.filezilla_installed": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.find_sharing_interface": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.firewall_apply": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "System.firewall_counters": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.firewall_flush": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.firewall_leftovers": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.give_link_to_user": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.give_to_user": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.hotspot_settings": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.in_background": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.interfaces": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.is_root": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.mac_fix": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.mac_for_ip": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "System.mac_problems": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.machine_facts": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.open_filezilla": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.open_sharing_settings": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.open_socket": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "System.open_url": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.password_outcome": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.personal_words": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.places": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.plug_cable": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "System.privileges": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "System.restart_from": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.root_watch": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.set_sharing": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.sharing_running": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.start_with_password": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "System.still_here": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.stop_run": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "System.unplug_cable": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "System.wait_answer": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "System.wifi_monitor": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/tasks.py": {
+   "file_fan_out": 6,
+   "file_lines": 149,
+   "functions": {
+    "Leftovers.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Leftovers.check": {
+     "complexity": 11,
+     "function_lines": 21,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Leftovers.state": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "MacTasks.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "MacTasks._answered": {
+     "complexity": 5,
+     "function_lines": 19,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "MacTasks._find": {
+     "complexity": 6,
+     "function_lines": 9,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "MacTasks._follow": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "MacTasks._read": {
+     "complexity": 5,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "MacTasks.busy": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "MacTasks.run": {
+     "complexity": 7,
+     "function_lines": 20,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "MacTasks.state": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "chosen": {
+     "complexity": 7,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "cleaned_since": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "shown_run": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "summary": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/app/transfer.py": {
+   "file_fan_out": 5,
+   "file_lines": 53,
+   "functions": {
+    "ask_yes": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "export_settings": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "import_settings": {
+     "complexity": 10,
+     "function_lines": 21,
+     "nesting": 2,
+     "parameters": 6
+    },
+    "settings_command": {
+     "complexity": 9,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 5
+    }
+   }
+  },
+  "nxspoof/consoles/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/consoles/activity.py": {
+   "file_fan_out": 1,
+   "file_lines": 132,
+   "functions": {
+    "ConsoleActivity.__init__": {
+     "complexity": 1,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "ConsoleActivity.active_records": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "ConsoleActivity.arrive": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "ConsoleActivity.blocked_total": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "ConsoleActivity.count_dns": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "ConsoleActivity.dhcp_again": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleActivity.joined": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleActivity.left": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleActivity.mark_connected": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "ConsoleActivity.on_wifi": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "ConsoleActivity.record": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "ConsoleActivity.resolve": {
+     "complexity": 5,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "ConsoleActivity.saw_ip": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleActivity.service_event": {
+     "complexity": 7,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 5
+    },
+    "ConsoleActivity.service_watching": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "ConsoleActivity.time_on_wifi": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "ConsoleActivity.web_request": {
+     "complexity": 4,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "Record.__init__": {
+     "complexity": 1,
+     "function_lines": 15,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Record.active": {
+     "complexity": 4,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/consoles/registry.py": {
+   "file_fan_out": 2,
+   "file_lines": 33,
+   "functions": {
+    "ConsoleRegistry.__init__": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "ConsoleRegistry.color": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "ConsoleRegistry.color_of": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "ConsoleRegistry.entry": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "ConsoleRegistry.ftp_settings": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "ConsoleRegistry.known": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "ConsoleRegistry.label": {
+     "complexity": 6,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "ConsoleRegistry.name": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/consoles/tracker.py": {
+   "file_fan_out": 2,
+   "file_lines": 79,
+   "functions": {
+    "ConsoleTracker.__init__": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "ConsoleTracker._address": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleTracker._arrived": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleTracker._connected": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "ConsoleTracker._dns_result": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "ConsoleTracker.on_dhcp": {
+     "complexity": 1,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "ConsoleTracker.on_dns": {
+     "complexity": 7,
+     "function_lines": 15,
+     "nesting": 2,
+     "parameters": 5
+    },
+    "ConsoleTracker.on_http": {
+     "complexity": 6,
+     "function_lines": 17,
+     "nesting": 1,
+     "parameters": 7
+    },
+    "ConsoleTracker.on_wifi_join": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "ConsoleTracker.on_wifi_leave": {
+     "complexity": 1,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/core/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/core/controls.py": {
+   "file_fan_out": 0,
+   "file_lines": 38,
+   "functions": {
+    "Controls.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Controls.add": {
+     "complexity": 5,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "Controls.available": {
+     "complexity": 7,
+     "function_lines": 11,
+     "nesting": 3,
+     "parameters": 0
+    },
+    "Controls.call": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Controls.has": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/core/events.py": {
+   "file_fan_out": 2,
+   "file_lines": 94,
+   "functions": {
+    "Event.__init__": {
+     "complexity": 5,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 9
+    },
+    "Event.__repr__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Event.as_dict": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Event.detail_lines": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Event.is_problem": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Event.technical_line": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Event.technical_names": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "EventBus.__init__": {
+     "complexity": 1,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "EventBus._reaction_failed": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "EventBus.add_listener": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "EventBus.add_sink": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "EventBus.emit": {
+     "complexity": 12,
+     "function_lines": 21,
+     "nesting": 4,
+     "parameters": 1
+    },
+    "EventBus.fact": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "EventBus.log": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 8
+    },
+    "EventBus.say": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "_report": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/core/fmt.py": {
+   "file_fan_out": 0,
+   "file_lines": 48,
+   "functions": {
+    "casual_duration": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "console_snippet": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "console_snippet_json": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "error_text": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "error_trace": {
+     "complexity": 5,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "fmt_duration": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "mac_line": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "norm_mac": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "plural": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/core/paths.py": {
+   "file_fan_out": 0,
+   "file_lines": 8,
+   "functions": {
+    "display_path": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "project_path": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/core/places.py": {
+   "file_fan_out": 0,
+   "file_lines": 22,
+   "functions": {
+    "Places.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "Places.describe": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Places.docs_folder": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Places.folders": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Places.logs_folder": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Places.settings_file": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Places.together": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "Places.together_in_one": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/core/text.py": {
+   "file_fan_out": 0,
+   "file_lines": 48,
+   "functions": {
+    "Marked.__new__": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "Marked.__repr__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "compose": {
+     "complexity": 8,
+     "function_lines": 22,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "is_outcome": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "join": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "name": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "outcome": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "spans_of": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/dashboard/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/dashboard/center.py": {
+   "file_fan_out": 0,
+   "file_lines": 55,
+   "functions": {
+    "_write": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "closed": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "find": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "http_json": {
+     "complexity": 9,
+     "function_lines": 14,
+     "nesting": 2,
+     "parameters": 5
+    },
+    "opened": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "read_file": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "remembered_port": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/dashboard/controls.py": {
+   "file_fan_out": 6,
+   "file_lines": 217,
+   "functions": {
+    "checked_values": {
+     "complexity": 7,
+     "function_lines": 18,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "clean_notes": {
+     "complexity": 4,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "clean_port": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "clean_text": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "color_change": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "describe_changes": {
+     "complexity": 8,
+     "function_lines": 10,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "ftp_change": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "import_settings": {
+     "complexity": 8,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "model_change": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "model_value": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "notes_change": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "register": {
+     "complexity": 1,
+     "function_lines": 17,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "register.add_console": {
+     "complexity": 8,
+     "function_lines": 23,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "register.edit_console": {
+     "complexity": 4,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "register.known_entry": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "register.remove_console": {
+     "complexity": 3,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "register.seen": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "register.set_settings": {
+     "complexity": 10,
+     "function_lines": 20,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "setting_value": {
+     "complexity": 10,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "takes_effect": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "text_changes": {
+     "complexity": 6,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "wanted_changes": {
+     "complexity": 1,
+     "function_lines": 7,
+     "nesting": 0,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/dashboard/server.py": {
+   "file_fan_out": 2,
+   "file_lines": 242,
+   "functions": {
+    "DashboardServer.__init__": {
+     "complexity": 2,
+     "function_lines": 10,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "DashboardServer._where": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "DashboardServer.add_reader": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "DashboardServer.on_error": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "DashboardServer.publish": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "DashboardServer.start": {
+     "complexity": 1,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "DashboardServer.static_file": {
+     "complexity": 8,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "DashboardServer.stop": {
+     "complexity": 6,
+     "function_lines": 13,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "DashboardServer.subscribe": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "DashboardServer.unsubscribe": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "DashboardServer.viewers": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "DashboardSink.__call__": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "DashboardSink.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "DashboardSink.items": {
+     "complexity": 4,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "_make_handler": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_make_handler.Handler._data": {
+     "complexity": 5,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "_make_handler.Handler._host_ok": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "_make_handler.Handler._hung_up": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "_make_handler.Handler._json": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "_make_handler.Handler._send": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "_make_handler.Handler._stream": {
+     "complexity": 9,
+     "function_lines": 35,
+     "nesting": 4,
+     "parameters": 0
+    },
+    "_make_handler.Handler.do_GET": {
+     "complexity": 13,
+     "function_lines": 28,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "_make_handler.Handler.do_POST": {
+     "complexity": 13,
+     "function_lines": 24,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "_make_handler.Handler.log_message": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_make_handler.Handler.version_string": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "js_spans": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/dashboard/state.py": {
+   "file_fan_out": 3,
+   "file_lines": 44,
+   "functions": {
+    "build_state": {
+     "complexity": 6,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 8
+    },
+    "console_entry": {
+     "complexity": 12,
+     "function_lines": 21,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "settings_rows": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/features/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/features/filezilla.py": {
+   "file_fan_out": 3,
+   "file_lines": 30,
+   "functions": {
+    "FileZilla.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "FileZilla.open": {
+     "complexity": 4,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "FileZilla.register_controls": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "FileZilla.register_controls.open_for_console": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/features/report.py": {
+   "file_fan_out": 2,
+   "file_lines": 151,
+   "functions": {
+    "Scrub.__call__": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Scrub.__init__": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "Scrub._add": {
+     "complexity": 5,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "Scrub._mac": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "assemble": {
+     "complexity": 6,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "build": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 8
+    },
+    "chosen_logs": {
+     "complexity": 8,
+     "function_lines": 11,
+     "nesting": 4,
+     "parameters": 2
+    },
+    "full_block": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "head_lines": {
+     "complexity": 6,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "hotspots_in": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "log_block": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "log_title": {
+     "complexity": 6,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "logs_with_records": {
+     "complexity": 7,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "names_in": {
+     "complexity": 6,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "picked_lines": {
+     "complexity": 10,
+     "function_lines": 17,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "problems_in": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "record_lines": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "scrub_for": {
+     "complexity": 6,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/features/runlog.py": {
+   "file_fan_out": 2,
+   "file_lines": 195,
+   "functions": {
+    "Item.__init__": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "Item.__repr__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Item.as_dict": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "add_item": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "came_back": {
+     "complexity": 7,
+     "function_lines": 10,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "check_log": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "check_records": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "check_run": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "console_items": {
+     "complexity": 7,
+     "function_lines": 14,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "evidence": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "last_hotspot_name": {
+     "complexity": 6,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "latest_run": {
+     "complexity": 6,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "line_of": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "lines_only": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "list_runs": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "load_records": {
+     "complexity": 7,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "new_code_runs": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "of_kind": {
+     "complexity": 4,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "old_event": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "read_log": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "record_events": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "run_details": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "run_events": {
+     "complexity": 5,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "run_info": {
+     "complexity": 8,
+     "function_lines": 13,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "start_items": {
+     "complexity": 10,
+     "function_lines": 12,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "stop_how": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "stop_items": {
+     "complexity": 5,
+     "function_lines": 15,
+     "nesting": 0,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/features/sensors.py": {
+   "file_fan_out": 1,
+   "file_lines": 14,
+   "functions": {
+    "check": {
+     "complexity": 6,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 5
+    }
+   }
+  },
+  "nxspoof/features/services.py": {
+   "file_fan_out": 2,
+   "file_lines": 145,
+   "functions": {
+    "ServiceWatcher.__init__": {
+     "complexity": 5,
+     "function_lines": 14,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "ServiceWatcher._loop": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "ServiceWatcher._not_down_yet": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "ServiceWatcher.announce": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "ServiceWatcher.start": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "ServiceWatcher.step": {
+     "complexity": 10,
+     "function_lines": 25,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "ServiceWatcher.stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Services.__init__": {
+     "complexity": 1,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 8
+    },
+    "Services._restart": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "Services.attach": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Services.follow": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Services.on_address": {
+     "complexity": 8,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Services.on_console_changed": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Services.on_setting_changed": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Services.server_up": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Services.stop_all": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Services.url_for": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "probe_port": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/features/settingswatch.py": {
+   "file_fan_out": 3,
+   "file_lines": 64,
+   "functions": {
+    "SettingsWatch.__init__": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "SettingsWatch._consoles": {
+     "complexity": 7,
+     "function_lines": 17,
+     "nesting": 4,
+     "parameters": 2
+    },
+    "SettingsWatch._loop": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsWatch._settings": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "SettingsWatch.check": {
+     "complexity": 5,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsWatch.start": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "SettingsWatch.stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "snapshot": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "stamp": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/features/story.py": {
+   "file_fan_out": 2,
+   "file_lines": 47,
+   "functions": {
+    "Story.__init__": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "Story._loop": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Story.attach": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Story.on_fact": {
+     "complexity": 6,
+     "function_lines": 13,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "Story.start_ticker": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Story.stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Story.tick": {
+     "complexity": 5,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/features/summary.py": {
+   "file_fan_out": 2,
+   "file_lines": 81,
+   "functions": {
+    "_services": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "casual_lines": {
+     "complexity": 6,
+     "function_lines": 21,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "clock_time": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "console_block": {
+     "complexity": 11,
+     "function_lines": 20,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "report": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 6
+    },
+    "technical_lines": {
+     "complexity": 11,
+     "function_lines": 23,
+     "nesting": 2,
+     "parameters": 5
+    }
+   }
+  },
+  "nxspoof/features/textlog.py": {
+   "file_fan_out": 0,
+   "file_lines": 62,
+   "functions": {
+    "plain_lines": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "records_from_text": {
+     "complexity": 12,
+     "function_lines": 21,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "stop_path": {
+     "complexity": 8,
+     "function_lines": 14,
+     "nesting": 2,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/macos/admin.py": {
+   "file_fan_out": 1,
+   "file_lines": 27,
+   "functions": {
+    "ask": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "command": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "finish": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "foreground_line": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 4
+    },
+    "outcome": {
+     "complexity": 5,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/macos/appfirewall.py": {
+   "file_fan_out": 1,
+   "file_lines": 25,
+   "functions": {
+    "parse_state": {
+     "complexity": 12,
+     "function_lines": 19,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "state": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/cable.py": {
+   "file_fan_out": 3,
+   "file_lines": 49,
+   "functions": {
+    "Status.ok": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Status.text": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "_address_shown": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_bridge_text": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "down": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "status": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "up": {
+     "complexity": 7,
+     "function_lines": 13,
+     "nesting": 2,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/dhcp.py": {
+   "file_fan_out": 1,
+   "file_lines": 40,
+   "functions": {
+    "DhcpMonitor.__init__": {
+     "complexity": 1,
+     "function_lines": 7,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "DhcpMonitor._loop": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "DhcpMonitor.check": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "DhcpMonitor.start": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "DhcpMonitor.stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "new_leases": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/macos/dialog.py": {
+   "file_fan_out": 1,
+   "file_lines": 15,
+   "functions": {
+    "ask": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "command": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 5
+    }
+   }
+  },
+  "nxspoof/macos/firewall.py": {
+   "file_fan_out": 0,
+   "file_lines": 66,
+   "functions": {
+    "apply": {
+     "complexity": 5,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "build_rules": {
+     "complexity": 3,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "counters": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "flush": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "leftovers": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "parse_counters": {
+     "complexity": 9,
+     "function_lines": 12,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "pfctl": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "short_name": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "status_from": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 5
+    }
+   }
+  },
+  "nxspoof/macos/hotspot.py": {
+   "file_fan_out": 2,
+   "file_lines": 20,
+   "functions": {
+    "from_prefs": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "password_set": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "read": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/leases.py": {
+   "file_fan_out": 1,
+   "file_lines": 26,
+   "functions": {
+    "lease_mtime": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "parse_leases": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "read_leases": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/machine.py": {
+   "file_fan_out": 2,
+   "file_lines": 54,
+   "functions": {
+    "_first_line": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "_language": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "_managed": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "facts": {
+     "complexity": 3,
+     "function_lines": 14,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "personal_words": {
+     "complexity": 5,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/netif.py": {
+   "file_fan_out": 1,
+   "file_lines": 102,
+   "functions": {
+    "active_uplinks": {
+     "complexity": 9,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "bridge_device": {
+     "complexity": 7,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "connected_to": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "current_interfaces": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "current_ports": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "current_sharing_interface": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "find_sharing_interface": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "hardware_ports_text": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "has_connection_to": {
+     "complexity": 7,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "ifconfig_text": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "parse_hardware_ports": {
+     "complexity": 8,
+     "function_lines": 12,
+     "nesting": 4,
+     "parameters": 1
+    },
+    "parse_ifconfig": {
+     "complexity": 8,
+     "function_lines": 20,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "summarize_interfaces": {
+     "complexity": 4,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "wifi_device": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/netservices.py": {
+   "file_fan_out": 1,
+   "file_lines": 58,
+   "functions": {
+    "_check": {
+     "complexity": 6,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "create_service": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "get_info": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "list_services": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "networksetup": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "parse_info": {
+     "complexity": 9,
+     "function_lines": 15,
+     "nesting": 4,
+     "parameters": 1
+    },
+    "parse_service_order": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "service_for_device": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "set_dhcp": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "set_enabled": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "set_manual": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/macos/privsep.py": {
+   "file_fan_out": 1,
+   "file_lines": 71,
+   "functions": {
+    "alive": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "can_split": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "forward_stop_signals": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "forward_stop_signals.forward": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "kill": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "receive": {
+     "complexity": 8,
+     "function_lines": 18,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "send": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "split": {
+     "complexity": 2,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "wait": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/process.py": {
+   "file_fan_out": 0,
+   "file_lines": 59,
+   "functions": {
+    "answer": {
+     "complexity": 6,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "background": {
+     "complexity": 3,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "restart_from": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "stop": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "wait_answer": {
+     "complexity": 8,
+     "function_lines": 20,
+     "nesting": 3,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/macos/sharing.py": {
+   "file_fan_out": 1,
+   "file_lines": 171,
+   "functions": {
+    "_cf_to_py": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "_cfstr": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_libs": {
+     "complexity": 3,
+     "function_lines": 24,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "_open_prefs": {
+     "complexity": 2,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "_py_to_cf": {
+     "complexity": 2,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "_sc_error": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "describe": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "main": {
+     "complexity": 6,
+     "function_lines": 19,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "new_nat": {
+     "complexity": 3,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 6
+    },
+    "parse_service_interface": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "parse_service_keys": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "read_nat": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "read_value": {
+     "complexity": 2,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "service_for_device": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "set_sharing": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "status": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "write_nat": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "write_value": {
+     "complexity": 7,
+     "function_lines": 21,
+     "nesting": 3,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/macos/shell.py": {
+   "file_fan_out": 0,
+   "file_lines": 18,
+   "functions": {
+    "call": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "finish": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run": {
+     "complexity": 5,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "start": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/macos/user.py": {
+   "file_fan_out": 0,
+   "file_lines": 68,
+   "functions": {
+    "account_names": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "as_user_command": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "copy_text": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "data_folder": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "filezilla_installed": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "give_link_to_user": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "give_to_user": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "home": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "is_root": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "me": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "open_filezilla": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "open_in_terminal": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "open_sharing_settings": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "open_url": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_as_user": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "sudo_user": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/macos/wifi.py": {
+   "file_fan_out": 1,
+   "file_lines": 94,
+   "functions": {
+    "WifiMonitor.__init__": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "WifiMonitor._read": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "WifiMonitor._tick": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "WifiMonitor.start": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "WifiMonitor.stop": {
+     "complexity": 8,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "WifiTracker.__init__": {
+     "complexity": 1,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "WifiTracker.feed": {
+     "complexity": 8,
+     "function_lines": 19,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "WifiTracker.present_macs": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "WifiTracker.tick": {
+     "complexity": 7,
+     "function_lines": 16,
+     "nesting": 4,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/net/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/net/dns.py": {
+   "file_fan_out": 3,
+   "file_lines": 77,
+   "functions": {
+    "DnsServer.__init__": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "DnsServer._answer_for": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "DnsServer._loop": {
+     "complexity": 8,
+     "function_lines": 17,
+     "nesting": 3,
+     "parameters": 0
+    },
+    "DnsServer.start": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "DnsServer.stop": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "build_reply": {
+     "complexity": 9,
+     "function_lines": 26,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "encode_query": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "parse_answer": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/net/policy.py": {
+   "file_fan_out": 0,
+   "file_lines": 27,
+   "functions": {
+    "Policy.__init__": {
+     "complexity": 4,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "Policy.answers_with_mac": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Policy.decide": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Policy.is_test_host": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Policy.test_label": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "clean": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/net/selftest.py": {
+   "file_fan_out": 4,
+   "file_lines": 47,
+   "functions": {
+    "ask_dns": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "ask_web": {
+     "complexity": 5,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "check_line": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_selftest": {
+     "complexity": 10,
+     "function_lines": 15,
+     "nesting": 2,
+     "parameters": 6
+    }
+   }
+  },
+  "nxspoof/net/sockets.py": {
+   "file_fan_out": 0,
+   "file_lines": 11,
+   "functions": {
+    "open_socket": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/net/web.py": {
+   "file_fan_out": 1,
+   "file_lines": 72,
+   "functions": {
+    "TestWebServer.__init__": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 5
+    },
+    "TestWebServer.start": {
+     "complexity": 1,
+     "function_lines": 9,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "TestWebServer.stop": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "_make_handler": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "_make_handler.Handler._details": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "_make_handler.Handler._reply": {
+     "complexity": 5,
+     "function_lines": 24,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "_make_handler.Handler.do_GET": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "_make_handler.Handler.do_HEAD": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "_make_handler.Handler.do_POST": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "_make_handler.Handler.log_message": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_make_handler.Handler.version_string": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    }
+   }
+  },
+  "nxspoof/output/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/output/colors.py": {
+   "file_fan_out": 1,
+   "file_lines": 35,
+   "functions": {
+    "colorize": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "paint": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "render": {
+     "complexity": 10,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "strip": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/output/datafolder.py": {
+   "file_fan_out": 0,
+   "file_lines": 147,
+   "functions": {
+    "_move_last_run": {
+     "complexity": 6,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "_move_logs": {
+     "complexity": 6,
+     "function_lines": 18,
+     "nesting": 2,
+     "parameters": 4
+    },
+    "_move_settings": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "_same": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "_shortcut": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "before": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "copy_program": {
+     "complexity": 11,
+     "function_lines": 26,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "inside": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "prepare": {
+     "complexity": 10,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 3
+    },
+    "program_files": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "remember_before": {
+     "complexity": 5,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 4
+    }
+   }
+  },
+  "nxspoof/output/logfile.py": {
+   "file_fan_out": 1,
+   "file_lines": 136,
+   "functions": {
+    "LogFileSink.__call__": {
+     "complexity": 7,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "LogFileSink.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "LogFileSink.lines": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "RecordSink.__call__": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "RecordSink.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "append_as_root": {
+     "complexity": 8,
+     "function_lines": 14,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "create_run_log": {
+     "complexity": 13,
+     "function_lines": 27,
+     "nesting": 3,
+     "parameters": 9
+    },
+    "open_output": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "prune_runs": {
+     "complexity": 9,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "record": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "records_path": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "save_report": {
+     "complexity": 3,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "start_output": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "tail": {
+     "complexity": 5,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/output/runfile.py": {
+   "file_fan_out": 0,
+   "file_lines": 71,
+   "functions": {
+    "ask_stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "clear": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "clear_state": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "forget_before": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "held": {
+     "complexity": 5,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "read": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "read_state": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "stop_asked": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "take": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "write": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "write_state": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/output/terminal.py": {
+   "file_fan_out": 1,
+   "file_lines": 47,
+   "functions": {
+    "TerminalSink.__call__": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "TerminalSink.__init__": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "TerminalSink._casual": {
+     "complexity": 7,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "TerminalSink._technical": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "TerminalSink._write": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "TerminalSink.lines": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/settings/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/settings/schema.py": {
+   "file_fan_out": 0,
+   "file_lines": 81,
+   "functions": {
+    "Field.__init__": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 9
+    },
+    "Field.check": {
+     "complexity": 18,
+     "function_lines": 25,
+     "nesting": 6,
+     "parameters": 1
+    },
+    "Field.name": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "defaults": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "field": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/settings/store.py": {
+   "file_fan_out": 3,
+   "file_lines": 326,
+   "functions": {
+    "SettingsStore.__init__": {
+     "complexity": 1,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "SettingsStore._check_name_free": {
+     "complexity": 7,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "SettingsStore._consoles_list": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsStore._index_of": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "SettingsStore._recheck": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "SettingsStore.add_console": {
+     "complexity": 6,
+     "function_lines": 18,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "SettingsStore.console": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "SettingsStore.consoles": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsStore.document": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsStore.effective": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsStore.export_text": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "SettingsStore.export_to": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "SettingsStore.get": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "SettingsStore.load": {
+     "complexity": 4,
+     "function_lines": 14,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "SettingsStore.remove_console": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "SettingsStore.replace": {
+     "complexity": 4,
+     "function_lines": 13,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "SettingsStore.save": {
+     "complexity": 5,
+     "function_lines": 15,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "SettingsStore.set": {
+     "complexity": 4,
+     "function_lines": 13,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "SettingsStore.set_many": {
+     "complexity": 8,
+     "function_lines": 14,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "SettingsStore.update_console": {
+     "complexity": 9,
+     "function_lines": 22,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "SettingsStore.warning_lines": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "_format_console": {
+     "complexity": 8,
+     "function_lines": 15,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "_inline": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "_ordered": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "format_settings": {
+     "complexity": 16,
+     "function_lines": 32,
+     "nesting": 5,
+     "parameters": 1
+    },
+    "parse": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "valid_mac": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "validate": {
+     "complexity": 13,
+     "function_lines": 37,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "validate_console": {
+     "complexity": 14,
+     "function_lines": 33,
+     "nesting": 2,
+     "parameters": 2
+    }
+   }
+  },
+  "nxspoof/settings/transfer.py": {
+   "file_fan_out": 2,
+   "file_lines": 22,
+   "functions": {
+    "describe": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "preview": {
+     "complexity": 8,
+     "function_lines": 11,
+     "nesting": 0,
+     "parameters": 3
+    }
+   }
+  },
+  "nxspoof/setup/__init__.py": {
+   "file_fan_out": 0,
+   "file_lines": 0,
+   "functions": {}
+  },
+  "nxspoof/setup/checklist.py": {
+   "file_fan_out": 7,
+   "file_lines": 154,
+   "functions": {
+    "Checklist.__init__": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "Checklist._fix": {
+     "complexity": 6,
+     "function_lines": 18,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Checklist.check": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Checklist.chosen": {
+     "complexity": 5,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Checklist.doctor": {
+     "complexity": 7,
+     "function_lines": 18,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "Checklist.header": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "Checklist.report": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "Checklist.setup": {
+     "complexity": 9,
+     "function_lines": 35,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "ask_terminal": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "main": {
+     "complexity": 11,
+     "function_lines": 21,
+     "nesting": 1,
+     "parameters": 9
+    },
+    "open_log": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "split_names": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/setup/repair.py": {
+   "file_fan_out": 3,
+   "file_lines": 82,
+   "functions": {
+    "Repairs._clean": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "Repairs._root_for": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Repairs._undo_all": {
+     "complexity": 7,
+     "function_lines": 23,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Repairs.cleanup": {
+     "complexity": 3,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Repairs.run_is_active": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "Repairs.uninstall": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "cable_out": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "firewall_out": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "sharing_out": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    }
+   }
+  },
+  "nxspoof/setup/steps.py": {
+   "file_fan_out": 9,
+   "file_lines": 232,
+   "functions": {
+    "BridgeService.check": {
+     "complexity": 7,
+     "function_lines": 18,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "BridgeService.fix": {
+     "complexity": 3,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "BridgeService.record": {
+     "complexity": 6,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "BridgeService.undo": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "ConsoleChecklist.check": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "FileZilla.check": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Hotspot.check": {
+     "complexity": 8,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "InternetSharing.check": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "InternetSharing.undo": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "MacFirewall.check": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Machine.__init__": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "Machine.bridge_address": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Machine.bridge_device": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Machine.bridge_service": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Machine.hardware_ports": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "Machine.is_root": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "Machine.overlap": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "Machine.setting": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "Ports.check": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Python.check": {
+     "complexity": 2,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "Result.__init__": {
+     "complexity": 4,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "Result.__repr__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "SettingsFile.check": {
+     "complexity": 5,
+     "function_lines": 13,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "SettingsFile.fix": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Step.check": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "Step.fix": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "VirtualCable.check": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "VirtualCable.fix": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "VirtualCable.undo": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_last_line": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "port_in_use": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "recorded": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "restore_bridge": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 3
+    }
+   }
+  },
+  "tools/docs.py": {
+   "file_fan_out": 2,
+   "file_lines": 243,
+   "functions": {
+    "allowed": {
+     "complexity": 6,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "check": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "esc": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "gen_commands": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "gen_console_fields": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "gen_contract": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "gen_guardrails": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "gen_limits": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "gen_menu": {
+     "complexity": 9,
+     "function_lines": 17,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "gen_modules": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "gen_nav": {
+     "complexity": 3,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "gen_options": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "gen_pages": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "gen_settings": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "guardrail_rules": {
+     "complexity": 6,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "header_line": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "json_value": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "literal": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "main": {
+     "complexity": 4,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "menu_rows": {
+     "complexity": 8,
+     "function_lines": 11,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "method_comments": {
+     "complexity": 7,
+     "function_lines": 11,
+     "nesting": 4,
+     "parameters": 2
+    },
+    "missing_words": {
+     "complexity": 4,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "module_constant": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "modules": {
+     "complexity": 7,
+     "function_lines": 9,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "option_usage": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "page_problems": {
+     "complexity": 13,
+     "function_lines": 18,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "read_text": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "regenerate": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "regenerate.fill": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "tree_of": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "write": {
+     "complexity": 5,
+     "function_lines": 13,
+     "nesting": 3,
+     "parameters": 1
+    }
+   }
+  },
+  "tools/guardrails.py": {
+   "file_fan_out": 2,
+   "file_lines": 369,
+   "functions": {
+    "at": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "button_classes": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "button_rules": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "button_styles": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "check_all": {
+     "complexity": 2,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "commands_missing_in_menu": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "file_change": {
+     "complexity": 13,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "file_writes": {
+     "complexity": 5,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "files_missing_in_reference": {
+     "complexity": 7,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "generated_parts_stale": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "imported_tops": {
+     "complexity": 7,
+     "function_lines": 7,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "is_name_call": {
+     "complexity": 7,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "is_stdlib": {
+     "complexity": 8,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "machine_names": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "macos_logs": {
+     "complexity": 9,
+     "function_lines": 9,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "main": {
+     "complexity": 5,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "module_constant": {
+     "complexity": 5,
+     "function_lines": 5,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "newer_python_syntax": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "non_stdlib_imports": {
+     "complexity": 6,
+     "function_lines": 9,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "page_html_from_strings": {
+     "complexity": 3,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "page_imports": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "page_inline_or_internet": {
+     "complexity": 8,
+     "function_lines": 11,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "past_watchdog_limits": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "personal_data": {
+     "complexity": 11,
+     "function_lines": 19,
+     "nesting": 4,
+     "parameters": 1
+    },
+    "personal_words": {
+     "complexity": 5,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "plain_name_use": {
+     "complexity": 13,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "platform_contract_drift": {
+     "complexity": 10,
+     "function_lines": 7,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "prints": {
+     "complexity": 11,
+     "function_lines": 11,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "python_files": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "python_paths": {
+     "complexity": 5,
+     "function_lines": 6,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "read_text": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "system_calls_outside_macos": {
+     "complexity": 10,
+     "function_lines": 10,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "tags_without_color": {
+     "complexity": 11,
+     "function_lines": 10,
+     "nesting": 4,
+     "parameters": 1
+    },
+    "tasks_without_command": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "unmarked_console_names": {
+     "complexity": 3,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "web_files": {
+     "complexity": 5,
+     "function_lines": 7,
+     "nesting": 4,
+     "parameters": 1
+    }
+   }
+  },
+  "tools/health.py": {
+   "file_fan_out": 0,
+   "file_lines": 240,
+   "functions": {
+    "_accept_key": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "_grew": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "_qualified": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "_qualified.visit": {
+     "complexity": 6,
+     "function_lines": 11,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "_value_for": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "_walk_own": {
+     "complexity": 3,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "accept": {
+     "complexity": 12,
+     "function_lines": 22,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "code_lines": {
+     "complexity": 7,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "complexity": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 3,
+     "parameters": 1
+    },
+    "copies": {
+     "complexity": 11,
+     "function_lines": 18,
+     "nesting": 4,
+     "parameters": 2
+    },
+    "findings": {
+     "complexity": 13,
+     "function_lines": 23,
+     "nesting": 3,
+     "parameters": 3
+    },
+    "findings.judge": {
+     "complexity": 8,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 6
+    },
+    "load_baseline": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "main": {
+     "complexity": 9,
+     "function_lines": 22,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "measure": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "measure_file": {
+     "complexity": 12,
+     "function_lines": 19,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "memo_text": {
+     "complexity": 9,
+     "function_lines": 17,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "nesting": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "own_lines": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "scanned_files": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "write_memo": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 3
+    }
+   }
+  },
+  "tools/icon.py": {
+   "file_fan_out": 0,
+   "file_lines": 151,
+   "functions": {
+    "bubble": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "capsule": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "draw": {
+     "complexity": 7,
+     "function_lines": 20,
+     "nesting": 4,
+     "parameters": 2
+    },
+    "green": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "layers": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "main": {
+     "complexity": 8,
+     "function_lines": 23,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "ok_word": {
+     "complexity": 1,
+     "function_lines": 7,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "png_bytes": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "png_bytes.chunk": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "ring": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "rounded_rect": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 7
+    },
+    "smooth_min": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 3
+    },
+    "tile": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "triangle": {
+     "complexity": 2,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 5
+    },
+    "write_icns": {
+     "complexity": 4,
+     "function_lines": 11,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "write_ico": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "write_png": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "write_sheet": {
+     "complexity": 11,
+     "function_lines": 18,
+     "nesting": 4,
+     "parameters": 3
+    }
+   }
+  },
+  "tools/menu.py": {
+   "file_fan_out": 2,
+   "file_lines": 227,
+   "functions": {
+    "choose": {
+     "complexity": 7,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 2
+    },
+    "code_health": {
+     "complexity": 1,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "command": {
+     "complexity": 3,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "dashboard_port": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "dashboard_up": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "do_item": {
+     "complexity": 3,
+     "function_lines": 7,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "draw_icon": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "follow": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "main": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "open_dashboard": {
+     "complexity": 3,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "open_data_folder": {
+     "complexity": 2,
+     "function_lines": 5,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "open_doc": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "open_last_log": {
+     "complexity": 2,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "quiet": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "rebuild_app": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "row_text": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "rows": {
+     "complexity": 3,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run": {
+     "complexity": 4,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "run_tests": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "settings_file": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "show_menu": {
+     "complexity": 4,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "simulate_compare": {
+     "complexity": 2,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "spoof_running": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "start_background": {
+     "complexity": 6,
+     "function_lines": 10,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "status_line": {
+     "complexity": 2,
+     "function_lines": 9,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "update_docs": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "watch_simulation": {
+     "complexity": 3,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 0
+    }
+   }
+  },
+  "tools/run_tests.py": {
+   "file_fan_out": 0,
+   "file_lines": 30,
+   "functions": {
+    "main": {
+     "complexity": 1,
+     "function_lines": 10,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "watchdog": {
+     "complexity": 5,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 0
+    }
+   }
+  },
+  "tools/simulate.py": {
+   "file_fan_out": 8,
+   "file_lines": 367,
+   "functions": {
+    "FakeFtp.__init__": {
+     "complexity": 1,
+     "function_lines": 7,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "FakeFtp._loop": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 2,
+     "parameters": 0
+    },
+    "FakeFtp.stop": {
+     "complexity": 3,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "NoMonitor.start": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "NoMonitor.stop": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "PfResult.__init__": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "add_lease": {
+     "complexity": 2,
+     "function_lines": 4,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "compare": {
+     "complexity": 5,
+     "function_lines": 9,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "compare_states": {
+     "complexity": 5,
+     "function_lines": 11,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "delete_line": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "dns_query": {
+     "complexity": 4,
+     "function_lines": 14,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "fake_pfctl": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "http_get": {
+     "complexity": 4,
+     "function_lines": 8,
+     "nesting": 1,
+     "parameters": 3
+    },
+    "main": {
+     "complexity": 6,
+     "function_lines": 18,
+     "nesting": 1,
+     "parameters": 0
+    },
+    "make_work_dir": {
+     "complexity": 6,
+     "function_lines": 15,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "normalize": {
+     "complexity": 5,
+     "function_lines": 8,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "normalize_state": {
+     "complexity": 7,
+     "function_lines": 16,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "open_dashboard": {
+     "complexity": 1,
+     "function_lines": 8,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "play_in_background": {
+     "complexity": 1,
+     "function_lines": 5,
+     "nesting": 0,
+     "parameters": 6
+    },
+    "play_in_background.body": {
+     "complexity": 6,
+     "function_lines": 14,
+     "nesting": 3,
+     "parameters": 0
+    },
+    "play_in_background.snapshot": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "play_scenario": {
+     "complexity": 3,
+     "function_lines": 35,
+     "nesting": 1,
+     "parameters": 4
+    },
+    "play_scenario.wait": {
+     "complexity": 4,
+     "function_lines": 10,
+     "nesting": 3,
+     "parameters": 2
+    },
+    "press_dashboard_stop": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "print_diff": {
+     "complexity": 4,
+     "function_lines": 6,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "run_new": {
+     "complexity": 6,
+     "function_lines": 40,
+     "nesting": 2,
+     "parameters": 6
+    },
+    "run_new.FakeSystem.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.FakeSystem.bind_address": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.FakeSystem.connected_to": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "run_new.FakeSystem.find_sharing_interface": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.hotspot_settings": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.in_background": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.FakeSystem.interfaces": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.is_root": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.mac_problems": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "run_new.FakeSystem.machine_facts": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.open_filezilla": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.FakeSystem.open_sharing_settings": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.open_url": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.FakeSystem.plug_cable": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.restart_from": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "run_new.FakeSystem.set_sharing": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.FakeSystem.sharing_running": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.unplug_cable": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 0
+    },
+    "run_new.FakeSystem.wifi_monitor": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "run_new.ThroughKeeper.__init__": {
+     "complexity": 1,
+     "function_lines": 3,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "save_log": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 2
+    },
+    "save_snapshots": {
+     "complexity": 2,
+     "function_lines": 3,
+     "nesting": 1,
+     "parameters": 2
+    },
+    "softap_line": {
+     "complexity": 1,
+     "function_lines": 2,
+     "nesting": 0,
+     "parameters": 1
+    },
+    "wait_until_ready": {
+     "complexity": 7,
+     "function_lines": 12,
+     "nesting": 3,
+     "parameters": 2
+    }
+   }
+  },
+  "tools/verify_run.py": {
+   "file_fan_out": 7,
+   "file_lines": 59,
+   "functions": {
+    "check_mac": {
+     "complexity": 3,
+     "function_lines": 15,
+     "nesting": 1,
+     "parameters": 1
+    },
+    "main": {
+     "complexity": 7,
+     "function_lines": 27,
+     "nesting": 2,
+     "parameters": 1
+    },
+    "report": {
+     "complexity": 4,
+     "function_lines": 7,
+     "nesting": 2,
+     "parameters": 3
+    }
+   }
+  }
+ },
+ "history": [
+  {
+   "reason": "starting point after the rebuild (2026-11-14): validated code; the app layer wires everything, so it uses many modules",
+   "when": "2026-11-14 00:40"
+  },
+  {
+   "reason": "app/main.py now uses macos/shell.py instead of running commands itself (guardrail: only macos/ talks to the Mac)",
+   "when": "2026-11-14 00:44"
+  },
+  {
+   "reason": "track the new safeguard files (tools/guardrails.py, macos/shell.py) for growth; nothing above a memo level",
+   "when": "2026-11-14 12:20"
+  },
+  {
+   "reason": "dashboard/controls.py grew from 1 to 3 controls (edit and remove a console); every function is small, checks split per field",
+   "when": "2026-11-14 12:52"
+  },
+  {
+   "reason": "core/text.py added (marked console names); tools/guardrails.py gained the 'console names are marked' rule",
+   "when": "2026-11-14 13:36"
+  },
+  {
+   "reason": "control center stage 1: app/center.py wires the dashboard on its own (15 modules, like run.py/main.py); features/runlog.py check_log() is verify_run.py's known function, moved unchanged",
+   "when": "2026-11-14 14:24"
+  },
+  {
+   "reason": "run.py writes its own marked lines through core/text.py (compose/outcome: the standard way every line writer marks names and outcome words); the CHECK and SETTINGS WARNING lines moved to selftest/store, only the FIREWALL WARNING line stays; run.py is the run's wiring hub, under the hard limit",
+   "when": "2026-11-15 15:17"
+  },
+  {
+   "reason": "app/system.py is the one door to the Mac (D23's platform contract): it reaches every macos/ module, and now hands out where files go (core/places.py), by design",
+   "when": "2026-11-16 19:55"
+  },
+  {
+   "reason": "app/system.py is the one door to the Mac (D23's platform contract): it reaches every macos/ module, now also net/sockets.py for the servers' ports (D24), by design",
+   "when": "2026-11-16 22:05"
+  },
+  {
+   "reason": "run.py: the run's sequence reaches each part it starts, now also the data folder's before-record for the hotspot it renames (D25); system.py: the one door to the Mac reaches every macos/ module, now also macos/hotspot.py (D23, D25)",
+   "when": "2026-11-17 00:48"
+  },
+  {
+   "reason": "system.py is the one door to the Mac (each new macOS ability, here the reminder dialog, is one more import by design); center.py is the control center's assembly point, and the page watcher was split out into app/pagewatch.py to keep it small (one import)",
+   "when": "2026-11-20 20:53"
+  },
+  {
+   "reason": "launch.py is where a run is assembled; the hotspot watch (D29) is attached here because run.py is at its hard module limit (one more import, by design)",
+   "when": "2026-11-21 15:59"
+  },
+  {
+   "reason": "D30 one start: app/start.py is where a run is put together (settings, lock, program copy, keeper split, run, hotspot watch, run.json), so it uses many modules by design; app/system.py is the one door to the Mac and gained macos/process.py for a run's life (background, answer, stop, heartbeat)",
+   "when": "2026-11-21 23:17"
+  },
+  {
+   "reason": "main.py is the dispatcher: one import per command family, and report is a new family (11, memo at 10; the limit is 16)",
+   "when": "2026-11-24 19:20"
+  }
+ ]
+}

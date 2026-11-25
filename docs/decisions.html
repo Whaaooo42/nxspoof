@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decisions · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html" class="on" aria-current="page">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>Decisions</h1>
+<p class="lead">Every decision that shaped NXSPOOF, with its why, in short. Most were the owner's, often after trying the thing for real; "only fools don't change their mind", so some were replaced, and say by what. The full story before 2026-11-16 is in the history zip; after, in git.</p>
+<p class="small"><span class="tag t-green">current</span> how it is today · <span class="tag t-yellow">revised</span> still true, changed since · <span class="tag t-gray">replaced</span> history · <span class="tag t-blue">planned</span> designed, not built</p>
+
+<div class="scroll"><table>
+<tr><th>#</th><th>Decision</th><th>Why</th><th>Date</th></tr>
+<tr id="d1"><td><b>D1</b></td><td>No version control: a dated backup before each big step <span class="tag t-gray">replaced</span></td><td>Keep a hobby project simple. Replaced by local git at the cutoff (2026-11-16)</td><td>11-13</td></tr>
+<tr id="d2"><td><b>D2</b></td><td><code>nx_spoof.py</code> stays the launcher (a thin file); shell scripts go to <code>scripts/</code> <span class="tag t-green">current</span></td><td>The name everyone knew; a tidy top of the folder</td><td>11-13</td></tr>
+<tr id="d3"><td><b>D3</b></td><td>Rebuild side by side, switch only after validation <span class="tag t-gray">done</span></td><td>The old code kept working until the new one had proved itself (switched 2026-11-14, Runs A–C)</td><td>11-13</td></tr>
+<tr id="d4"><td><b>D4</b></td><td>Developer docs apart from the guide <span class="tag t-green">current</span></td><td>Two audiences: using it, building it ("Use it" and "Build it" here)</td><td>11-13</td></tr>
+<tr id="d5"><td><b>D5</b></td><td>A simulator, a clean-up, a <code>check</code> command <span class="tag t-green">current</span></td><td>Test without a Switch or admin rights; recover after a crash</td><td>11-13</td></tr>
+<tr id="d6"><td><b>D6</b></td><td>Python 3.9, Apple's own, is the permanent minimum <span class="tag t-green">current</span></td><td>It's on every Mac: nothing to install</td><td>11-13</td></tr>
+<tr id="d7"><td><b>D7</b></td><td>One ordered, protected shutdown <span class="tag t-green">current</span></td><td>An error while stopping once skipped turning sharing off: one failure must never skip the rest</td><td>11-13</td></tr>
+<tr id="d8"><td><b>D8</b></td><td>Two network modes: <b>sealed</b> (a dead link) and <b>allowlist</b> (real internet over USB-C Ethernet, only to allowed destinations) <span class="tag t-blue">planned</span></td><td>Some console apps need a real server; consoles should still never get everything</td><td>11-13</td></tr>
+<tr id="d9"><td><b>D9</b></td><td>The dashboard edits any setting and console; settings.json saved as a tidy rewrite <span class="tag t-green">current</span></td><td>No hand-editing JSON; a file that stays readable after every save</td><td>11-13</td></tr>
+<tr id="d10"><td><b>D10</b></td><td>Folders by domain (consoles, net, macos…), <code>app/</code> for wiring <span class="tag t-green">current</span></td><td>Find code by what it's about</td><td>11-13</td></tr>
+<tr id="d11"><td><b>D11</b></td><td>A Requests inbox: every blocked attempt becomes a one-click allow or deny <span class="tag t-blue">planned</span></td><td>Allowing something should take one click, not a trip into settings.json</td><td>11-13</td></tr>
+<tr id="d12"><td><b>D12</b></td><td>A hard, global blocklist that beats every allowlist <span class="tag t-blue">planned</span></td><td>Some servers must never be reached, not even by a mistaken click</td><td>11-13</td></tr>
+<tr id="d13"><td><b>D13</b></td><td>Allow and deny lists, global and per console <span class="tag t-blue">planned</span></td><td>A friend's console isn't yours; a console's own rule beats a global one</td><td>11-13</td></tr>
+<tr id="d14"><td><b>D14</b></td><td>The guide stays short; the details live elsewhere <span class="tag t-green">current</span></td><td>The guide is for day to day; Reference, Setup and Troubleshooting hold the rest</td><td>11-13</td></tr>
+<tr id="d15"><td><b>D15</b></td><td>Automated setup for any Mac (setup, doctor, uninstall); nothing hard-coded, everything detected <span class="tag t-green">current</span></td><td>A new Mac in a few OKs; interface names change with the Mac and its language</td><td>11-13</td></tr>
+<tr id="d16"><td><b>D16</b></td><td>The dashboard is the control center: it lives without a run, as you <span class="tag t-green">current</span></td><td>Settings, consoles, past runs, This Mac and Start, without the Terminal; the Terminal always stays possible</td><td>11-14</td></tr>
+<tr id="d17"><td><b>D17</b></td><td>Start from the page through macOS's own password window; no helper that starts runs without a password <span class="tag t-yellow">revised</span></td><td>A visible password per action is honest. Its first stage (a Terminal window) went with D30</td><td>11-14</td></tr>
+<tr id="d18"><td><b>D18</b></td><td>One writer for settings.json at a time <span class="tag t-yellow">revised</span></td><td>Two programs must never overwrite each other. Since D30: the dashboard always writes it, the run only reads it</td><td>11-14</td></tr>
+<tr id="d19"><td><b>D19</b></td><td>Two doors at the top of the folder, the password windows in <code>scripts/</code> <span class="tag t-gray">replaced</span></td><td>One door for everyone, one for the Terminal. Became NXSPOOF.app (D20) and one start (D30); <code>scripts/</code> is down to four files</td><td>11-15</td></tr>
+<tr id="d20"><td><b>D20</b></td><td><b>NXSPOOF.app</b>, an AppleScript applet, is the usual way in <span class="tag t-green">current</span></td><td>macOS silently refuses a shell-script app the Documents folder; an applet is an app of its own, and macOS asks once</td><td>11-16</td></tr>
+<tr id="d21"><td><b>D21</b></td><td>"It just works", wherever the folder is: settings and logs in the data folder, every start from a program copy there <span class="tag t-green">current</span></td><td>macOS keeps a program started through its password window out of Documents, Desktop, Downloads and iCloud Drive, without asking</td><td>11-16</td></tr>
+<tr id="d22"><td><b>D22</b></td><td>No Terminal for everyday things: setup, undo and clean up through the password window, followed live; crash leftovers noticed by the dashboard <span class="tag t-green">current</span></td><td>Everyday use should never need the Terminal</td><td>11-16</td></tr>
+<tr id="d23"><td><b>D23</b></td><td><b>One engine, two doors, folder first</b>: one program and one data folder; the Terminal and the app reach the same commands <span class="tag t-green">current</span></td><td>The folder you clone <i>is</i> NXSPOOF. Skipped on purpose: installing into /Applications, a root helper that never asks (a root service installed from a folder makes careful people nervous), signing (only for downloaded apps), a bundled Python, self-updating (<code>git pull</code> does it)</td><td>11-16</td></tr>
+<tr id="d24"><td><b>D24</b></td><td><b>Minimal root</b>: a run splits at once; the keeper stays root for a checked list, the run is you <span class="tag t-green">current</span></td><td>The code that reads what consoles send should never have root; the keeper still cleans up after a crash</td><td>11-16</td></tr>
+<tr id="d25"><td><b>D25</b></td><td>The bridge's address is a setting (three private ranges); <b>the hotspot is macOS's</b>: NXSPOOF only reads its name, channel and password <span class="tag t-yellow">revised</span></td><td>Home networks can overlap 172.16.x.x. The hotspot was a setting too, until Run H: the password is tied to the name, and writing the name alone left a network no Switch could join</td><td>11-17</td></tr>
+<tr id="d26"><td><b>D26</b></td><td>One dashboard and one side room (⚙️ Configure); one Save for everything; past runs in the log pane's picker <span class="tag t-green">current</span></td><td>A main screen and a side room, not four tabs; the log should never see the back and forth of typing</td><td>11-17</td></tr>
+<tr id="d27"><td><b>D27</b></td><td><b>The page is the dashboard</b>: no Close button, it closes itself after its last page <span class="tag t-yellow">revised</span></td><td>"In my auntie's mind, the dashboard IS the browser." Since D30, closing it during a run asks Stop / Keep running</td><td>11-20</td></tr>
+<tr id="d28"><td><b>D28</b></td><td><b>Only a Stop stops NXSPOOF</b> (and a sleep, D32); windows only watch it <span class="tag t-green">current</span></td><td>Closing a window by accident shouldn't drop every console. "Is it required to even have a terminal window linked to the process like that?"</td><td>11-20</td></tr>
+<tr id="d29"><td><b>D29</b></td><td>The hotspot is watched during every run, and put back <span class="tag t-yellow">revised</span></td><td>On Nov 18 macOS lost the virtual cable, sharing stopped, and the dashboard still said running. Since D30 it never gives up by itself</td><td>11-21</td></tr>
+<tr id="d30"><td><b>D30</b></td><td><b>The family, untangled: the run writes files, everyone else reads them</b> <span class="tag t-green">current</span></td><td>Four plain parts (a run, its keeper, a dashboard, a viewer) instead of links, relays and re-joining; one start for both doors; one run at a time by a lock</td><td>11-21</td></tr>
+<tr id="d31"><td><b>D31</b></td><td><b>Problems report themselves</b>: every line says what kind of error, a "this Mac" line in every run, and 🐞 Report <span class="tag t-green">current</span></td><td>Strangers' Macs will meet what ours never did; their logs should say enough to fix it without a dozen questions. The report is made from records only, with names and addresses replaced, and shown before it's copied</td><td>11-24</td></tr>
+<tr id="d32"><td><b>D32</b></td><td><b>A run keeps the Mac awake, and a sleep ends it</b> <span class="tag t-green">current</span></td><td>"If I put NXSPOOF on, it's cuz I wanna use it", like a film in a video player: no idle sleep while it runs (<code>--allow-sleep</code> to opt out). A sleep anyway (the lid) is a way of saying you're done: on Nov 24 a Mac woke on its home Wi-Fi with the hotspot's radio off, so the run stops cleanly at the wake and resumes nothing (an exception to D28; D29's watch still puts back a hotspot lost while awake)</td><td>11-24</td></tr>
+</table></div>
+<p class="small muted">All dates are 2026.</p>
+
+<details class="fold"><summary>D31 in detail <span class="muted">· built 2026-11-24</span></summary>
+<ul class="small">
+  <li><b>Errors in words:</b> every error line names the error's kind (<code>KeyError: 'name'</code>, not just <code>'name'</code>); an unexpected one keeps its traceback in the line's details, the keeper's included (core/fmt.py). A broken reaction, a hotspot watch that can't look and the dashboard's internal errors used to be silent: each says so once.</li>
+  <li><b>This Mac:</b> every run's log starts with macOS's version and build, the model, the chip, Python, the language and whether an organization manages the Mac (macos/machine.py). Nothing personal: no Mac name, no user name, no serial number.</li>
+  <li><b>Quiet sensors:</b> a reworded Wi-Fi log line or a moved lease file breaks nothing loudly, so the end of a run says when one source saw nothing while the others saw consoles (features/sensors.py). A hotspot that never comes up lists the network interfaces macOS has.</li>
+  <li><b>🐞 Report:</b> one engine (app/reporting.py, features/report.py), two doors: the dashboard shows it first, then Copy (and Open GitHub once the repository exists); <code>nx_spoof.py report</code> (menu 6 → 4) prints it, saves it, copies it and opens GitHub's page. It goes through the clipboard, never in a web address: too long for one, and nothing personal should travel in one. Skipped: sending it anywhere by itself.</li>
+</ul>
+</details>
+
+<details class="fold" open><summary>D30 in detail <span class="muted">· built 2026-11-21 and 22</span></summary>
+<ul class="small">
+  <li><b>One start:</b> <code>nx_spoof.py start</code> (was <code>run</code>) from either door: the program copy, setup's checks (<code>--fix</code>, <code>--anyway</code>), <code>run.lock</code>, the background, the run's one answer. Every run plugs the cable in and takes it out at its Stop; it gives up on a hotspot that isn't up after 60 s. Gone: foreground runs, <code>start.sh</code>, the page's Start in Terminal.</li>
+  <li><b>The dashboard reads files:</b> it finds the run by its lock and follows its records and <code>run_state.json</code>; the run reads settings.json again when it changes. Gone: the run's own page and web API, registering, the relay.</li>
+  <li><b>Settings trimmed</b> to the consoles plus seven; what only a Terminal run needs is a <code>--flag</code>. The dashboard's port remembered in <code>dash.json</code>, one dashboard at a time. Closing the page during a run asks Stop NXSPOOF / Keep running.</li>
+  <li><b>The hotspot watch never gives up</b>: 5, 15, 30 s, then every minute.</li>
+  <li><b>From the first real-Mac checks:</b> a Stop leaves a note (<code>stop.json</code>) as well as a signal (a run born from the password window had its signals blocked); a closed page is noticed in seconds; "already running" at once.</li>
+  <li><b>The menu</b> redone with numbers on every screen, grouped, grayed out by context; <code>scripts/</code> trimmed to four files; setup and undo wait while a run is active.</li>
+  <li><b>The docs</b> (2026-11-22) became these HTML pages, with every table that mirrors the code written from it.</li>
+</ul>
+</details>
+
+</main>
+</body>
+</html>

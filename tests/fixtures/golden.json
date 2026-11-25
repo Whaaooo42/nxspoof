@@ -1,0 +1,334 @@
+{
+ "_about": "Expected outputs, recorded 2026-11-16 from the previous code (identical to today's at the cutoff); the tests compare today's code with them. The previous code itself is in the history zip.",
+ "casual_problem": "😕 Something went wrong (details below and in the log file):\n   \u001b[90mPROBLEM the firewall rules didn't load\u001b[0m\n   \u001b[90mpfctl: syntax error\u001b[0m\n",
+ "casual_s2_name": "\u001b[35;1mSwitch 2\u001b[0m",
+ "colorize": [
+  "\u001b[90mSETTINGS\u001b[0m loaded settings.json (2 consoles)",
+  "\u001b[90mSETTINGS\u001b[0m console Switch 1  dc:68:eb:5a:11:c1  Nintendo Switch",
+  "\u001b[90mSETTINGS\u001b[0m console Switch 2  48:f1:eb:5a:22:c2  Nintendo Switch 2",
+  "Found Internet Sharing on bridge100, Mac address on that network is 192.168.2.1",
+  "\u001b[32;1mREADY\u001b[0m Everything works on the Mac side. Now connect the console. Ctrl+C to stop.",
+  "\u001b[36mWIFI\u001b[0m  Switch 2 (48:f1:eb:5a:22:c2) joined the Wi-Fi",
+  "\u001b[36mDHCP\u001b[0m  gave address 127.0.0.1 to Switch 2 (48:f1:eb:5a:22:c2)",
+  "\u001b[32mFTP\u001b[0m   watching Switch 2 for an FTP server on port 5021 (start it on the console)",
+  "\u001b[34mDNS\u001b[0m   Switch 2 (127.0.0.1) asked A     ctest.p01.ctest.srv.nintendo.net -> 192.168.2.1  (Switch 2 connection test)",
+  "\u001b[34mHTTP\u001b[0m  Switch 2 (127.0.0.1) GET http://ctest.p01.ctest.srv.nintendo.net/  (UA: libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)) -> 200 ok  (Switch 2 connection test)",
+  "\u001b[34mDNS\u001b[0m   Switch 2 (127.0.0.1) asked A     dauth.p01.lp1.ndas.srv.nintendo.net -> BLOCKED",
+  "\u001b[34mDNS\u001b[0m   Switch 2 (127.0.0.1) asked A     sun.p01.lp1.d4c.srv.nintendo.net -> BLOCKED",
+  "\u001b[34mDNS\u001b[0m   Switch 2 (127.0.0.1) asked A     dauth.p01.lp1.ndas.srv.nintendo.net -> BLOCKED",
+  "\u001b[34mDNS\u001b[0m   Switch 2 (127.0.0.1) asked A     api.p01.lp1.ctest.srv.nintendo.net -> BLOCKED",
+  "\u001b[34mHTTP\u001b[0m  Switch 2 (127.0.0.1) GET http://api.github.com/repos/x  (UA: Mozilla/5.0 (Nintendo Switch)) -> BLOCKED (403)",
+  "\u001b[32mFTP\u001b[0m   Switch 2: FTP server is UP -> ftp://127.0.0.1:5021",
+  "\u001b[32mFTP\u001b[0m   Switch 2: FTP server went DOWN (watching again)",
+  "\u001b[36mWIFI\u001b[0m  Switch 1 (dc:68:eb:5a:11:c1) joined the Wi-Fi",
+  "\u001b[36mWIFI\u001b[0m  Switch 1 (dc:68:eb:5a:11:c1) left the Wi-Fi (disconnected, was on for 8s)",
+  "\u001b[36mWIFI\u001b[0m  Unknown console (0a:01:02:03:04:05) joined the Wi-Fi",
+  "\u001b[33;1mNEW\u001b[0m   unknown console 0a:01:02:03:04:05 - not in settings.json yet (add it on the dashboard, or paste the entry the summary prints when you stop)",
+  "\u001b[36mWIFI\u001b[0m  Switch 2 (48:f1:eb:5a:22:c2) left the Wi-Fi (disconnected, was on for 34s)",
+  "\u001b[36mWIFI\u001b[0m  Switch 2 (48:f1:eb:5a:22:c2) joined the Wi-Fi",
+  "\u001b[34mDNS\u001b[0m   Switch 2 (127.0.0.1) asked A     ctest.p01.ctest.srv.nintendo.net -> 192.168.2.1  (Switch 2 connection test)",
+  "\u001b[34mHTTP\u001b[0m  Switch 2 (127.0.0.1) GET http://ctest.p01.ctest.srv.nintendo.net/  (UA: libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)) -> 200 ok  (Switch 2 connection test)",
+  "Stopping...",
+  "\u001b[1mSUMMARY\u001b[0m ----------------------------------------------------------------",
+  "\u001b[1mSUMMARY\u001b[0m run 22:26:10 -> 22:26:51 (0:00:40)",
+  "\u001b[1mSUMMARY\u001b[0m Switch 2  48:f1:eb:5a:22:c2  127.0.0.1",
+  "\u001b[1mSUMMARY\u001b[0m    on the Wi-Fi   : 22:26:12 -> 22:26:47, 22:26:48 -> still on at stop  (total 36s)",
+  "\u001b[1mSUMMARY\u001b[0m    tests passed   : 2 x Switch 2 connection test",
+  "\u001b[1mSUMMARY\u001b[0m    FTP server     : UP 22:26:22, went DOWN 22:26:25 -> ftp://127.0.0.1:5021",
+  "\u001b[1mSUMMARY\u001b[0m    blocked        : 5 lookups, 4 different names",
+  "\u001b[1mSUMMARY\u001b[0m         2 x dauth.p01.lp1.ndas.srv.nintendo.net",
+  "\u001b[1mSUMMARY\u001b[0m         1 x sun.p01.lp1.d4c.srv.nintendo.net",
+  "\u001b[1mSUMMARY\u001b[0m         1 x api.p01.lp1.ctest.srv.nintendo.net",
+  "\u001b[1mSUMMARY\u001b[0m         1 x http://api.github.com",
+  "\u001b[1mSUMMARY\u001b[0m    User-Agent     : libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)",
+  "\u001b[1mSUMMARY\u001b[0m    User-Agent     : Mozilla/5.0 (Nintendo Switch)",
+  "\u001b[1mSUMMARY\u001b[0m Switch 1  dc:68:eb:5a:11:c1  (no address)",
+  "\u001b[1mSUMMARY\u001b[0m    on the Wi-Fi   : 22:26:28 -> 22:26:36  (total 8s)",
+  "\u001b[1mSUMMARY\u001b[0m    tests passed   : none",
+  "\u001b[1mSUMMARY\u001b[0m Unknown console  0a:01:02:03:04:05  (no address)",
+  "\u001b[1mSUMMARY\u001b[0m    on the Wi-Fi   : 22:26:38 -> still on at stop  (total 12s)",
+  "\u001b[1mSUMMARY\u001b[0m    tests passed   : none",
+  "\u001b[1mSUMMARY\u001b[0m firewall: allowed DHCP 2  DNS 9  web test 4   ||   IPv6 (blocked) 0  everything else (blocked) 0",
+  "\u001b[1mSUMMARY\u001b[0m NEW console 0a:01:02:03:04:05 - paste into \"consoles\" in settings.json:",
+  "\u001b[1mSUMMARY\u001b[0m    {\"name\": \"Friend's Switch\", \"model\": \"\", \"mac\": \"0a:01:02:03:04:05\", \"owner\": \"\", \"color\": \"yellow\", \"ftp\": {\"port\": 5000}, \"notes\": []}",
+  "\u001b[1mSUMMARY\u001b[0m ----------------------------------------------------------------",
+  "\u001b[33mSHARING\u001b[0m turned Internet Sharing OFF - your Mac goes back to your home Wi-Fi",
+  "Stopped."
+ ],
+ "default_settings": {
+  "consoles": [],
+  "dashboard": {
+   "enabled": true,
+   "open_browser": true,
+   "port": 8800,
+   "remind_when_closed": true
+  },
+  "display": {
+   "colors": true,
+   "console": "technical"
+  },
+  "ftp": {
+   "check_every_seconds": 3,
+   "open_filezilla": false,
+   "port": 5000,
+   "recheck_when_up_seconds": 30,
+   "watch": true
+  },
+  "logs": {
+   "folder": "logs",
+   "keep_last": 0
+  },
+  "spoof": {
+   "auto_sharing": true,
+   "firewall": true,
+   "keep_sharing": false
+  }
+ },
+ "dns_replies": [
+  {
+   "name": "ctest.cdn.nintendo.net",
+   "qname": "ctest.cdn.nintendo.net",
+   "qtype": 1,
+   "qtype_name": 1,
+   "reply": "2a2a858000010001000000000563746573740363646e086e696e74656e646f036e65740000010001c00c000100010000003c0004c0a80201"
+  },
+  {
+   "name": "ctest.cdn.nintendo.net",
+   "qname": "ctest.cdn.nintendo.net",
+   "qtype": 28,
+   "qtype_name": 28,
+   "reply": "2a2a858000010000000000000563746573740363646e086e696e74656e646f036e657400001c0001"
+  },
+  {
+   "name": "ctest.cdn.nintendo.net",
+   "qname": "ctest.cdn.nintendo.net",
+   "qtype": 255,
+   "qtype_name": 255,
+   "reply": "2a2a858000010001000000000563746573740363646e086e696e74656e646f036e65740000ff0001c00c000100010000003c0004c0a80201"
+  },
+  {
+   "name": "ctest.cdn.nintendo.net",
+   "qname": "ctest.cdn.nintendo.net",
+   "qtype": 65,
+   "qtype_name": 65,
+   "reply": "2a2a858000010000000000000563746573740363646e086e696e74656e646f036e65740000410001"
+  },
+  {
+   "name": "ctest.p01.ctest.srv.nintendo.net",
+   "qname": "ctest.p01.ctest.srv.nintendo.net",
+   "qtype": 1,
+   "qtype_name": 1,
+   "reply": "2a2a858000010001000000000563746573740370303105637465737403737276086e696e74656e646f036e65740000010001c00c000100010000003c0004c0a80201"
+  },
+  {
+   "name": "ctest.p01.ctest.srv.nintendo.net",
+   "qname": "ctest.p01.ctest.srv.nintendo.net",
+   "qtype": 28,
+   "qtype_name": 28,
+   "reply": "2a2a858000010000000000000563746573740370303105637465737403737276086e696e74656e646f036e657400001c0001"
+  },
+  {
+   "name": "ctest.p01.ctest.srv.nintendo.net",
+   "qname": "ctest.p01.ctest.srv.nintendo.net",
+   "qtype": 255,
+   "qtype_name": 255,
+   "reply": "2a2a858000010001000000000563746573740370303105637465737403737276086e696e74656e646f036e65740000ff0001c00c000100010000003c0004c0a80201"
+  },
+  {
+   "name": "ctest.p01.ctest.srv.nintendo.net",
+   "qname": "ctest.p01.ctest.srv.nintendo.net",
+   "qtype": 65,
+   "qtype_name": 65,
+   "reply": "2a2a858000010000000000000563746573740370303105637465737403737276086e696e74656e646f036e65740000410001"
+  },
+  {
+   "name": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qname": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qtype": 1,
+   "qtype_name": 1,
+   "reply": "2a2a858000010001000000000373756e03703031036c70310364346303737276086e696e74656e646f036e65740000010001c00c000100010000003c000400000000"
+  },
+  {
+   "name": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qname": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qtype": 28,
+   "qtype_name": 28,
+   "reply": "2a2a858000010000000000000373756e03703031036c70310364346303737276086e696e74656e646f036e657400001c0001"
+  },
+  {
+   "name": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qname": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qtype": 255,
+   "qtype_name": 255,
+   "reply": "2a2a858000010001000000000373756e03703031036c70310364346303737276086e696e74656e646f036e65740000ff0001c00c000100010000003c000400000000"
+  },
+  {
+   "name": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qname": "sun.p01.lp1.d4c.srv.nintendo.net",
+   "qtype": 65,
+   "qtype_name": 65,
+   "reply": "2a2a858000010000000000000373756e03703031036c70310364346303737276086e696e74656e646f036e65740000410001"
+  },
+  {
+   "name": "api.github.com",
+   "qname": "api.github.com",
+   "qtype": 1,
+   "qtype_name": 1,
+   "reply": "2a2a85800001000100000000036170690667697468756203636f6d0000010001c00c000100010000003c000400000000"
+  },
+  {
+   "name": "api.github.com",
+   "qname": "api.github.com",
+   "qtype": 28,
+   "qtype_name": 28,
+   "reply": "2a2a85800001000000000000036170690667697468756203636f6d00001c0001"
+  },
+  {
+   "name": "api.github.com",
+   "qname": "api.github.com",
+   "qtype": 255,
+   "qtype_name": 255,
+   "reply": "2a2a85800001000100000000036170690667697468756203636f6d0000ff0001c00c000100010000003c000400000000"
+  },
+  {
+   "name": "api.github.com",
+   "qname": "api.github.com",
+   "qtype": 65,
+   "qtype_name": 65,
+   "reply": "2a2a85800001000000000000036170690667697468756203636f6d0000410001"
+  }
+ ],
+ "filezilla_bin": "/Applications/FileZilla.app/Contents/MacOS/filezilla",
+ "label_s2_with_mac": "\u001b[35;1mSwitch 2\u001b[0m (48:f1:eb:5a:22:c2)",
+ "label_selftest": "\u001b[90mMac (self-test)\u001b[0m",
+ "leases": [
+  [
+   "192.168.2.3",
+   "48:f1:eb:5a:22:c2"
+  ],
+  [
+   "192.168.2.2",
+   "dc:68:eb:5a:11:c1"
+  ]
+ ],
+ "nat": {
+  "False": {
+   "describe": "enabled=False  from=Thunderbolt Bridge (bridge0)  to=en0",
+   "written": {
+    "AirPort": {
+     "Channel": 0
+    },
+    "Enabled": 0,
+    "PrimaryInterface": {
+     "Device": "bridge0",
+     "Enabled": 0,
+     "HardwareKey": "",
+     "PrimaryUserReadable": "Thunderbolt Bridge"
+    },
+    "PrimaryService": "60F93F48-F4AB-4633-9ACC-A6C7E4EB7CF5",
+    "SharingDevices": [
+     "en0"
+    ]
+   }
+  },
+  "True": {
+   "describe": "enabled=True  from=Thunderbolt Bridge (bridge0)  to=en0",
+   "written": {
+    "AirPort": {
+     "Channel": 0
+    },
+    "Enabled": 1,
+    "PrimaryInterface": {
+     "Device": "bridge0",
+     "Enabled": 0,
+     "HardwareKey": "",
+     "PrimaryUserReadable": "Thunderbolt Bridge"
+    },
+    "PrimaryService": "60F93F48-F4AB-4633-9ACC-A6C7E4EB7CF5",
+    "SharingDevices": [
+     "en0"
+    ]
+   }
+  }
+ },
+ "paint_red_bold": "\u001b[31;1mx\u001b[0m",
+ "pf_short_names": [
+  "IPv6 (blocked)",
+  "DHCP",
+  "DNS",
+  "web test",
+  "everything else (blocked)"
+ ],
+ "settings_console_macs": [
+  "dc:68:eb:5a:11:c1",
+  "48:f1:eb:5a:22:c2"
+ ],
+ "settings_loaded": {
+  "dashboard": {
+   "enabled": true,
+   "open_browser": true,
+   "port": 8800,
+   "remind_when_closed": true
+  },
+  "display": {
+   "colors": true,
+   "console": "technical"
+  },
+  "ftp": {
+   "check_every_seconds": 3,
+   "open_filezilla": false,
+   "port": 5000,
+   "recheck_when_up_seconds": 30,
+   "watch": true
+  },
+  "logs": {
+   "folder": "logs",
+   "keep_last": 0
+  },
+  "spoof": {
+   "auto_sharing": true,
+   "firewall": true,
+   "keep_sharing": false
+  }
+ },
+ "technical_wifi_join": "\u001b[90m[22:26:12]\u001b[0m \u001b[36mWIFI\u001b[0m  \u001b[35;1mSwitch 2\u001b[0m (48:f1:eb:5a:22:c2) joined the Wi-Fi",
+ "test_hosts": {
+  "ctest.cdn.nintendo.net": "Switch 1 connection test",
+  "ctest.p01.ctest.srv.nintendo.net": "Switch 2 connection test"
+ },
+ "wifi_session": [
+  [
+   "join",
+   "48:f1:eb:5a:22:c2",
+   0.0
+  ],
+  [
+   "leave",
+   "48:f1:eb:5a:22:c2",
+   "disconnected",
+   22.0
+  ],
+  [
+   "join",
+   "48:f1:eb:5a:22:c2",
+   25.01
+  ],
+  [
+   "join",
+   "dc:68:eb:5a:11:c1",
+   55.018
+  ],
+  [
+   "leave",
+   "dc:68:eb:5a:11:c1",
+   "disconnected",
+   72.0
+  ],
+  [
+   "leave",
+   "48:f1:eb:5a:22:c2",
+   "disconnected",
+   92.0
+  ]
+ ]
+}

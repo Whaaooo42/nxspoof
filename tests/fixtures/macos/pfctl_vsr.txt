@@ -1,0 +1,15 @@
+block drop in quick on bridge100 inet6 all
+  [ Evaluations: 120        Packets: 0          Bytes: 0           States: 0     ]
+  [ Inserted: uid 0 pid 4821 State Creations: 0     ]
+pass in quick on bridge100 inet proto udp from any port = 68 to any port = 67 keep state
+  [ Evaluations: 120        Packets: 6          Bytes: 1968        States: 0     ]
+  [ Inserted: uid 0 pid 4821 State Creations: 6     ]
+pass in quick on bridge100 inet proto udp from any to 192.168.2.1 port = 53 keep state
+  [ Evaluations: 114        Packets: 14         Bytes: 980         States: 0     ]
+  [ Inserted: uid 0 pid 4821 State Creations: 14    ]
+pass in quick on bridge100 inet proto tcp from any to 192.168.2.1 port = 80 flags S/SA keep state
+  [ Evaluations: 100        Packets: 42         Bytes: 6720        States: 0     ]
+  [ Inserted: uid 0 pid 4821 State Creations: 42    ]
+block drop in quick on bridge100 all
+  [ Evaluations: 58         Packets: 0          Bytes: 0           States: 0     ]
+  [ Inserted: uid 0 pid 4821 State Creations: 0     ]

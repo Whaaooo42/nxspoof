@@ -1,0 +1,165 @@
+/* NXSPOOF docs - the one stylesheet of every page in docs/ (the dashboard's 📖 Help, GitHub Pages, or the files opened as they are).
+   Light and dark follow the Mac. Sections: COLORS · PAGE · NAVIGATION · BLOCKS · TABLES · DRAWINGS · THE TERMINAL · SEARCH */
+
+/* ############################################################################################################################################################ */
+/* ##  COLORS                                                                                                                                                ## */
+/* ############################################################################################################################################################ */
+
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --line: #dfe3ea; --text: #1d2330; --muted: #6b7385;
+  --blue: #2b6cb0; --green: #1f9d55; --red: #d64545; --yellow: #b7791f; --violet: #6b46c1;
+  --blue-bg: #e8f1fb; --green-bg: #e7f6ee; --red-bg: #fbeaea; --yellow-bg: #fbf3e2; --violet-bg: #f0ebfb; --gray-bg: #f0f2f5;
+  --term-bg: #1e2129; --term-text: #d7dce5; --term-dim: #7d8697; --term-green: #6fcf97; --term-yellow: #f2c94c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151b; --panel: #1a1e26; --line: #2c323d; --text: #e6e9ef; --muted: #9aa3b5;
+    --blue: #63b3ed; --green: #48bb78; --red: #f56565; --yellow: #ecc94b; --violet: #b794f4;
+    --blue-bg: #1b2a3d; --green-bg: #183126; --red-bg: #3a1d1d; --yellow-bg: #362d16; --violet-bg: #2a2140; --gray-bg: #222733;
+    --term-bg: #0d0f13;
+  }
+}
+
+/* ############################################################################################################################################################ */
+/* ##  PAGE                                                                                                                                                  ## */
+/* ############################################################################################################################################################ */
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 16px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display: grid; grid-template-columns: 210px minmax(0, 1fr); min-height: 100vh; }
+main { max-width: 1000px; width: 100%; padding: 32px 28px 72px; }
+h1 { font-size: 28px; margin: 0 0 6px; }
+h2 { font-size: 20px; margin: 44px 0 10px; }
+h3 { font-size: 15px; margin: 22px 0 6px; }
+p { margin: 8px 0; }
+p.lead { color: var(--muted); margin: 0 0 18px; max-width: 760px; }
+a { color: var(--blue); }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+code, kbd { font: 12px ui-monospace, "SF Mono", Menlo, monospace; background: var(--gray-bg); padding: 1px 5px; border-radius: 4px; }
+kbd { border: 1px solid var(--line); }
+pre.code { margin: 8px 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; overflow-x: auto;
+  font: 12.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
+ul, ol { padding-left: 22px; }
+li { margin: 3px 0; }
+@media (max-width: 760px) {
+  body { display: block; }
+  main { padding: 20px 16px 56px; }
+}
+
+/* ############################################################################################################################################################ */
+/* ##  NAVIGATION                                                                                                                                            ## */
+/* ############################################################################################################################################################ */
+
+nav.side { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 22px 14px; background: var(--panel);
+  border-right: 1px solid var(--line); font-size: 14px; }
+nav.side .brand { display: block; font-weight: 700; font-size: 16px; margin: 0 0 12px 6px; color: var(--text); text-decoration: none; }
+nav.side b { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 4px 6px; }
+nav.side a:not(.brand) { display: block; color: var(--text); text-decoration: none; padding: 4px 8px; border-radius: 7px; }
+nav.side a:not(.brand):hover { background: var(--gray-bg); }
+nav.side a.on { background: var(--blue-bg); color: var(--blue); font-weight: 600; }
+@media (max-width: 760px) {
+  nav.side { position: static; height: auto; display: flex; flex-wrap: wrap; gap: 2px 4px; align-items: center; padding: 10px 12px;
+    border-right: 0; border-bottom: 1px solid var(--line); }
+  nav.side .brand { width: 100%; margin: 0 0 4px; }
+  nav.side b { display: none; }
+  nav.side a:not(.brand) { padding: 3px 7px; font-size: 13px; }
+}
+
+/* ############################################################################################################################################################ */
+/* ##  BLOCKS                                                                                                                                                ## */
+/* ############################################################################################################################################################ */
+
+.banner { background: var(--green-bg); border: 1px solid var(--green); border-radius: 12px; padding: 12px 16px; margin: 10px 0; font-size: 14px; }
+.note { background: var(--yellow-bg); border: 1px solid var(--yellow); border-radius: 12px; padding: 10px 14px; margin: 10px 0; font-size: 14px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 8px 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.card h3 { margin: 0 0 4px; }
+.card ul { margin: 6px 0 0; padding-left: 18px; font-size: 13px; }
+.card p { font-size: 13px; }
+a.card.link { display: block; color: var(--text); text-decoration: none; }
+a.card.link:hover { border-color: var(--blue); }
+a.card.link b { display: block; font-size: 15px; color: var(--blue); }
+a.card.link span { font-size: 13px; color: var(--muted); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 999px; margin-bottom: 6px; white-space: nowrap; }
+.t-blue { background: var(--blue-bg); color: var(--blue); } .t-green { background: var(--green-bg); color: var(--green); }
+.t-red { background: var(--red-bg); color: var(--red); } .t-yellow { background: var(--yellow-bg); color: var(--yellow); }
+.t-violet { background: var(--violet-bg); color: var(--violet); } .t-gray { background: var(--gray-bg); color: var(--muted); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 8px 0; padding: 0; list-style: none; }
+.rules li { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 13px; margin: 0; }
+.rules b { display: block; font-size: 14px; margin-bottom: 2px; }
+ol.steps { counter-reset: step; list-style: none; padding: 0; margin: 10px 0; }
+ol.steps > li { counter-increment: step; position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 14px 10px 48px; margin: 8px 0; }
+ol.steps > li::before { content: counter(step); position: absolute; left: 14px; top: 10px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--blue-bg); color: var(--blue); font-weight: 700; font-size: 13px; text-align: center; line-height: 24px; }
+details.fold { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; margin: 10px 0; }
+details.fold > summary { cursor: pointer; font-weight: 600; }
+details.fold[open] > summary { margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+details.fold > summary .muted { font-weight: 400; font-size: 13px; }
+.dialog { max-width: 440px; margin: 10px auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .16); font-size: 13px; }
+.dialog .dt { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.dialog .db { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.dialog .db span { padding: 3px 14px; border-radius: 6px; border: 1px solid var(--line); background: var(--gray-bg); }
+.dialog .db .def { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+/* ############################################################################################################################################################ */
+/* ##  TABLES                                                                                                                                                ## */
+/* ############################################################################################################################################################ */
+
+.scroll { overflow-x: auto; margin: 8px 0; }
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 13px; }
+th, td { text-align: left; padding: 7px 10px; border-top: 1px solid var(--line); vertical-align: top; }
+th { background: var(--gray-bg); font-weight: 600; border-top: 0; }
+tr.group td { background: var(--gray-bg); font-weight: 600; }
+td code { white-space: nowrap; }
+td.wrap code { white-space: normal; }
+
+/* ############################################################################################################################################################ */
+/* ##  DRAWINGS                                                                                                                                              ## */
+/* ############################################################################################################################################################ */
+
+figure { margin: 10px 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; overflow-x: auto; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
+svg { display: block; width: 100%; height: auto; min-width: 640px; }
+svg text { fill: var(--text); font: 13px -apple-system, BlinkMacSystemFont, sans-serif; }
+svg .small { font-size: 11px; fill: var(--muted); }
+svg .title { font-weight: 600; }
+svg .box { fill: var(--panel); stroke: var(--line); stroke-width: 1.5; }
+svg .b-blue { fill: var(--blue-bg); stroke: var(--blue); } svg .b-green { fill: var(--green-bg); stroke: var(--green); }
+svg .b-red { fill: var(--red-bg); stroke: var(--red); } svg .b-yellow { fill: var(--yellow-bg); stroke: var(--yellow); }
+svg .b-violet { fill: var(--violet-bg); stroke: var(--violet); } svg .b-gray { fill: var(--gray-bg); stroke: var(--line); }
+svg .arrow { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+svg .arrow-blue { stroke: var(--blue); } svg .arrow-green { stroke: var(--green); } svg .arrow-red { stroke: var(--red); }
+svg .dash { stroke-dasharray: 5 4; }
+svg .head { fill: var(--muted); }
+svg .ok { fill: var(--green); } svg .no { fill: var(--red); }
+svg .ok-bubble { fill: var(--green); } svg .ok-word { fill: #fff; font-weight: 700; }   /* the icon's "ok", on its way back (connection-test.html) */
+
+/* ############################################################################################################################################################ */
+/* ##  THE TERMINAL                                                                                                                                          ## */
+/* ############################################################################################################################################################ */
+
+pre.term { margin: 0; background: var(--term-bg); color: var(--term-text); border-radius: 10px; padding: 14px 16px;
+  font: 12.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace; overflow-x: auto; white-space: pre; }
+pre.term b { color: #fff; } pre.term .d { color: var(--term-dim); } pre.term .g { color: var(--term-green); } pre.term .y { color: var(--term-yellow); }
+.menu-screens { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 8px 0; }     /* one screen per row: the lines are as wide as the real window */
+
+/* ############################################################################################################################################################ */
+/* ##  SEARCH (docs.js: a box that filters the cards under it)                                                                                               ## */
+/* ############################################################################################################################################################ */
+
+input.search { width: 100%; max-width: 460px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel);
+  color: var(--text); font: inherit; margin: 6px 0 4px; }
+.search-count { font-size: 13px; color: var(--muted); margin-left: 8px; }
+.sym { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin: 8px 0; font-size: 14px; }
+.sym .what { font-weight: 600; }
+.sym .fix { margin-top: 4px; }
+.sym:target { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue-bg); }
+[hidden] { display: none !important; }
+.hero-icon { margin: 8px 0 0; } .hero-icon img { display: block; }   /* the icon above the home page's title */
+.shot img { display: block; width: 100%; height: auto; border-radius: 6px; }   /* the dashboard's picture on the home page */

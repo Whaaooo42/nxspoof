@@ -1,0 +1,12 @@
+{
+	ip_address=192.168.2.3
+	hw_address=1,48:f1:eb:5a:22:c2
+	identifier=1,48:f1:eb:5a:22:c2
+	lease=0x6af7acc8
+}
+{
+	ip_address=192.168.2.2
+	hw_address=1,dc:68:eb:5a:11:c1
+	identifier=1,dc:68:eb:5a:11:c1
+	lease=0x6af78274
+}

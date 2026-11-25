@@ -1,0 +1,618 @@
+{
+ "after_blocked": {
+  "actions": [],
+  "consoles": [
+   {
+    "blocked": [],
+    "blocked_total": 0,
+    "color": "cyan",
+    "ftp": {
+     "events": [],
+     "up": false,
+     "url": null
+    },
+    "ip": null,
+    "joined": [],
+    "known": true,
+    "left": [],
+    "mac": "dc:68:eb:5a:11:c1",
+    "model": "Nintendo Switch",
+    "name": "Switch 1",
+    "online": false,
+    "owner": "me",
+    "present": false,
+    "seen": false,
+    "settings": {
+     "color": "cyan",
+     "ftp_port": 5021,
+     "model": "Nintendo Switch",
+     "name": "Switch 1",
+     "notes": [
+      "First on NXSPOOF 2026-11-13 12:47. Connection test: ctest.cdn.nintendo.net, User-Agent 'NX NIFM/00'.",
+      "Blocked lookups seen: pegasus.hac.lp1.pegasus.srv.nintendo.net, val.hac.lp1.penne.srv.nintendo.net, api.hac.lp1.ctest.srv.nintendo.net.",
+      "2026-11-13 13:06: error 2110-1100 once (never joined the Wi-Fi radio, not the firewall); retry worked."
+     ],
+     "owner": "me",
+     "serial": "",
+     "system_version": ""
+    },
+    "tests": 0,
+    "uas": []
+   },
+   {
+    "blocked": [
+     [
+      "dauth.p01.lp1.ndas.srv.nintendo.net",
+      2
+     ],
+     [
+      "sun.p01.lp1.d4c.srv.nintendo.net",
+      1
+     ],
+     [
+      "api.p01.lp1.ctest.srv.nintendo.net",
+      1
+     ],
+     [
+      "http://api.github.com",
+      1
+     ]
+    ],
+    "blocked_total": 5,
+    "color": "magenta",
+    "ftp": {
+     "events": [],
+     "up": false,
+     "url": "ftp://127.0.0.1:5021"
+    },
+    "ip": "127.0.0.1",
+    "joined": [
+     1795580381.8819609
+    ],
+    "known": true,
+    "left": [],
+    "mac": "48:f1:eb:5a:22:c2",
+    "model": "Nintendo Switch 2",
+    "name": "Switch 2",
+    "online": true,
+    "owner": "me",
+    "present": true,
+    "seen": true,
+    "settings": {
+     "color": "magenta",
+     "ftp_port": 5021,
+     "model": "Nintendo Switch 2",
+     "name": "Switch 2",
+     "notes": [
+      "First on NXSPOOF 2026-11-13 13:25. Connection test: ctest.p01.ctest.srv.nintendo.net, User-Agent 'libcurl (nnNifm; ...; SDK 23.3.0.0; Add-on 23.3.0.0)'.",
+      "Blocked lookups seen: sun.p01.lp1.d4c (update check), dauth.p01.lp1.ndas (device sign-in, retried every few minutes), api.p01.lp1.ctest, bvc.p01.lp1.bvc, <id>.my.2k.com, api.github.com, v1.",
+      "Also tries IPv6 (dropped by the firewall; NXSPOOF has no IPv6). 'SDK 23.3.0.0' is the networking component version, not necessarily the System version."
+     ],
+     "owner": "me",
+     "serial": "",
+     "system_version": ""
+    },
+    "tests": 1,
+    "uas": [
+     "libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)",
+     "Mozilla/5.0 (Nintendo Switch)"
+    ]
+   }
+  ],
+  "models": [
+   {
+    "detail": "HAC-001 \u00b7 2017-2018 \u00b7 Tegra X1 (T210) \u00b7 the RCM exploit works",
+    "name": "Switch V1 (Erista, unpatched)"
+   },
+   {
+    "detail": "HAC-001 \u00b7 2018-2019 \u00b7 Tegra X1 (T210) \u00b7 RCM patched, modchip needed",
+    "name": "Switch V1 (Erista, patched)"
+   },
+   {
+    "detail": "HAC-001(-01) \u00b7 2019+ \u00b7 Tegra X1+ (T214) \u00b7 longer battery \u00b7 modchip needed",
+    "name": "Switch V2 (Mariko)"
+   },
+   {
+    "detail": "HDH-001 \u00b7 \"Hoag\" \u00b7 2019+ \u00b7 Tegra X1+ (T214) \u00b7 handheld only",
+    "name": "Switch Lite (Mariko)"
+   },
+   {
+    "detail": "HEG-001 \u00b7 \"Aula\" \u00b7 2021+ \u00b7 Tegra X1+ (T214) \u00b7 7\" OLED, LAN port in the dock",
+    "name": "Switch OLED (Mariko)"
+   },
+   {
+    "detail": "BEE-001 \u00b7 2025+ \u00b7 NVIDIA T239",
+    "name": "Switch 2"
+   }
+  ],
+  "run": {
+   "auto_sharing": true,
+   "console_mode": "casual",
+   "dry_run": false,
+   "filezilla": true,
+   "firewall": true,
+   "firewall_loaded": true,
+   "ftp_watch": true,
+   "hotspot_down": false,
+   "hotspot_ip": "192.168.2.1",
+   "hotspot_name": "NXSPOOF",
+   "log_file": "logs/2026-11-24_23-19-39.log",
+   "now": 1795580385.91955,
+   "phase": "running",
+   "pid": 5374,
+   "started": 1795580379.874051
+  },
+  "settings": [
+   {
+    "apply": "restart",
+    "choices": [
+     "172.16.0.1",
+     "10.254.0.1",
+     "192.168.254.1"
+    ],
+    "default": "172.16.0.1",
+    "help": "Thunderbolt Bridge's fixed address (setup sets it; pick another if it overlaps your home network)",
+    "in_force": "172.16.0.1",
+    "kind": "text",
+    "label": "address",
+    "max": null,
+    "min": null,
+    "name": "bridge.address",
+    "overridden_by": null,
+    "saved": "172.16.0.1",
+    "section": "bridge",
+    "section_title": "Thunderbolt Bridge"
+   },
+   {
+    "apply": "restart",
+    "choices": [],
+    "default": 0,
+    "help": "Keep only the newest N run logs (0 = keep everything)",
+    "in_force": 0,
+    "kind": "int",
+    "label": "keep last",
+    "max": null,
+    "min": 0,
+    "name": "logs.keep_last",
+    "overridden_by": null,
+    "saved": 0,
+    "section": "logs",
+    "section_title": "Log files"
+   },
+   {
+    "apply": "restart",
+    "choices": [],
+    "default": true,
+    "help": "Watch each console for an FTP server",
+    "in_force": true,
+    "kind": "bool",
+    "label": "watch",
+    "max": null,
+    "min": null,
+    "name": "ftp.watch",
+    "overridden_by": null,
+    "saved": true,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": 5000,
+    "help": "FTP port to check",
+    "in_force": 5021,
+    "kind": "int",
+    "label": "port",
+    "max": 65535,
+    "min": 1,
+    "name": "ftp.port",
+    "overridden_by": null,
+    "saved": 5021,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": 3,
+    "help": "How often to check while the FTP server is down",
+    "in_force": 1,
+    "kind": "number",
+    "label": "check every seconds",
+    "max": null,
+    "min": 1,
+    "name": "ftp.check_every_seconds",
+    "overridden_by": null,
+    "saved": 1,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": 30,
+    "help": "How often to check while it's up, to notice when it goes down (0 = check once and stop)",
+    "in_force": 1,
+    "kind": "number",
+    "label": "recheck when up seconds",
+    "max": null,
+    "min": 0,
+    "name": "ftp.recheck_when_up_seconds",
+    "overridden_by": null,
+    "saved": 1,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": false,
+    "help": "Open FileZilla on the console when its FTP server comes up",
+    "in_force": false,
+    "kind": "bool",
+    "label": "open filezilla",
+    "max": null,
+    "min": null,
+    "name": "ftp.open_filezilla",
+    "overridden_by": null,
+    "saved": false,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   }
+  ],
+  "tags": [
+   "CHECK",
+   "CLEAN",
+   "DASH",
+   "DHCP",
+   "DNS",
+   "DOCTOR",
+   "FATAL",
+   "FIREWALL",
+   "FTP",
+   "HTTP",
+   "LOG",
+   "NEW",
+   "NOTE",
+   "PROBLEM",
+   "READY",
+   "SETTINGS",
+   "SETUP",
+   "SHARING",
+   "START",
+   "SUMMARY",
+   "UNDO",
+   "WIFI",
+   "pf"
+  ]
+ },
+ "before_stop": {
+  "actions": [],
+  "consoles": [
+   {
+    "blocked": [],
+    "blocked_total": 0,
+    "color": "cyan",
+    "ftp": {
+     "events": [],
+     "up": false,
+     "url": null
+    },
+    "ip": null,
+    "joined": [
+     1795580397.766446
+    ],
+    "known": true,
+    "left": [
+     1795580406.407178
+    ],
+    "mac": "dc:68:eb:5a:11:c1",
+    "model": "Nintendo Switch",
+    "name": "Switch 1",
+    "online": false,
+    "owner": "me",
+    "present": false,
+    "seen": true,
+    "settings": {
+     "color": "cyan",
+     "ftp_port": 5021,
+     "model": "Nintendo Switch",
+     "name": "Switch 1",
+     "notes": [
+      "First on NXSPOOF 2026-11-13 12:47. Connection test: ctest.cdn.nintendo.net, User-Agent 'NX NIFM/00'.",
+      "Blocked lookups seen: pegasus.hac.lp1.pegasus.srv.nintendo.net, val.hac.lp1.penne.srv.nintendo.net, api.hac.lp1.ctest.srv.nintendo.net.",
+      "2026-11-13 13:06: error 2110-1100 once (never joined the Wi-Fi radio, not the firewall); retry worked."
+     ],
+     "owner": "me",
+     "serial": "",
+     "system_version": ""
+    },
+    "tests": 0,
+    "uas": []
+   },
+   {
+    "blocked": [
+     [
+      "dauth.p01.lp1.ndas.srv.nintendo.net",
+      2
+     ],
+     [
+      "sun.p01.lp1.d4c.srv.nintendo.net",
+      1
+     ],
+     [
+      "api.p01.lp1.ctest.srv.nintendo.net",
+      1
+     ],
+     [
+      "http://api.github.com",
+      1
+     ]
+    ],
+    "blocked_total": 5,
+    "color": "magenta",
+    "ftp": {
+     "events": [
+      [
+       1795580391.912149,
+       "UP"
+      ],
+      [
+       1795580396.936329,
+       "DOWN"
+      ]
+     ],
+     "up": false,
+     "url": "ftp://127.0.0.1:5021"
+    },
+    "ip": "127.0.0.1",
+    "joined": [
+     1795580381.8819609,
+     1795580418.0922382
+    ],
+    "known": true,
+    "left": [
+     1795580416.564329
+    ],
+    "mac": "48:f1:eb:5a:22:c2",
+    "model": "Nintendo Switch 2",
+    "name": "Switch 2",
+    "online": true,
+    "owner": "me",
+    "present": true,
+    "seen": true,
+    "settings": {
+     "color": "magenta",
+     "ftp_port": 5021,
+     "model": "Nintendo Switch 2",
+     "name": "Switch 2",
+     "notes": [
+      "First on NXSPOOF 2026-11-13 13:25. Connection test: ctest.p01.ctest.srv.nintendo.net, User-Agent 'libcurl (nnNifm; ...; SDK 23.3.0.0; Add-on 23.3.0.0)'.",
+      "Blocked lookups seen: sun.p01.lp1.d4c (update check), dauth.p01.lp1.ndas (device sign-in, retried every few minutes), api.p01.lp1.ctest, bvc.p01.lp1.bvc, <id>.my.2k.com, api.github.com, v1.",
+      "Also tries IPv6 (dropped by the firewall; NXSPOOF has no IPv6). 'SDK 23.3.0.0' is the networking component version, not necessarily the System version."
+     ],
+     "owner": "me",
+     "serial": "",
+     "system_version": ""
+    },
+    "tests": 2,
+    "uas": [
+     "libcurl (nnNifm; bf4812d9-d89b-4804-b53a-d08e0bed634f; SDK 23.3.0.0; Add-on 23.3.0.0)",
+     "Mozilla/5.0 (Nintendo Switch)"
+    ]
+   },
+   {
+    "blocked": [],
+    "blocked_total": 0,
+    "color": "yellow",
+    "ftp": {
+     "events": [],
+     "up": false,
+     "url": null
+    },
+    "ip": null,
+    "joined": [
+     1795580407.9241369
+    ],
+    "known": false,
+    "left": [],
+    "mac": "0a:01:02:03:04:05",
+    "model": "",
+    "name": "Unknown console",
+    "online": false,
+    "owner": "",
+    "present": true,
+    "seen": true,
+    "snippet": "{\"name\": \"Friend's Switch\", \"model\": \"\", \"mac\": \"0a:01:02:03:04:05\", \"owner\": \"\", \"color\": \"yellow\", \"ftp\": {\"port\": 5000}, \"notes\": []}",
+    "tests": 0,
+    "uas": []
+   }
+  ],
+  "models": [
+   {
+    "detail": "HAC-001 \u00b7 2017-2018 \u00b7 Tegra X1 (T210) \u00b7 the RCM exploit works",
+    "name": "Switch V1 (Erista, unpatched)"
+   },
+   {
+    "detail": "HAC-001 \u00b7 2018-2019 \u00b7 Tegra X1 (T210) \u00b7 RCM patched, modchip needed",
+    "name": "Switch V1 (Erista, patched)"
+   },
+   {
+    "detail": "HAC-001(-01) \u00b7 2019+ \u00b7 Tegra X1+ (T214) \u00b7 longer battery \u00b7 modchip needed",
+    "name": "Switch V2 (Mariko)"
+   },
+   {
+    "detail": "HDH-001 \u00b7 \"Hoag\" \u00b7 2019+ \u00b7 Tegra X1+ (T214) \u00b7 handheld only",
+    "name": "Switch Lite (Mariko)"
+   },
+   {
+    "detail": "HEG-001 \u00b7 \"Aula\" \u00b7 2021+ \u00b7 Tegra X1+ (T214) \u00b7 7\" OLED, LAN port in the dock",
+    "name": "Switch OLED (Mariko)"
+   },
+   {
+    "detail": "BEE-001 \u00b7 2025+ \u00b7 NVIDIA T239",
+    "name": "Switch 2"
+   }
+  ],
+  "run": {
+   "auto_sharing": true,
+   "console_mode": "casual",
+   "dry_run": false,
+   "filezilla": true,
+   "firewall": true,
+   "firewall_loaded": true,
+   "ftp_watch": true,
+   "hotspot_down": false,
+   "hotspot_ip": "192.168.2.1",
+   "hotspot_name": "NXSPOOF",
+   "log_file": "logs/2026-11-24_23-19-39.log",
+   "now": 1795580419.095399,
+   "phase": "running",
+   "pid": 5374,
+   "started": 1795580379.874051
+  },
+  "settings": [
+   {
+    "apply": "restart",
+    "choices": [
+     "172.16.0.1",
+     "10.254.0.1",
+     "192.168.254.1"
+    ],
+    "default": "172.16.0.1",
+    "help": "Thunderbolt Bridge's fixed address (setup sets it; pick another if it overlaps your home network)",
+    "in_force": "172.16.0.1",
+    "kind": "text",
+    "label": "address",
+    "max": null,
+    "min": null,
+    "name": "bridge.address",
+    "overridden_by": null,
+    "saved": "172.16.0.1",
+    "section": "bridge",
+    "section_title": "Thunderbolt Bridge"
+   },
+   {
+    "apply": "restart",
+    "choices": [],
+    "default": 0,
+    "help": "Keep only the newest N run logs (0 = keep everything)",
+    "in_force": 0,
+    "kind": "int",
+    "label": "keep last",
+    "max": null,
+    "min": 0,
+    "name": "logs.keep_last",
+    "overridden_by": null,
+    "saved": 0,
+    "section": "logs",
+    "section_title": "Log files"
+   },
+   {
+    "apply": "restart",
+    "choices": [],
+    "default": true,
+    "help": "Watch each console for an FTP server",
+    "in_force": true,
+    "kind": "bool",
+    "label": "watch",
+    "max": null,
+    "min": null,
+    "name": "ftp.watch",
+    "overridden_by": null,
+    "saved": true,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": 5000,
+    "help": "FTP port to check",
+    "in_force": 5021,
+    "kind": "int",
+    "label": "port",
+    "max": 65535,
+    "min": 1,
+    "name": "ftp.port",
+    "overridden_by": null,
+    "saved": 5021,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": 3,
+    "help": "How often to check while the FTP server is down",
+    "in_force": 1,
+    "kind": "number",
+    "label": "check every seconds",
+    "max": null,
+    "min": 1,
+    "name": "ftp.check_every_seconds",
+    "overridden_by": null,
+    "saved": 1,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": 30,
+    "help": "How often to check while it's up, to notice when it goes down (0 = check once and stop)",
+    "in_force": 1,
+    "kind": "number",
+    "label": "recheck when up seconds",
+    "max": null,
+    "min": 0,
+    "name": "ftp.recheck_when_up_seconds",
+    "overridden_by": null,
+    "saved": 1,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   },
+   {
+    "apply": "live",
+    "choices": [],
+    "default": false,
+    "help": "Open FileZilla on the console when its FTP server comes up",
+    "in_force": false,
+    "kind": "bool",
+    "label": "open filezilla",
+    "max": null,
+    "min": null,
+    "name": "ftp.open_filezilla",
+    "overridden_by": null,
+    "saved": false,
+    "section": "ftp",
+    "section_title": "FTP watch"
+   }
+  ],
+  "tags": [
+   "CHECK",
+   "CLEAN",
+   "DASH",
+   "DHCP",
+   "DNS",
+   "DOCTOR",
+   "FATAL",
+   "FIREWALL",
+   "FTP",
+   "HTTP",
+   "LOG",
+   "NEW",
+   "NOTE",
+   "PROBLEM",
+   "READY",
+   "SETTINGS",
+   "SETUP",
+   "SHARING",
+   "START",
+   "SUMMARY",
+   "UNDO",
+   "WIFI",
+   "pf"
+  ]
+ }
+}

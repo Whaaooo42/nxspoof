@@ -1,0 +1,36 @@
+# NXSPOOF - rules for working on this project
+
+NXSPOOF turns this Mac into a Wi-Fi hotspot that answers only the Nintendo Switch / Switch 2 connection tests and blocks everything else. How it's built: `docs/how-its-built.html` (read it before changing structure; its "What's next" is what's next), and why: `docs/decisions.html`. The docs are HTML pages in `docs/` (only README.md stays Markdown), served by the dashboard (📖 Help): `guide.html` (short, friendly), `troubleshooting.html`, `reference.html`, `setup.html`, `how-it-works.html`, `two-doors.html`, `real-runs.html`.
+
+## Before you say a change is done
+
+1. Run the tests on both Pythons: `/usr/bin/python3 -B tools/run_tests.py` (Apple's 3.9, what NXSPOOF runs on) and `python3 -B tools/run_tests.py` (the owner's newer one). They include the guardrails (`tools/guardrails.py`) and end with the watchdog (`tools/health.py`).
+2. If the run prints a **📝 MEMO** (or `MEMO.md` exists): tell the owner what it says. Tidy the code (split, extract a helper) when that's reasonable. Only accept with `python3 -B tools/health.py --accept "reason"` when the code really is fine as it is, and say so to the owner with the reason. Never accept just to silence it.
+3. If behavior or wording could have changed: `python3 -B tools/simulate.py new --out <tmp>` then `--compare tests/fixtures/reference/run <tmp>` (the reference run of today's code, the standard since 2026-11-16). An intended difference: record the reference again (`python3 -B tools/simulate.py new --out tests/fixtures/reference/run`, and `--stop dashboard --out tests/fixtures/reference/run_dashboard_stop`) and tell the owner what changed and why.
+4. After a big change, offer the owner the real-run checklist (`docs/real-runs.html`; menu `6 → 1` checks each run from its records).
+
+## The principles (the guardrails check most of them)
+
+- **Layers:** `core` → `settings`/`consoles`/`net`/`macos`/`output` → `features`/`dashboard`/`setup` → `app`. Imports go down only; packages in the same layer don't import each other.
+- **Only `macos/` talks to the Mac** (commands, pf, sharing, ownership; programs start through `macos/shell.py`), and **`macos/` never logs**: it returns values or raises. The run reaches the Mac through `app/system.py` (the simulator fakes it).
+- **Console names and outcome words are marked, never searched for:** write lines that name a console with `compose("...%s...", registry.name(mac))`, and outcome words (BLOCKED, PASS, FAIL, 200 ok, WARNING, is UP, went DOWN) with `outcome("BLOCKED", "blocked")` (`core/text.py`), so the Terminal and the dashboard color exactly those. A name used as a plain value on purpose is wrapped in `str(...)`.
+- **Every message goes through the event bus** (`bus.log(tag, technical, casual=..., level=...)`, `bus.say(casual)`, `bus.fact(kind)`). Something that deserves a line AND matters to listeners is **one** event: `bus.log(..., fact="console.left", ...)`, never a line plus a separate fact. The settings store is quiet: whoever changes a setting announces it that way. The technical log's tone is kept; casual lines are plain words with emoji, only for meaningful events; problems always show.
+- **Programs read a run from its records, never its text:** every event also goes to `logs/<run>.jsonl` in the data folder (`output/logfile.py` RecordSink); `features/runlog.py` (the log pane's run picker, menu 5) checks kinds and data. Only `features/textlog.py` knows the text log's patterns, for runs from before 2026-11-15.
+- **Files have one owner:** settings through `settings/store.py` (tidy rewrite), logs through `output/logfile.py`, the data folder itself (moving old files, the program copy) through `output/datafolder.py`; everything created is handed back to the user (`macos.user.give_to_user`).
+- **It just works, wherever the folder is (D21):** settings and logs live in NXSPOOF's data folder, `~/Library/Application Support/NXSPOOF/` (the `data` shortcut in the project folder); ▶ Start runs a program copy from there. The real logs to read are in `data/logs/`. Tests never touch it (`tests/__init__.py` swaps it for a temporary folder).
+- **One engine, two doors, folder first (D23):** the Terminal and the dashboard reach the same `nxspoof/` and the same data folder; every This Mac button runs a real `nx_spoof.py` command; where files go is asked of `core/places.py` (by role), and everything NXSPOOF needs from the machine is in `app/system.py`'s `CONTRACT`. The skip list in D23 stays skipped (no install into /Applications, no root helper, no signing, no bundled Python, no self-update).
+- **Minimal root (D24):** a real run splits at once (`app/keeper.py`): the keeper stays root and answers only its checked list (sharing, NXSPOOF's firewall rules, the cable, the two server sockets); the run itself is you. A new root need = a new keeper request with its argument check and a test in `tests/test_keeper.py`, never root in the run.
+- **Standard library only**, Python 3.9 syntax. **Dashboard:** 127.0.0.1 only, token-protected controls, no inline scripts, text never inserted as HTML.
+- **Code conventions:** a one-line `#` comment directly above every function, class and method; no docstrings except the file header; never two empty lines in a row; section banners exactly 160 wide with an empty line above and below.
+
+## Changing the safeguards
+
+The guardrails' exception tables (`ALLOWED_*` in `tools/guardrails.py`) and the watchdog's levels (`LIMITS` in `tools/health.py`) are the owner's decisions. Adding an exception needs a reason in the table and a word to the owner. Never loosen a rule, raise a limit, or delete a check without the owner's OK. A new rule comes with a proof in `tests/test_guardrails_bite.py`.
+
+## Working on NXSPOOF
+
+- **History is git.** Before a big step, check `git status` is clean (commit or ask first). At each milestone the owner approves (a feature done and checked, real runs passed), make one commit on `main` whose message says what changed and what was checked. Never rewrite history. `git` doesn't hold the data folder (settings.json, logs): before something that touches them, copy it (`~/Library/Application Support/NXSPOOF`, without `program/`) into the scratchpad.
+- **Nothing personal in the repository:** real console addresses, people's names, emails and the Mac's name stay out of code, tests and docs (tests use made-up addresses). Personal notes live in `private/` and personal instructions in `CLAUDE.local.md`, both ignored by git.
+- **Logs over questions:** detailed logs, a thorough technical log, extra `--flags` and checks at each step are the house style. Verify from the logs yourself instead of asking for copied output (the Mac is offline while the hotspot runs).
+- A new command gets a row in `menu.command` (`tools/menu.py`). The docs' tables that mirror the code (settings, options, commands, the menu, modules, the contract, the guardrails) are generated: after changing any of them, `python3 -B tools/docs.py --write` (the guardrails check it). A new file gets its row in `reference.html`'s Files, a new page its row in `tools/docs.py` PAGES. Pages: one shared `style.css`, no inline scripts (`docs.js`), nothing from the internet.
+- Run nothing that needs `sudo`: give the owner the command, or a menu item.

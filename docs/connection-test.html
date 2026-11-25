@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The connection test · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html" class="on" aria-current="page">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>The connection test, packet by packet</h1>
+<p class="lead">What happens, technically, from the moment a Switch asks for its connection-test name to the moment it says "connected", with the files that do each step. The friendly overview is <a href="how-it-works.html">How it works</a>.</p>
+
+<figure>
+<svg viewBox="0 0 1000 440" role="img" aria-labelledby="s1 sd1">
+  <title id="s1">The exchange between a Switch and the Mac</title>
+  <desc id="sd1">The Switch gets an address from macOS's DHCP, asks DNS for the test name and gets the Mac's address, fetches the test page and gets 200 ok (drawn as NXSPOOF's icon: a small speech bubble saying ok), says connected, then its other lookups get 0.0.0.0 and anything aimed at a known address is dropped by pf.</desc>
+  <defs><marker id="sh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head"/></marker></defs>
+  <rect x="40" y="16" width="140" height="44" rx="10" class="box b-violet"/><text x="110" y="43" text-anchor="middle" class="title">Switch</text>
+  <rect x="370" y="16" width="140" height="44" rx="10" class="box b-red"/><text x="440" y="43" text-anchor="middle" class="title">pf (firewall)</text>
+  <rect x="700" y="16" width="200" height="44" rx="10" class="box b-green"/><text x="800" y="43" text-anchor="middle" class="title">The Mac (192.168.2.1)</text>
+  <path d="M110 60 V 430" class="arrow dash"/><path d="M440 60 V 430" class="arrow dash"/><path d="M800 60 V 430" class="arrow dash"/>
+  <text x="20" y="92" class="small">0</text><path d="M110 88 H 796" class="arrow" marker-end="url(#sh)"/><text x="130" y="82" class="small">DHCP: an address, please (UDP 67, passed)</text>
+  <path d="M800 108 H 114" class="arrow arrow-green" marker-end="url(#sh)"/><text x="480" y="124" class="small">bootpd: 192.168.2.3, router and DNS 192.168.2.1</text>
+  <text x="20" y="158" class="small">1</text><path d="M110 154 H 796" class="arrow" marker-end="url(#sh)"/><text x="130" y="148" class="small">DNS: A ctest.p01.ctest.srv.nintendo.net? (UDP 53, passed)</text>
+  <path d="M800 174 H 114" class="arrow arrow-green" marker-end="url(#sh)"/><text x="480" y="190" class="small">net/dns.py: 192.168.2.1, lifetime 60 s</text>
+  <text x="20" y="224" class="small">2</text><path d="M110 220 H 796" class="arrow" marker-end="url(#sh)"/><text x="130" y="214" class="small">HTTP: GET /, Host: ctest… (TCP 80, passed)</text>
+  <path d="M800 240 H 114" class="arrow arrow-green" marker-end="url(#sh)"/><text x="480" y="256" class="small">net/web.py: 200 OK, X-Organization: Nintendo, "ok"</text>
+  <g aria-hidden="true"><path d="M237 229 H 261 A 11 11 0 0 1 261 251 H 244 L 228 258 L 233 249 A 11 11 0 0 1 237 229 Z" class="ok-bubble"/><text x="249" y="244.5" text-anchor="middle" class="ok-word">ok</text></g>
+  <rect x="40" y="272" width="140" height="30" rx="8" class="box b-green"/><text x="110" y="292" text-anchor="middle" class="title">"connected"</text>
+  <text x="20" y="334" class="small">3</text><path d="M110 330 H 796" class="arrow" marker-end="url(#sh)"/><text x="130" y="324" class="small">DNS: A dauth.p01.lp1.ndas.srv.nintendo.net?</text>
+  <path d="M800 350 H 114" class="arrow arrow-red" marker-end="url(#sh)"/><text x="480" y="366" class="small">0.0.0.0: BLOCKED (counted for that console)</text>
+  <text x="20" y="404" class="small">4</text><path d="M110 400 H 432" class="arrow arrow-red" marker-end="url(#sh)"/><text x="130" y="394" class="small">anything to an address it already knows</text><text x="452" y="405" class="title no">✗ dropped (counted)</text>
+</svg>
+<figcaption>The whole exchange, DNS then HTTP, takes a few milliseconds.</figcaption>
+</figure>
+
+<h2>0 · An address, and a name for the console</h2>
+<ul>
+  <li>The Switch joins the hotspot. macOS's own DHCP server (<code>bootpd</code>) gives it an address, say <code>192.168.2.3</code>, with <code>192.168.2.1</code> (the Mac, on <code>bridge100</code>) as its router <b>and</b> its DNS server.</li>
+  <li>pf lets that exchange through: <code>pass in quick on bridge100 inet proto udp from any port 68 to any port 67</code>.</li>
+  <li>NXSPOOF reads macOS's lease file (<code>/var/db/dhcpd_leases</code>, <code>macos/leases.py</code>) and learns <i>this address is that MAC address</i>, which settings.json names "Switch 2". From now on everything from <code>192.168.2.3</code> is Switch 2's (<code>consoles/tracker.py</code>, <code>on_dhcp</code>): <code>DHCP  gave address 192.168.2.3 to Switch 2 (…)</code>, fact <code>console.address</code>.</li>
+</ul>
+
+<h2>1 · The DNS question</h2>
+<ul>
+  <li>One UDP packet to <code>192.168.2.1:53</code>: <i>type A (an IPv4 address) for <code>ctest.p01.ctest.srv.nintendo.net</code>?</i> (a Switch 1 asks for <code>ctest.cdn.nintendo.net</code>). It often asks for AAAA (IPv6) too.</li>
+  <li>pf, on the way in, in order: IPv6 is dropped first (<code>block drop in quick on bridge100 inet6 all</code>); this packet matches <code>pass in quick on bridge100 inet proto udp from any to 192.168.2.1 port 53</code>.</li>
+  <li><b>Plan B:</b> when macOS already holds port 53, NXSPOOF listens on 5354 and a redirect moves the packet there (<code>rdr pass on bridge100 inet proto udp from any to 192.168.2.1 port 53 -&gt; 192.168.2.1 port 5354</code>). The Switch never knows.</li>
+  <li>The socket was opened by the <b>keeper</b> (only root may open ports below 1024 on one address) and handed to the run, which isn't root, over a private channel (file-descriptor passing, <code>app/keeper.py</code>). The code that parses what the Switch sent never runs as root.</li>
+</ul>
+
+<h2>2 · The DNS server answers</h2>
+<p><code>net/dns.py</code>, <code>build_reply</code>, pure functions tested with real packets:</p>
+<ol>
+  <li><b>Header:</b> 12 bytes: transaction ID, flags, number of questions. A packet that is itself a response, has no question, or is shorter than 12 bytes is ignored.</li>
+  <li><b>Name:</b> length-prefixed labels (<code>5ctest 3p01 5ctest 3srv 8nintendo 3net 0</code>). A compression pointer inside a question is refused as junk.</li>
+  <li><b>Type and class</b>, 2 bytes each.</li>
+  <li><b>Decision</b> (<code>net/policy.py</code>), on the name lowercased, trailing dot removed. Only an A or ANY question gets an address: a test name → <code>192.168.2.1</code>; anything else → <code>0.0.0.0</code> ("nowhere"); AAAA and other types → an empty "no error" reply: as far as the Switch can tell, there's no IPv6 here.</li>
+</ol>
+<div class="scroll"><table>
+<tr><th>Reply part</th><th>Value</th></tr>
+<tr><td>Transaction ID</td><td>the question's own</td></tr>
+<tr><td>Flags</td><td>response, authoritative, "recursion desired" copied, "recursion available"</td></tr>
+<tr><td>Counts</td><td>1 question, 1 answer (0 for the empty reply)</td></tr>
+<tr><td>Question</td><td>echoed back as received</td></tr>
+<tr><td>Answer</td><td>name pointer <code>0xC00C</code> (the name at byte 12, the question's), type A, class IN, lifetime <b>60 s</b>, 4 bytes of address</td></tr>
+</table></div>
+<p>Sent straight back, in well under a millisecond. Then it's written down: <code>consoles/tracker.py</code>, <code>on_dns</code>, finds which console has that address, updates its counters, and logs, with the console's name marked (so the Terminal and the dashboard color exactly that):</p>
+<pre class="code">DNS   Switch 2 (192.168.2.3) asked A     ctest.p01.ctest.srv.nintendo.net -&gt; 192.168.2.1  (Switch 2 connection test)</pre>
+<p>A blocked name says <code>-&gt; BLOCKED</code> instead and carries the <code>console.blocked</code> fact with the running total: the card's "N attempts blocked".</p>
+
+<h2>3 · The test page</h2>
+<ul>
+  <li>A TCP connection to <code>192.168.2.1:80</code>; pf lets it in (<code>pass in quick on bridge100 inet proto tcp from any to 192.168.2.1 port 80</code>) and keeps its state, so the replies flow back.</li>
+  <li><code>GET /</code> with <code>Host: ctest.p01.ctest.srv.nintendo.net</code>, and the Switch's network stack in the User-Agent: <code>libcurl (nnNifm; …)</code> for a Switch 2, <code>NX NIFM/00</code> for a Switch 1.</li>
+  <li><code>net/web.py</code> decides from the <b>Host</b> header, through the same policy as DNS:</li>
+</ul>
+<div class="scroll"><table>
+<tr><th>Host</th><th>Answer</th></tr>
+<tr><td>a test name</td><td class="wrap"><code>200 OK</code>, <code>Content-Type: text/plain</code>, <code>Content-Length: 2</code>, <b><code>X-Organization: Nintendo</code></b>, <code>Cache-Control: max-age=0, no-cache, no-store</code>, <code>Pragma: no-cache</code>, body <b><code>ok</code></b> (exactly Nintendo's, checked live 2026-11-13)</td></tr>
+<tr><td>anything else</td><td><code>403</code>, empty, connection closed</td></tr>
+</table></div>
+
+<h2>4 · "Online", and right after</h2>
+<p><code>consoles/tracker.py</code>, <code>on_http</code>: the first test passed during this visit raises <code>console.online</code>. The card turns online, the casual log says <i>Switch 2 thinks it's online, all good</i>, and the technical log:</p>
+<pre class="code">HTTP  Switch 2 GET http://ctest.p01.ctest.srv.nintendo.net/  (UA: libcurl (nnNifm; …)) -&gt; 200 ok  (Switch 2 connection test)</pre>
+<ul>
+  <li>The Switch's network manager (NIFM) sees what it expects (status 200, that header, that body) and shows "connected".</li>
+  <li>Then it tries its real servers (sign-in, update checks, game servers…). Each name gets <code>0.0.0.0</code>: the connection fails on the console itself, and each attempt is logged and counted.</li>
+  <li>Anything aimed at an address it already knows is dropped by the last rule, <code>block drop in quick on bridge100 all</code>. pf counts those packets: the summary's "everything else (blocked)".</li>
+  <li>The 60-second lifetime means the Switch asks again now and then, and gets the same answer.</li>
+  <li>NXSPOOF's own self-test (before READY) sends the same requests with a marker header, so they're never counted as a console's.</li>
+</ul>
+
+<h2>See it yourself</h2>
+<ul>
+  <li><b>The technical log</b> (the dashboard's Technical, or the run's <code>data/logs/&lt;date&gt;_&lt;time&gt;.log</code>): the <code>DHCP</code>, <code>DNS</code> and <code>HTTP</code> lines above, for each console.</li>
+  <li><b>The self-test</b> at every start: <code>CHECK DNS  PASS ctest.cdn.nintendo.net -&gt; 192.168.2.1</code>, <code>CHECK HTTP PASS … -&gt; 200 ok</code>, and <code>example.com -&gt; 0.0.0.0</code> / <code>-&gt; 403</code> for the "everything else" side.</li>
+  <li><b>Without a Switch:</b> <code>python3 -B nx_spoof.py check</code> (menu 8 → 3) runs the same servers on <code>127.0.0.1</code> with free ports, no admin rights.</li>
+</ul>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--
+  index.html - the NXSPOOF live dashboard page (served by nxspoof/dashboard/server.py at http://localhost:8800).
+
+  Nothing is loaded from the internet:
+    index.html          structure (this file)
+    css/dashboard.css   look
+    js/app.js           behavior, with its modules: js/core.js (helpers, talking to NXSPOOF), js/feed.js (the log pane),
+                        js/runs.js (its run picker: a past run in the same pane), js/cards.js (header and console cards),
+                        js/views.js (the dashboard, or Configure), js/mac.js and js/settings.js (Configure's two columns:
+                        This Mac, and how NXSPOOF behaves, with one Save), js/start.js (Start and Close, and their panel),
+                        js/tasks.js (This Mac's tasks with your password, the crash banner), js/report.js (🐞 Report a
+                        problem: the report for a GitHub issue, shown first, then copied)
+  One page, two views (D26): the dashboard (consoles and the log pane), and Configure (#configure), stepped into with the
+  header's ⚙️ Configure and out of with ← Dashboard.
+  The server replaces {{TOKEN}} below with this run's secret token (needed for the controls).
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="nxspoof-token" content="{{TOKEN}}">
+<title>NXSPOOF Dashboard</title>
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+</head>
+<body>
+<header>
+  <div class="head-row">
+    <h1><img class="logo" src="logo.png" alt="">NXSPOOF</h1>
+    <div id="chips" class="chips"></div>
+    <span id="head-note" class="starting-note"></span>
+    <div id="controls"></div>
+    <a id="report" href="#report" title="A report for a GitHub issue: this Mac, its setup, the last runs' problems, names replaced. Shown first, then copied.">🐞 Report</a>
+    <a id="help" href="/docs/" target="_blank" rel="noopener" title="The NXSPOOF docs, in a new tab">📖 Help</a>
+    <button id="view-switch" class="btn" type="button">⚙️ Configure</button>
+  </div>
+</header>
+<div id="center-panel" hidden></div>
+<div id="report-panel" hidden></div>
+<div id="leftovers" hidden></div>
+<div id="banner"></div>
+<main>
+  <section>
+    <h2 id="consoles-title">Consoles</h2>
+    <div id="cards"></div>
+  </section>
+  <section>
+    <h2 id="log-title">Live log</h2>
+    <div class="feed">
+      <div class="feed-head">
+        <select id="run-pick" class="pick" aria-label="Which log" hidden><option value="">● Live</option></select>
+        <span class="spacer"></span>
+        <div class="toggle" role="group" aria-label="Log style">
+          <button id="btn-casual" type="button">Casual</button>
+          <button id="btn-technical" type="button">Technical</button>
+        </div>
+        <div class="toggle" role="group" aria-label="Log order">
+          <button id="btn-oldest" type="button">Oldest first</button>
+          <button id="btn-newest" type="button">Newest first</button>
+        </div>
+      </div>
+      <div id="feed-body">
+        <div id="run-summary" hidden></div>
+        <div id="events" class="technical"><div class="empty">Waiting for events…</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="configure" class="view" aria-label="Configure">
+  <div class="cfg-head">
+    <div id="cfg-intro" class="set-intro"></div>
+    <div class="cfg-side">
+      <div id="cfg-transfer" class="set-transfer"></div>
+      <div id="savebar"></div>
+    </div>
+  </div>
+  <div id="cfg-import"></div>
+  <div class="cfg-grid">
+    <section><h2>This Mac</h2><div id="mac"></div></section>
+    <section><h2>How NXSPOOF behaves</h2><div id="settings"></div></section>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<footer id="footer">Only visible on this Mac. The log file is always technical.</footer>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide · NXSPOOF</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32"><link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<script src="docs.js" defer></script>
+</head>
+<body>
+<!-- generated: nav -->
+<nav class="side" aria-label="The NXSPOOF docs">
+<a class="brand" href="index.html">🎮 NXSPOOF</a>
+<a href="index.html">Home</a>
+<b>Use it</b>
+<a href="guide.html" class="on" aria-current="page">Guide</a>
+<a href="troubleshooting.html">Troubleshooting</a>
+<a href="setup.html">Setup</a>
+<b>Understand it</b>
+<a href="how-it-works.html">How it works</a>
+<a href="connection-test.html">The connection test</a>
+<a href="two-doors.html">The two doors</a>
+<b>Look it up</b>
+<a href="reference.html">Reference</a>
+<a href="real-runs.html">Real runs</a>
+<b>Build it</b>
+<a href="how-its-built.html">How it's built</a>
+<a href="decisions.html">Decisions</a>
+</nav>
+<!-- /generated -->
+<main>
+
+<h1>Guide 🎮</h1>
+<p class="lead">Your Mac makes a Wi-Fi network. Your Switch joins it and believes it's online, but it can't reach Nintendo or the internet. Your Mac can still talk to the Switch (FTP, for example).</p>
+<div class="note">While NXSPOOF runs, <b>your Mac is offline</b>: its Wi-Fi is busy being the hotspot. It comes back when you stop. (Unless your Mac is also on Ethernet: then it stays online, and the consoles still get nothing.)</div>
+
+<h2>Start</h2>
+<ol class="steps">
+  <li>Double-click <b><code>NXSPOOF.app</code></b>. The <b>dashboard</b> opens in your browser (no password yet). The very first time, macOS asks whether NXSPOOF may use the folder it's in: click <b>Allow</b>.</li>
+  <li>On a new Mac, open <b>⚙️ Configure</b> first and press <b>🛠️ Fix selected</b>: one password in macOS's window, and it gets the Mac ready and tells you what you need to do yourself (<a href="setup.html">Setup</a>).</li>
+  <li>Press <b>▶ Start NXSPOOF</b>. macOS asks for your Mac password in its own window. No Terminal window: NXSPOOF runs in the background. (If the Mac isn't ready, the page says why first, and offers <b>🛠️ Fix and start</b>: one password for both.)</li>
+  <li>Wait a few seconds for <b>READY</b>. The page now shows the run; the 📡 chip shows your hotspot's name.</li>
+  <li>Turn on your Switch. It joins the hotspot by itself (or pick it in the Switch's System Settings → Internet).</li>
+</ol>
+<p class="small muted">☕ While NXSPOOF runs, your Mac stays awake, like during a film: the screen can still turn off. Closing the lid still puts it to sleep, and that ends the run: when the Mac wakes, NXSPOOF stops cleanly (😴), resumes nothing, and your Mac stays on your home Wi-Fi. ▶ Start again when you need it.</p>
+
+<h2>Stop</h2>
+<p>Click <b>■ Stop</b> on the dashboard (or menu <b>2</b> in <code>menu.command</code>). Firewall off, a summary of each Switch's visit, Internet Sharing off, the virtual cable out: your Mac gets its internet back.</p>
+<p><b>Only a Stop stops NXSPOOF</b> (or your Mac going to sleep: see below). Closing the dashboard's page while it runs: a small macOS dialog asks <b>Stop NXSPOOF</b> or <b>Keep running</b> (the default: your Switch stays connected). Open <code>NXSPOOF.app</code> again whenever you want: the run is there at once, its whole log from the start, and its <b>■ Stop</b> button.</p>
+<div class="dialog">
+  <div class="dt">NXSPOOF is still running</div>
+  Your Switch stays connected, but this Mac's Wi-Fi stays a hotspot until you stop it. To see NXSPOOF again, open the app.
+  <div class="db"><span>Stop NXSPOOF</span><span class="def">Keep running</span></div>
+</div>
+
+<h2>The dashboard</h2>
+<p>Your browser shows <code>http://localhost:8800</code> (the same address each time). Only your Mac can see it.</p>
+<div class="cards">
+  <div class="card"><h3>A card for each Switch</h3><p>Online or away, how long it's been there, whether it passed its online check, its FTP server, what it tried to reach. <b>✏️ Edit</b> (name, color, FTP port, notes…) and <b>🗑️ Remove</b> on each known Switch.</p></div>
+  <div class="card"><h3>The live log</h3><p>What's happening, in plain words. <b>Technical</b> for every detail; <b>Oldest first / Newest first</b> for the order. Its picker (<b>● Live ▾</b>) shows any past run, with its checklist.</p></div>
+  <div class="card"><h3>⚙️ Configure</h3><p>Left: is this Mac ready, and <b>🛠️ Fix selected</b>. Right: every setting, with what it does. Changes wait for <b>Save</b>; some apply at once, the others at the next start (each says which). <b>📤 Export</b> / <b>📥 Import</b> your settings.</p></div>
+  <div class="card"><h3>The buttons</h3><p><b>📂 Open in FileZilla</b> when a Switch's FTP server is up. <b>➕ Add to settings.json</b> on a Switch NXSPOOF doesn't know yet. <b>➕ Add a console</b> by its MAC address, before it even connects. <b>📖 Help</b>: these pages.</p></div>
+</div>
+<p class="small muted">The hotspot's name, channel and password are macOS's: This Mac's hotspot line opens System Settings for them. NXSPOOF only reads them.</p>
+
+<h2>A friend's Switch</h2>
+<p>Let it join the hotspot. Its card shows a small form: type a name (and model, owner, color if you like), then <b>➕ Add to settings.json</b>. From then on, NXSPOOF knows it by name.</p>
+
+<h2>The menu (Terminal)</h2>
+<p>Prefer the Terminal? Double-click <b><code>menu.command</code></b>: everything, by number. <b>1</b> start, <b>2</b> stop, <b>3</b>/<b>4</b> watch it live (technical or casual), <b>5</b> the dashboard; then <b>6</b> Past runs, <b>7</b> This Mac, <b>8</b> Development, <b>9</b> Docs, numbered from 1 again inside. <b>b</b> back, <b>q</b> quit. What doesn't fit the moment is grayed out (but still answers). All of it, screen by screen: <a href="two-doors.html">The two doors</a>.</p>
+
+<h2>Where things are</h2>
+<p>Every run is saved with all its technical details in NXSPOOF's data folder: open the <b><code>data</code></b> shortcut in the nx-spoof folder, then <code>logs/</code> (<code>last_run.log</code> is always the latest). Your settings live there too, so you can move or rename the nx-spoof folder freely: nothing is lost.</p>
+<p>If a file called <code>MEMO.md</code> appears in the folder, the code watchdog has a note about code that's getting complicated. Nothing is broken; just mention it to Claude.</p>
+
+<h2>If something's wrong</h2>
+<div class="scroll"><table>
+<tr><th>What happens</th><th>Try this</th></tr>
+<tr><td>The Switch can't find the hotspot, or shows error <b>2110-1100</b></td><td>On the Switch, search for networks again and pick it. Or turn the Switch's Wi-Fi off and on</td></tr>
+<tr><td>The Switch says it has no internet</td><td>Look at its card. If it never says "connected": <a href="troubleshooting.html#dhcp-no-dns">Troubleshooting</a></td></tr>
+<tr><td>The dashboard didn't open</td><td>Open <code>http://localhost:8800</code> yourself, or double-click <code>NXSPOOF.app</code> again</td></tr>
+<tr><td><code>NXSPOOF.app</code> won't open ("unidentified developer")</td><td>Right-click it, <b>Open</b>, then <b>Open</b> again. Only once (the same for <code>menu.command</code>)</td></tr>
+<tr><td>▶ Start: nothing happens after the password</td><td>The dashboard's log says why. Or start from the menu (<b>1</b>): the Terminal prints the same answer</td></tr>
+<tr><td>Your Mac still has no internet after stopping</td><td>Stop again, or turn <b>Internet Sharing</b> off in System Settings → General → Sharing</td></tr>
+<tr><td>Something else, or a fix didn't help</td><td><b>🐞 Report</b> on the dashboard (menu <b>6 → 4</b>): a report for a GitHub issue, names already replaced. Read it, copy it, paste it into a new issue</td></tr>
+</table></div>
+<p>Anything else: <a href="troubleshooting.html">Troubleshooting</a> (with a search box), and <a href="troubleshooting.html#report">🐞 Report</a> when it doesn't help.</p>
+
+</main>
+</body>
+</html>
