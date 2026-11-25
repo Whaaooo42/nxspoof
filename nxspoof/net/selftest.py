@@ -3,12 +3,15 @@ nxspoof.net.selftest - the self-check run before consoles connect: both test nam
 Mac's address and the "ok" reply, and a blocked name must get 0.0.0.0 and a 403.
 
 Returns results; the caller writes the CHECK lines. Never logs.
+
+The web check talks straight to the Mac's own address with http.client: no proxy lookup. urllib would first ask macOS for
+proxy settings (SystemConfiguration, through _scproxy), which crashes a forked process on newer macOS (27.3, Nov 25:
+the run is forked), and a proxy has no business in a check of this Mac's own answers anyway.
 """
 
 import collections
+import http.client
 import socket
-import urllib.error
-import urllib.request
 
 from nxspoof.core.text import compose, outcome
 from nxspoof.net import dns, policy as policy_module
@@ -34,17 +37,21 @@ def ask_dns(ip, port, name, timeout=3):
     finally:
         c.close()
 
-# Ask the web server as host; returns (status or "error: ...", X-Organization header, body).
+# Ask the web server as host, directly (no proxy); returns (status or "error: ...", X-Organization header, body). A refusal
+# (403) comes back as its status, with no body.
 def ask_web(ip, port, host, timeout=3):
-    req = urllib.request.Request("http://%s:%d/" % (ip, port), headers={"Host": host, SELFTEST_HEADER: "1"})
+    conn = http.client.HTTPConnection(ip, port, timeout=timeout)
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            return r.status, r.headers.get("X-Organization"), r.read()
-    except urllib.error.HTTPError as e:
-        e.close()
-        return e.code, None, b""
-    except OSError as e:
+        conn.request("GET", "/", headers={"Host": host, SELFTEST_HEADER: "1"})
+        r = conn.getresponse()
+        body = r.read()
+        if r.status >= 400:
+            return r.status, None, b""
+        return r.status, r.getheader("X-Organization"), body
+    except (OSError, http.client.HTTPException) as e:
         return "error: %s" % e, None, b""
+    finally:
+        conn.close()
 
 # Run all six checks; returns [Check(kind "DNS"/"HTTP", name, passed, got)] in the old order.
 # on_check(check) is called as each one finishes (the run logs them as they happen).

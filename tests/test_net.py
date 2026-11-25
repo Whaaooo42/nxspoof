@@ -139,6 +139,14 @@ class Servers(unittest.TestCase):
         self.assertEqual(details[-1], "body (12 bytes): b'{\"hello\": 1}'")
         self.assertIsNone(self.requests[0][6] if self.requests else None)
 
+    # The self-test never goes through urllib: urllib asks macOS for proxies (SystemConfiguration), which crashes a forked run on
+    # newer macOS; http.client talks straight to the Mac's own address.
+    def test_selftest_needs_no_proxy_lookup(self):
+        with open(selftest.__file__, encoding="utf-8") as f:
+            text = f.read()
+        self.assertNotIn("import urllib", text)
+        self.assertEqual(selftest.ask_web("127.0.0.1", HTTP_PORT, "example.com")[0], 403)
+
     # The self-test: all six checks pass, in order.
     def test_selftest(self):
         checks = selftest.run_selftest("127.0.0.1", DNS_PORT, HTTP_PORT, MAC_IP)
