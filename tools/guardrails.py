@@ -38,6 +38,7 @@ ALLOWED_PRINT = {
     "nxspoof/app/commands.py": "the small commands answer on the Terminal (check, link, running)",
     "nxspoof/setup/checklist.py": "setup asks you questions",
     "nxspoof/macos/sharing.py": "its own small command line (python3 -m nxspoof.macos.sharing)",
+    "nxspoof/macos/scprefs.py": "a helper NXSPOOF runs as its own fresh process (SystemConfiguration isn't fork-safe): its output IS its answer (owner's OK 2026-11-25)",
 }
 # Files allowed to write, move or delete files, with the reason (each hands what it creates back to you).
 ALLOWED_FILE_WRITES = {

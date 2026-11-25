@@ -8,6 +8,7 @@ exactly like the old ones. Nothing here needs root; nothing changes the Mac.
 
 import json
 import os
+import plistlib
 import shutil
 import subprocess
 import tempfile
@@ -206,6 +207,48 @@ class Sharing(unittest.TestCase):
         self.assertTrue(keys)
         self.assertEqual(sharing.parse_service_interface(sample("scutil_show_bridge.txt"), "bridge0"), "Thunderbolt Bridge")
         self.assertIsNone(sharing.parse_service_interface(sample("scutil_show_bridge.txt"), "en0"))
+
+    # SystemConfiguration is never loaded where NXSPOOF forks (macOS 27.3 crashed there, Nov 25): only macos/scprefs.py
+    # uses ctypes, it imports nothing from NXSPOOF, and nothing imports it (it only ever runs as a fresh process).
+    def test_ctypes_only_in_a_fresh_process(self):
+        package = os.path.join(PROJECT_DIR, "nxspoof")
+        users, importers = [], []
+        for folder, _, files in os.walk(package):
+            for name in files:
+                if name.endswith(".py"):
+                    path = os.path.join(folder, name)
+                    with open(path, encoding="utf-8") as f:
+                        text = f.read()
+                    rel = os.path.relpath(path, PROJECT_DIR)
+                    if "import ctypes" in text:
+                        users.append(rel)
+                    if name != "scprefs.py" and ("scprefs import" in text or "import scprefs" in text or "macos.scprefs" in text):
+                        importers.append(rel)
+        self.assertEqual(users, [os.path.join("nxspoof", "macos", "scprefs.py")])
+        self.assertEqual(importers, [])
+        with open(os.path.join(package, "macos", "scprefs.py"), encoding="utf-8") as f:
+            self.assertNotIn("from nxspoof", f.read())
+
+    # Reading and writing go to scprefs.py as a fresh Python (-I), the value travelling as an XML property list; its
+    # message comes back as a SharingError.
+    def test_fresh_process_calls(self):
+        calls = []
+
+        # A fake runner answering like scprefs.py.
+        def run(cmd, text=None):
+            calls.append((cmd, text))
+            if cmd[-3] == "read":
+                return 0, plistlib.dumps({"value": {"Enabled": 1}}, fmt=plistlib.FMT_XML).decode()
+            return 0, ""
+        self.assertEqual(sharing.read_value("NAT", run=run), {"Enabled": 1})
+        sharing.write_value("NAT", {"Enabled": 0}, run=run)
+        (read_cmd, _), (write_cmd, sent) = calls
+        self.assertEqual(read_cmd[1:], ["-I", "-B", sharing.SCPREFS, "read", "com.apple.nat.plist", "NAT"])
+        self.assertEqual(write_cmd[-3:], ["write", "com.apple.nat.plist", "NAT"])
+        self.assertEqual(plistlib.loads(sent.encode()), {"value": {"Enabled": 0}})
+        with self.assertRaises(sharing.SharingError) as caught:
+            sharing.write_value("NAT", {}, run=lambda cmd, text=None: (1, "commit failed: permission denied (run with sudo)\n"))
+        self.assertEqual(str(caught.exception), "commit failed: permission denied (run with sudo)")
 
     # The Mac's real Internet Sharing settings can be read and described (reading needs no root).
     def test_live_read(self):
