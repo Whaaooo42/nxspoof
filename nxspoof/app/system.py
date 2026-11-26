@@ -20,7 +20,8 @@ from nxspoof.net import sockets
 CONTRACT = (                                 # (group, its methods): what a platform must provide
     ("who and where", ("is_root", "privileges", "root_watch", "places", "machine_facts", "personal_words", "give_to_user", "give_link_to_user",
                        "mac_problems", "mac_fix")),
-    ("a run's life", ("in_background", "answer", "wait_answer", "stop_run", "restart_from", "still_here", "keep_awake", "let_sleep")),
+    ("a run's life", ("in_background", "take_over", "check_not_root", "answer", "wait_answer", "stop_run", "restart_from", "still_here",
+                      "keep_awake", "let_sleep")),
     ("the hotspot", ("hotspot_settings", "sharing_running", "set_sharing", "find_sharing_interface", "interfaces", "bind_address",
                      "open_socket", "plug_cable", "unplug_cable")),
     ("the firewall", ("firewall_apply", "firewall_counters", "firewall_flush", "firewall_leftovers")),
@@ -65,9 +66,20 @@ class System(object):
 
     # ---- a run's life (macos/process.py; whether one is running is the lock's answer: output/runfile.py)
 
-    # Fork into a waiter and a worker on its own, its output into `output` -> (role, fd, pid) (macos/process.py).
-    def in_background(self, output):
-        return process.background(output)
+    # Handed its answer pipe, `keep` ({name: fd}: the lock) and `handover` (what the start knew in memory); command(spec) gives
+    # its words -> ("waiter", fd to read its answer from, its pid) (macos/process.py). The fakes answer ("worker", None, None)
+    # and the run is played in their process.
+    # The run's worker started as a brand-new process on its own (never a fork), its output into `output`.
+    def in_background(self, command, output, keep=None, handover=None):
+        return process.background(command, output, keep, handover)
+
+    # A started stage takes over what it was handed (macos/process.py): its descriptors made private again, the hand-over read.
+    def take_over(self, spec):
+        return process.take_over(spec)
+
+    # The run, first thing: not root and unable to become root again (macos/process.py; raises PermissionError otherwise).
+    def check_not_root(self):
+        process.check_not_root()
 
     # The worker's one answer to the waiter (macos/process.py).
     def answer(self, fd, obj):

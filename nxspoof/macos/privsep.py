@@ -1,13 +1,15 @@
 """
 nxspoof.macos.privsep - splitting a root run into two processes (privilege separation, D24).
 
-The keeper stays root; the run goes on in a new process as you: your groups, then your group id, then your user id
-(in that order, so it can never become root again), and HOME set to your home. The two talk over a pair of connected
+The keeper stays root; the run is a brand-new process (exec, never a fork that carries on: macOS's frameworks crash in
+those from macOS 26.1) started as you: your groups, then your group id, then your user id, set by the launch itself before
+the exec (in that order, so it can never become root again), and HOME set to your home. The two talk over a pair of connected
 Unix sockets: one length-prefixed JSON message at a time, request then answer, with file descriptors passed alongside
 (the sockets the keeper opens for the run). Never logs: returns values or raises.
 
   can_split()                  True when this process is really root on behalf of someone (sudo's variables)
-  split()                      ("keeper", channel, the run's pid) here, ("run", channel, the keeper's pid) in the new process
+  spawn_run(command, fds, values, handover)   the run started as you, handed the run's side of a socket pair -> (the
+                               keeper's side, the run's pid)
   send(channel, obj, fds=())   one message, with descriptors (raises OSError when the other side is gone)
   receive(channel)             (obj, fds), or (None, []) when the other side has closed
   forward_stop_signals(pid)    the keeper doesn't stop on Ctrl+C, a closed window or SIGTERM: it passes them on to the run
@@ -23,8 +25,9 @@ import pwd
 import signal
 import socket
 import struct
+import subprocess
 
-from nxspoof.macos import user
+from nxspoof.macos import process, user
 
 HEADER = struct.Struct(">I")                 # each message: its length (4 bytes), then its JSON
 MAX_MESSAGE = 1 << 20                        # a message bigger than this is refused (the keeper's answers are small)
@@ -34,21 +37,24 @@ MAX_FDS = 4
 def can_split():
     return os.geteuid() == 0 and user.sudo_user() is not None
 
-# Fork: this process stays root (the keeper); the new one becomes you (the run). Returns (role, channel, the other's pid).
-def split():
+# Start the run as you, a brand-new process (macos/process.py started): your groups (as many as macOS takes), your group id
+# and your user id set by the launch before the exec, HOME your home; handed the run's side of a new socket pair ("channel"),
+# the descriptors `fds`, the plain `values` and the hand-over. This process stays root (the keeper). -> (the keeper's side,
+# the run's pid).
+def spawn_run(command, fds, values, handover, start=process.started):
     name, uid, gid = user.sudo_user()
     keeper_side, run_side = socket.socketpair(socket.AF_UNIX, socket.SOCK_STREAM)
-    keeper_pid = os.getpid()
-    pid = os.fork()
-    if pid:
+    groups = os.getgrouplist(name, gid)[:os.sysconf("SC_NGROUPS_MAX")]
+    try:
+        pid = start(command, dict(fds, channel=run_side.fileno()), values, handover, user=uid, group=gid, extra_groups=groups,
+                    env=dict(os.environ, HOME=pwd.getpwuid(uid).pw_dir), stdin=subprocess.DEVNULL)
+    finally:
         run_side.close()
-        return "keeper", keeper_side, pid
-    keeper_side.close()
-    os.initgroups(name, gid)
-    os.setgid(gid)
-    os.setuid(uid)
-    os.environ["HOME"] = pwd.getpwuid(uid).pw_dir
-    return "run", run_side, keeper_pid
+    return keeper_side, pid
+
+# The run's side of the pair, from its handed descriptor -> a socket.
+def channel_from(fd):
+    return socket.socket(fileno=fd)
 
 # Send one message (a JSON-able object), with file descriptors alongside; raises OSError when the other side is gone.
 def send(channel, obj, fds=()):
@@ -113,7 +119,4 @@ def signal_name(code):
 
 # Wait for the run (pid) to end; its exit code (128 + the signal's number when a signal ended it).
 def wait(pid):
-    _, status = os.waitpid(pid, 0)
-    if os.WIFEXITED(status):
-        return os.WEXITSTATUS(status)
-    return 128 + os.WTERMSIG(status) if os.WIFSIGNALED(status) else 1
+    return process.reap(pid)

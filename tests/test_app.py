@@ -18,6 +18,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest import mock
 
 from nxspoof.app import cli, main as main_module, signals, starter
 from nxspoof.app.config import build_config
@@ -138,8 +139,8 @@ class FakeSystem(System):
     def restart_from(self, folder, argv):
         return None
 
-    # No fork in tests: the start's run happens here, and nobody waits for its answer.
-    def in_background(self, output):
+    # Nothing started in tests: the start's run happens here, and nobody waits for its answer.
+    def in_background(self, command, output, keep=None, handover=None):
         return "worker", None, None
 
     # The hotspot (or None to keep waiting).
@@ -410,13 +411,38 @@ class StartAndStop(RunTest):
         seen, problems = [], [[{"name": "bridge", "title": "Thunderbolt Bridge", "tech": "no fixed address", "fixable": True}], []]
         self.system.mac_problems = lambda program, places: problems.pop(0)
         self.system.mac_fix = lambda places, names: seen.append((names, runfile.held(places.runtime)))
-        self.system.in_background = lambda output: ("waiter", None, None)           # the run's side isn't played here
+        self.system.in_background = lambda command, output, keep=None, handover=None: ("waiter", None, None)   # the run's side isn't played here
         self.system.wait_answer = lambda fd, timeout: {"ok": True, "text": "Connect a Switch."}
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             code = main_module.main(["start", "--fix", "--settings", os.path.join(self.dir, "settings.json")], system=self.system, project_dir=self.dir)
         self.assertEqual((code, seen), (0, [(["bridge"], False)]), out.getvalue())
         self.assertIn("setup fixes bridge first", out.getvalue())
+
+    # The stages (D33): "--stage worker|run <spec>" before the words is read off (never an option); the worker takes over what
+    # it was handed (the hand-over's prepared lines reach the run) and goes on as the worker; the run checks it isn't root
+    # first, then plays with the keeper's System. Each stage's words start this same nx_spoof.py again.
+    def test_stages(self):
+        from nxspoof.app import cli, start as start_module
+        self.assertEqual(cli.split_stage(["--stage", "run", '{"answer": 5}', "start", "--no-ftp-watch"]), ("run", {"answer": 5}, ["start", "--no-ftp-watch"]))
+        self.assertEqual(cli.split_stage(["start"]), (None, None, ["start"]))
+        seen = {}
+        self.system.take_over = lambda spec: dict(spec, handover={"prepared": [["warn", "old files moved over"]]})
+        self.system.check_not_root = lambda: seen.setdefault("checked", True)
+        settings = os.path.join(self.dir, "settings.json")
+        with mock.patch.object(start_module, "run_in_background", lambda args, loaded, system, places, stream, prepared, answer:
+                               seen.update(worker=(prepared, answer.fd)) or 0):
+            main_module.main(["--stage", "worker", '{"answer": 9, "lock": 8, "handover": 7}', "start", "--settings", settings], system=self.system, project_dir=self.dir)
+        self.assertEqual(seen["worker"], ([("warn", "old files moved over")], 9))
+        with mock.patch.object(start_module.keeper, "run_system", lambda got: ("the keeper's", got["keeper"])), \
+                mock.patch.object(start_module, "play_run", lambda loaded, system, places, stream, prepared, answer: seen.update(run=system) or 0):
+            main_module.main(["--stage", "run", '{"answer": 9, "channel": 6, "keeper": 77, "handover": 7}', "start", "--settings", settings],
+                             system=self.system, project_dir=self.dir)
+        self.assertEqual((seen["checked"], seen["run"]), (True, ("the keeper's", 77)))
+        args = cli.parse_args(["start", "--no-ftp-watch"])
+        words = start_module.stage_words(Places.together(self.dir, self.dir), args, "run", {"answer": 9})
+        self.assertEqual(words[2:6], [os.path.join(self.dir, "nx_spoof.py"), "--stage", "run", '{"answer": 9}'])
+        self.assertEqual(words[6:], ["start", "--no-ftp-watch"])
 
     # This Mac not ready: the reasons and exit 2 (the menu then offers --anyway), nothing touched; --anyway starts.
     def test_refuses_when_not_ready(self):

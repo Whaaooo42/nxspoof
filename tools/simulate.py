@@ -293,8 +293,8 @@ def run_new(out_prefix, keep_dir=False, stop="ctrl-c", hold=0, keeper=False, das
         def restart_from(self, folder, argv):
             return None
 
-        # No fork: the simulated run happens here, and nobody waits for its answer.
-        def in_background(self, output):
+        # Nothing started: the simulated run happens here, and nobody waits for its answer.
+        def in_background(self, command, output, keep=None, handover=None):
             return "worker", None, None
 
         # The hotspot as the default settings want it (never this Mac's own).

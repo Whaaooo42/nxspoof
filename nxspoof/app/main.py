@@ -31,7 +31,9 @@ from nxspoof.macos import sharing
 #   places: where NXSPOOF's files are (core/places.py); by default the platform's (System.places), or, given only a
 #   project folder (tests, the simulator), that folder for every role.
 def main(argv=None, system=None, project_dir=None, stream=None, places=None):
-    args = cli.parse_args(sys.argv[1:] if argv is None else argv)
+    stage, spec, words = cli.split_stage(sys.argv[1:] if argv is None else argv)
+    args = cli.parse_args(words)
+    args.stage, args.stage_spec = stage, spec                        # a started stage of `start` (app/start.py, D33), or None
     system = system or System()
     places = places or find_places(system, project_dir, PROJECT_DIR)
     prepared = prepare_data(args.command, system, places)

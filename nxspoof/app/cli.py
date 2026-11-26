@@ -7,6 +7,7 @@ table, so a new option is one row. Options override settings.json for one run on
 """
 
 import argparse
+import json
 
 # ##############################################################################################################################################################
 # ##  THE OPTIONS TABLE                                                                                                                                       ##
@@ -57,6 +58,7 @@ OPTIONS = [
 ]
 
 BY_FLAG = {o.flag: o for o in OPTIONS}
+STAGES = ("worker", "run")                   # the start's stages, each a brand-new process (app/start.py, D33)
 
 # The commands (the first word; none = start). Each is (name, what it does).
 COMMANDS = [
@@ -94,6 +96,14 @@ def build_parser():
             ap.add_argument(o.flag, dest=o.dest, type=int if o.kind == "int" else str, choices=o.choices,
                             default=o.default, metavar=o.dest.upper() if not o.choices else None, help=o.help)
     return ap
+
+# A started stage's words (app/start.py: "--stage worker|run <JSON spec>" before the command's own words, never typed by
+# anyone and never in --help) -> (stage or None, spec or None, the command's own words).
+def split_stage(argv):
+    argv = list(argv)
+    if argv[:1] == ["--stage"] and len(argv) >= 3 and argv[1] in STAGES:
+        return argv[1], json.loads(argv[2]), argv[3:]
+    return None, None, argv
 
 # Parse a list of arguments (sys.argv[1:] style) into an argparse namespace.
 def parse_args(argv):

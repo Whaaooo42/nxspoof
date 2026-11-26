@@ -11,6 +11,7 @@ import os
 import plistlib
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -427,27 +428,33 @@ class Process(unittest.TestCase):
         process.let_sleep(proc)                                     # already gone: nothing
         process.let_sleep(None)
 
-    # The worker (a real fork) answers, the waiter gets it; a worker that ends without answering: None; nobody: "timeout".
+    # background: a brand-new process (exec), on its own session, its output in the file, handed the answer pipe, the lock (made
+    # private again by take_over) and the hand-over; its answer comes back (or None when it ends without one); reap gets its code.
     def test_background_and_answer(self):
         folder = tempfile.mkdtemp(prefix="nxspoof-process-")
         self.addCleanup(shutil.rmtree, folder)
-        out = os.path.join(folder, "out.txt")
+        out, lock_path = os.path.join(folder, "out.txt"), os.path.join(folder, "run.lock")
+        child = ("import json, os, sys; sys.path.insert(0, %r); from nxspoof.macos import process; "
+                 "got = process.take_over(json.loads(sys.argv[1])); "
+                 "print('from the worker', got['handover'], os.get_inheritable(got['lock']), os.getsid(0) == os.getpid(), flush=True); "
+                 "process.answer(got['answer'], json.loads(sys.argv[2]))" % PROJECT_DIR)
         for answer, expected in (({"ok": True, "text": "READY"}, {"ok": True, "text": "READY"}), (None, None)):
-            with open(out, "a") as f:
-                role, fd, pid = process.background(f)
-            if role == "worker":                                # the new process: answer (or not), then leave at once
-                try:
-                    print("from the worker", flush=True)
-                    process.answer(fd, answer)
-                finally:
-                    os._exit(0)
-            self.assertEqual(process.wait_answer(fd, 5), expected)
-            os.waitpid(pid, 0)
+            with open(out, "a") as f, open(lock_path, "a") as lock:
+                role, fd, pid = process.background(lambda spec: [sys.executable, "-B", "-c", child, json.dumps(spec), json.dumps(answer)], f,
+                                                   keep={"lock": lock.fileno()}, handover={"prepared": [["warn", "moved"]]})
+            self.assertEqual(role, "waiter")
+            self.assertEqual(process.wait_answer(fd, 10), expected)
+            self.assertEqual(process.reap(pid), 0)
         with open(out) as f:
-            self.assertIn("from the worker", f.read())
+            self.assertEqual(f.read().count("from the worker {'prepared': [['warn', 'moved']]} False True"), 2)
         read_end, write_end = os.pipe()
         self.assertEqual(process.wait_answer(read_end, 0.2), "timeout")
         os.close(write_end)
+
+    # check_not_root: a process that isn't root (as the tests run) passes; the run calls it first thing.
+    def test_check_not_root(self):
+        if os.geteuid() != 0:
+            process.check_not_root()
 
     # stop: a process that's gone is False; one that's there gets SIGTERM.
     def test_stop(self):

@@ -2,9 +2,16 @@
 nxspoof.macos.process - a run's life as a process: started in the background with an answer, stopped by a signal, started
 again from the program copy. Never logs: returns values or raises.
 
-  background(output)        fork: here ("waiter", reading end, the worker's pid); in the new process ("worker", writing end,
-                            None), on its own (setsid: no Terminal window or hang-up reaches it), its output into `output`
-                            (an open file, output/logfile.py's)
+  background(command, output, keep, handover)   a brand-new process (fork + exec in one go, nothing run in between: macOS
+                            supports nothing else after a fork, and from macOS 26.1 the frameworks crash in a forked child,
+                            FB21364061), on its own (its own session: no Terminal window or hang-up reaches it), its output
+                            into `output`, handed the write end of its answer pipe, the descriptors `keep` and a hand-over
+                            pipe (what the start knew in memory) -> ("waiter", reading end, its pid)
+  started(command, fds, values, handover, **popen)   the same start, for any brand-new process (the keeper's run too)
+  take_over(spec)           in the new process: its handed descriptors made private again (never handed further), the
+                            hand-over read -> {"answer", "lock", "channel": their numbers, "handover": what was handed over}
+  reap(pid)                 wait for a process started here -> its exit code (128 + a signal when a signal ended it)
+  check_not_root()          the run, first thing: it isn't root and can't become root again (raises PermissionError)
   answer(fd, obj)           the worker's one answer to the waiter (a JSON line), then its end closed
   wait_answer(fd, timeout)  the waiter: the answer (dict), None when the worker ended without one, "timeout"
   stop(pid)                 SIGTERM to a run: True if sent, False if it's gone (PermissionError: it isn't yours)
@@ -25,22 +32,78 @@ import sys
 import time
 
 CAFFEINATE = "/usr/bin/caffeinate"
+FD_NAMES = ("answer", "lock", "channel", "handover")     # the descriptors a started process may be handed
+_STARTED = {}                                            # pid -> its Popen (reap() waits through it, so it's reaped once)
 
-# Fork into a waiter (here) and a worker (the new process, alone in its own session, stdin from /dev/null and its output
-# into the open file `output`). Returns ("waiter", fd to read the answer from, the worker's pid) or ("worker", fd to answer on, None).
-def background(output):
+# Start a brand-new process on its own (its own session, stdin from /dev/null, its output into the open file `output`), handed
+# the write end of its answer pipe, the descriptors `keep` ({name: fd}) and `handover` (JSON-able: what the start knew in
+# memory). command(spec) gives its words once the handed descriptors' numbers are known. -> ("waiter", fd to read its answer
+# from, its pid).
+def background(command, output, keep=None, handover=None):
     read_end, write_end = os.pipe()
-    pid = os.fork()
-    if pid:
+    try:
+        pid = started(command, dict(keep or {}, answer=write_end), {}, handover, stdin=subprocess.DEVNULL, stdout=output,
+                      stderr=output, start_new_session=True)
+    finally:
         os.close(write_end)
-        return "waiter", read_end, pid
-    os.close(read_end)
-    os.setsid()
-    with open(os.devnull) as nothing:
-        os.dup2(nothing.fileno(), 0)
-    os.dup2(output.fileno(), 1)
-    os.dup2(output.fileno(), 2)
-    return "worker", write_end, None
+    return "waiter", read_end, pid
+
+# Start a brand-new process (exec, nothing in between): handed the descriptors `fds` ({name: fd}), the plain `values`
+# ({name: value}) and a hand-over pipe holding `handover` (JSON); command(spec) gives its words from the spec ({names: numbers
+# and values}), and popen's options are subprocess's (user=, group=, env=...). Returns its pid (reap(pid) waits for it).
+def started(command, fds, values, handover, **popen):
+    hand_r, hand_w = os.pipe()
+    try:
+        os.write(hand_w, json.dumps(handover).encode("utf-8"))
+    finally:
+        os.close(hand_w)
+    try:
+        spec = dict(fds, handover=hand_r, **values)
+        proc = subprocess.Popen(command(spec), pass_fds=tuple(fds.values()) + (hand_r,), close_fds=True, **popen)
+    finally:
+        os.close(hand_r)
+    _STARTED[proc.pid] = proc
+    return proc.pid
+
+# In a process started by background() or started(): its handed descriptors made private again (never handed further: a lock
+# that leaked into another program would look like a run forever), the hand-over read and closed -> {name: number or value,
+# "handover": what was handed over}.
+def take_over(spec):
+    out = dict(spec)
+    for name, value in spec.items():
+        if name in FD_NAMES and isinstance(value, int):
+            os.set_inheritable(value, False)
+    data = b""
+    while True:
+        chunk = os.read(spec["handover"], 65536)
+        if not chunk:
+            break
+        data += chunk
+    os.close(spec["handover"])
+    out["handover"] = json.loads(data.decode("utf-8")) if data else None
+    return out
+
+# The run, first thing: really not root, and unable to become root again (its user, group and groups were set before its
+# exec). Raises PermissionError otherwise (the run then stops before doing anything).
+def check_not_root():
+    if 0 in (os.getuid(), os.geteuid(), os.getgid(), os.getegid()) or 0 in os.getgroups():
+        raise PermissionError("the run is still root (uid %d, gid %d): it refuses to go on" % (os.getuid(), os.getgid()))
+    try:
+        os.setuid(0)
+    except PermissionError:
+        return
+    raise PermissionError("the run could become root again: it refuses to go on")
+
+# Wait for a process started here -> its exit code (128 + the signal's number when a signal ended it).
+def reap(pid):
+    proc = _STARTED.pop(pid, None)
+    if proc is not None:
+        code = proc.wait()
+        return 128 - code if code < 0 else code
+    _, status = os.waitpid(pid, 0)
+    if os.WIFEXITED(status):
+        return os.WEXITSTATUS(status)
+    return 128 + os.WTERMSIG(status) if os.WIFSIGNALED(status) else 1
 
 # The worker's answer (a JSON-able dict), once; the end is closed after it (obj None: closed without answering). A gone
 # waiter is fine (nobody's listening).

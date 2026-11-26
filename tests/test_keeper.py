@@ -6,6 +6,8 @@ after a run that ended without its own.
 
 import json
 import os
+from unittest import mock
+import pwd
 import shutil
 import socket
 import subprocess
@@ -111,6 +113,27 @@ class Messages(unittest.TestCase):
         finally:
             for sig, handler in saved.items():
                 signal.signal(sig, handler)
+
+    # The run is started as you, a brand-new process: your user, group and groups set by the launch, HOME your home, handed the
+    # run's side of the pair with the start's descriptors and the keeper's pid; the keeper keeps its side.
+    def test_spawn_run_as_you(self):
+        seen = {}
+
+        # Record how the run would be started.
+        def start(command, fds, values, handover, **popen):
+            seen.update(fds=fds, values=values, handover=handover, popen=popen, words=command(dict(fds, handover=99, **values)))
+            return 4242
+        me = pwd.getpwuid(os.getuid())
+        with mock.patch.dict(os.environ, {"SUDO_USER": me.pw_name, "SUDO_UID": str(me.pw_uid), "SUDO_GID": str(me.pw_gid)}):
+            channel, pid = privsep.spawn_run(lambda spec: ["run", json.dumps(spec)], {"answer": 7}, {"keeper": 100}, {"prepared": []}, start=start)
+        channel.close()
+        self.assertEqual(pid, 4242)
+        popen = seen["popen"]
+        self.assertEqual((popen["user"], popen["group"], popen["env"]["HOME"]), (me.pw_uid, me.pw_gid, me.pw_dir))
+        self.assertIn(me.pw_gid, popen["extra_groups"])
+        self.assertLessEqual(len(popen["extra_groups"]), os.sysconf("SC_NGROUPS_MAX"))
+        self.assertEqual(sorted(seen["fds"]), ["answer", "channel"])
+        self.assertEqual(json.loads(seen["words"][1])["keeper"], 100)
 
     # Without real root (the tests), a run doesn't split: one process, as before.
     def test_no_split_without_root(self):

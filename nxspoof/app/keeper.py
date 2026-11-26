@@ -2,7 +2,8 @@
 nxspoof.app.keeper - a run's root part: privilege separation (D24, docs/how-its-built.html).
 
 A real run starts as root (sudo in Terminal, or ▶ Start's password window). Before anything else it splits
-(macos/privsep.py): this process stays root as the keeper, and the run goes on in a new process, as you. The run
+(macos/privsep.py): this process stays root as the keeper, and the run is a brand-new process started as you (exec, never
+a fork that carries on: macOS's frameworks crash in those from macOS 26.1, D33). The run
 reads the consoles' packets (DNS, the web test), so it's never trusted with root: the keeper answers only these
 requests, and checks every argument:
   set_sharing(on)                              Internet Sharing on / off
@@ -21,6 +22,7 @@ a NOTE in the run's log (fact run.keeper_cleanup). --no-keeper keeps the whole r
 """
 
 import collections
+import os
 import re
 import select
 import socket
@@ -44,21 +46,25 @@ ERRORS = {"FirewallError": FirewallError, "SharingError": SharingError, "OSError
 
 Split = collections.namedtuple("Split", "role system code")       # role "run" (system: the one to use) or "keeper" (code: exit code)
 
-# Split a real root run (macos/privsep.py): in the run's process -> Split("run", KeeperSystem, None); in this one, the
-# keeper serves until the run has ended -> Split("keeper", None, its exit code). Not root, nobody to become, or
-# wanted=False (--no-keeper): Split("run", system, None), one process as before. in_keeper(): called first thing in the
-# keeper (it lets go of what only the run should hold: the start's answer).
-def split(system, keep_sharing, wanted=True, in_keeper=None):
-    if not wanted or not privsep.can_split():
+# Split a real root run (macos/privsep.py): the run started as you, a brand-new process (run: (command(spec), fds, values,
+# handover) to start it with; its own process makes its KeeperSystem with run_system), while this one stays root and serves
+# until the run has ended -> Split("keeper", None, its exit code). Not root, nobody to become, nothing to start the run with
+# (the fake Mac) or wanted=False (--no-keeper): Split("run", system, None), one process as before. in_keeper(): called once
+# the run has started (the keeper lets go of what only the run should hold: the start's answer).
+def split(system, keep_sharing, wanted=True, in_keeper=None, run=None):
+    if not wanted or run is None or not privsep.can_split():
         return Split("run", system, None)
     uid = user.sudo_user()[1]
-    role, channel, other = privsep.split()
-    if role == "run":
-        return Split("run", KeeperSystem(channel, other), None)
+    command, fds, values, handover = run
+    channel, pid = privsep.spawn_run(command, fds, dict(values, keeper=os.getpid()), handover)
     if in_keeper:
         in_keeper()
-    privsep.forward_stop_signals(other)
-    return Split("keeper", None, Keeper(system, channel, other, uid, keep_sharing).serve())
+    privsep.forward_stop_signals(pid)
+    return Split("keeper", None, Keeper(system, channel, pid, uid, keep_sharing).serve())
+
+# In the run's own process: its System, talking to the keeper over the handed side of the pair (spec: what take_over read).
+def run_system(spec):
+    return KeeperSystem(privsep.channel_from(spec["channel"]), spec["keeper"])
 
 # True for a dotted IPv4 address ("192.168.2.1").
 def is_ipv4(text):
