@@ -1,11 +1,13 @@
 """
 tests/test_forksafe.py - the run's ways of touching the Mac, done in a forked child: none may use macOS's frameworks there.
 
-NXSPOOF's background run and its keeper are forked without exec (app/start.py, app/keeper.py), and macOS doesn't
-support CoreFoundation, Objective-C or SystemConfiguration in such a child: from macOS 26.1 it crashes (FB21364061,
-seen by two users on macOS 27, Nov 25). On macOS 15 a forked child only crashes when its parent had another thread
-alive at the fork, so this test starts one first (the canary): a run-side path that reaches those frameworks then
-aborts here too, on the developer's Mac. It would have caught both crashes found on Nov 25.
+Until D33 NXSPOOF's background run and its keeper were forked without exec, and macOS doesn't support CoreFoundation,
+Objective-C or SystemConfiguration in such a child: from macOS 26.1 it crashes (FB21364061, seen by two users on
+macOS 27, Nov 25). Since D33 every NXSPOOF process starts fresh (macos/process.py started) and the guardrail "no fork
+that carries on" keeps it that way; this test is the second net: the run-side paths must stay safe even in a fork.
+On macOS 15 a forked child only crashes when its parent had another thread alive at the fork, so this test starts
+one first (the canary): a run-side path that reaches those frameworks then aborts here too, on the developer's Mac.
+It would have caught both crashes found on Nov 25.
 """
 
 import os
