@@ -84,6 +84,11 @@ class GuardrailsBite(Planted):
         for expected in ("imports subprocess", "imports signal", "os.geteuid()"):
             self.assertCaught(self.g.system_calls_outside_macos, expected)
 
+    # A fork that carries on, even inside macos/ (D33).
+    def test_fork(self):
+        self.append("nxspoof/macos/process.py", "\n# Forks the old way.\ndef old_background():\n    return os.fork()\n")
+        self.assertCaught(self.g.forks, "nxspoof/macos/process.py")
+
     # A log call inside macos/.
     def test_macos_logging(self):
         self.append("nxspoof/macos/leases.py", "\n# Talks too much.\ndef noisy(bus):\n    bus.log(\"DHCP\", \"hello\")\n")

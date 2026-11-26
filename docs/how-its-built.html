@@ -86,6 +86,7 @@
 <div class="scroll"><table>
 <tr><th>Rule</th><th>Protects</th></tr>
 <tr><td><b>only macos/ talks to the Mac</b></td><td>no subprocess, ctypes or system calls outside nxspoof/macos/ (signals: app/signals.py)</td></tr>
+<tr><td><b>no fork that carries on (D33)</b></td><td>every NXSPOOF process starts fresh: macOS supports only exec after a fork, and its frameworks crash in a forked child from macOS 26.1</td></tr>
 <tr><td><b>macos/ never logs</b></td><td>macos/ returns values or raises</td></tr>
 <tr><td><b>no hard-coded machine details</b></td><td>devices and addresses are detected</td></tr>
 <tr><td><b>messages go through the event bus</b></td><td>print only where printing is the job (ALLOWED_PRINT)</td></tr>

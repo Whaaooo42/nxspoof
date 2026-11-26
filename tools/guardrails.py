@@ -68,6 +68,7 @@ SYSTEM_MODULES = ("subprocess", "ctypes", "pty", "signal")
 INTERNET = re.compile(r"https?://[a-z0-9.-]+")
 INTERNET_IN_DOCS = re.compile(r"(?:\b(?:src|href|action)\s*=\s*[\"']?|url\(\s*[\"']?|@import\s+[\"']?)\s*(?:https?:)?//[a-z0-9.-]+")
 MACHINE_NAMES = re.compile(r"[\"'](en\d|bridge\d+|172\.16\.0\.1|192\.168\.2\.\d+)[\"']")
+FORK_CALLS = {("os", "fork"), ("os", "forkpty"), ("pty", "fork")}    # a fork that carries on (no exec): nowhere in nxspoof/ (D33)
 FORBIDDEN_OS_CALLS = {"chown", "lchown", "geteuid", "getuid", "setuid", "kill", "system", "popen", "fork", "execv", "execvp", "spawnv"}
 FILE_CHANGES = {"remove", "unlink", "rename", "replace", "symlink", "makedirs", "mkdir", "rmdir", "chmod", "truncate", "open", "fdopen"}
 SHUTIL_CHANGES = {"rmtree", "move", "copy", "copyfile", "copytree"}
@@ -152,6 +153,15 @@ def system_calls_outside_macos(root):
                      if top in SYSTEM_MODULES and (rel, top) not in ALLOWED_SYSTEM_IMPORTS]
         problems += [at(rel, n, "os.%s()" % n.func.attr) for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
                      and isinstance(n.func.value, ast.Name) and n.func.value.id == "os" and n.func.attr in FORBIDDEN_OS_CALLS]
+    return problems
+
+# Nowhere in nxspoof/, macos/ included: a fork that carries on (os.fork, os.forkpty, pty.fork). macOS supports only exec after
+# a fork, and from macOS 26.1 its frameworks crash in a forked child (FB21364061): every process starts fresh (D33).
+def forks(root):
+    problems = []
+    for rel, tree, _ in python_files(root, "nxspoof"):
+        problems += [at(rel, n, "%s.%s()" % (n.func.value.id, n.func.attr)) for n in ast.walk(tree) if isinstance(n, ast.Call)
+                     and isinstance(n.func, ast.Attribute) and isinstance(n.func.value, ast.Name) and (n.func.value.id, n.func.attr) in FORK_CALLS]
     return problems
 
 # macos/ returns values or raises: no event bus, no outputs, no log calls.
@@ -416,6 +426,8 @@ def past_watchdog_limits(root):
 RULES = [
     ("only macos/ talks to the Mac", "no subprocess, ctypes or system calls outside nxspoof/macos/ (signals: app/signals.py)",
      "add a function to macos/ (it can take a fake runner in tests) and call that", system_calls_outside_macos),
+    ("no fork that carries on (D33)", "every NXSPOOF process starts fresh: macOS supports only exec after a fork, and its frameworks crash in a forked child from macOS 26.1",
+     "start a fresh process instead (macos/process.py started); if doing it right truly needs a fork, bring it to the owner: the golden rule comes first", forks),
     ("macos/ never logs", "macos/ returns values or raises", "return a value or raise, and let the caller log it", macos_logs),
     ("no hard-coded machine details", "devices and addresses are detected", "detect them (macos/netif.py) or use its defaults", machine_names),
     ("messages go through the event bus", "print only where printing is the job (ALLOWED_PRINT)",

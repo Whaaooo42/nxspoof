@@ -25,6 +25,8 @@ NXSPOOF turns this Mac into a Wi-Fi hotspot that answers only the Nintendo Switc
 
 ## Changing the safeguards
 
+**The golden rule comes first: is it done right?** The guardrails and the watchdog serve it, not the other way around. When a rule stands in the way of doing it right, bring it to the owner (an exception with its reason, or a better rule), never work around it.
+
 The guardrails' exception tables (`ALLOWED_*` in `tools/guardrails.py`) and the watchdog's levels (`LIMITS` in `tools/health.py`) are the owner's decisions. Adding an exception needs a reason in the table and a word to the owner. Never loosen a rule, raise a limit, or delete a check without the owner's OK. A new rule comes with a proof in `tests/test_guardrails_bite.py`.
 
 ## Working on NXSPOOF
